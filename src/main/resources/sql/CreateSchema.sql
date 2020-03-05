@@ -130,7 +130,7 @@ CREATE TABLE `users` (
   `surname` varchar(45) COLLATE utf8_bin NOT NULL,
   `login` varchar(45) COLLATE utf8_bin NOT NULL,
   `password` varchar(45) COLLATE utf8_bin NOT NULL,
-  `e-mail` varchar(45) COLLATE utf8_bin NOT NULL,
+  `e_mail` varchar(45) COLLATE utf8_bin NOT NULL,
   `birth_date` date NOT NULL,
   `role_id` int(11) NOT NULL,
   `city_id` int(11) NOT NULL,
