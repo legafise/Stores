@@ -1,33 +1,24 @@
 package com.lashkevich.stores.entity;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class Basket {
-    private long good;
-    private long user;
+    private Map<Good, Integer> goods;
 
     public Basket() {
     }
 
-    public Basket(long good, long user) {
-        this.good = good;
-        this.user = user;
+    public Basket(Map<Good, Integer> goods) {
+        this.goods = goods;
     }
 
-    public long getGood() {
-        return good;
+    public Map<Good, Integer> getGoods() {
+        return goods;
     }
 
-    public void setGood(long good) {
-        this.good = good;
-    }
-
-    public long getUser() {
-        return user;
-    }
-
-    public void setUser(long user) {
-        this.user = user;
+    public void setGoods(Map<Good, Integer> goods) {
+        this.goods = goods;
     }
 
     @Override
@@ -35,20 +26,18 @@ public class Basket {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Basket basket = (Basket) o;
-        return good == basket.good &&
-                user == basket.user;
+        return Objects.equals(goods, basket.goods);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(good, user);
+        return Objects.hash(goods);
     }
 
     @Override
     public String toString() {
         return "Basket{" +
-                "good=" + good +
-                ", user=" + user +
+                "goods=" + goods +
                 '}';
     }
 }
