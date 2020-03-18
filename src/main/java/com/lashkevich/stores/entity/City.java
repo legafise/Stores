@@ -5,12 +5,12 @@ import java.util.Objects;
 public class City {
     private long id;
     private String name;
-    private long country;
+    private Country country;
 
     public City() {
     }
 
-    public City(long id, String name, long country) {
+    public City(long id, String name, Country country) {
         this.id = id;
         this.name = name;
         this.country = country;
@@ -20,23 +20,23 @@ public class City {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public long getCountry() {
-        return country;
-    }
-
-    public void setCountry(long country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 
@@ -46,8 +46,8 @@ public class City {
         if (o == null || getClass() != o.getClass()) return false;
         City city = (City) o;
         return id == city.id &&
-                country == city.country &&
-                Objects.equals(name, city.name);
+                Objects.equals(name, city.name) &&
+                Objects.equals(country, city.country);
     }
 
     @Override
