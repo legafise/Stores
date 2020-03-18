@@ -22,7 +22,7 @@ USE nonamestore;
 
 LOCK TABLES `baskets` WRITE;
 /*!40000 ALTER TABLE `baskets` DISABLE KEYS */;
-INSERT INTO `baskets` VALUES (17,1),(19,1),(20,3),(18,4),(21,2),(19,3),(17,5),(20,5),(19,2),(18,6),(20,1),(17,3),(17,6),(18,4),(21,4);
+INSERT INTO `baskets` VALUES (17,1,1),(17,3,1),(17,5,3),(17,6,1),(18,3,1),(18,4,3),(18,6,1),(19,1,1),(19,2,1),(19,3,1),(20,1,1),(20,3,2),(20,5,2),(21,2,2),(21,4,4);
 /*!40000 ALTER TABLE `baskets` ENABLE KEYS */;
 UNLOCK TABLES;
 

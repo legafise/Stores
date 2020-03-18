@@ -27,7 +27,8 @@ USE nonamestore;
 CREATE TABLE `baskets` (
   `good_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  KEY `baskets_goods_idx` (`good_id`),
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`good_id`,`user_id`),
   KEY `baskets_users_idx` (`user_id`),
   CONSTRAINT `baskets_goods` FOREIGN KEY (`good_id`) REFERENCES `goods` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `baskets_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -130,7 +131,7 @@ CREATE TABLE `users` (
   `surname` varchar(45) COLLATE utf8_bin NOT NULL,
   `login` varchar(45) COLLATE utf8_bin NOT NULL,
   `password` varchar(45) COLLATE utf8_bin NOT NULL,
-  `e_mail` varchar(45) COLLATE utf8_bin NOT NULL,
+  `email` varchar(45) COLLATE utf8_bin NOT NULL,
   `birth_date` date NOT NULL,
   `role_id` int(11) NOT NULL,
   `city_id` int(11) NOT NULL,
