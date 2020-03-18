@@ -1,6 +1,6 @@
 package com.lashkevich.stores.exception;
 
-public class ConnectionStoreException extends Exception{
+public class ConnectionStoreException extends Exception {
     public ConnectionStoreException() {
     }
 
