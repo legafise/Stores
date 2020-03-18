@@ -1,42 +1,43 @@
 package com.lashkevich.stores.entity;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class GoodPrice {
-    private long country;
-    private long good;
-    private double price;
+    private Country country;
+    private Good good;
+    private BigDecimal price;
 
     public GoodPrice() {
     }
 
-    public GoodPrice(long country, long good, double price) {
+    public GoodPrice(Country country, Good good, BigDecimal price) {
         this.country = country;
         this.good = good;
         this.price = price;
     }
 
-    public long getCountry() {
+    public Country getCountry() {
         return country;
     }
 
-    public void setCountry(long country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 
-    public long getGood() {
+    public Good getGood() {
         return good;
     }
 
-    public void setGood(long good) {
+    public void setGood(Good good) {
         this.good = good;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -45,9 +46,9 @@ public class GoodPrice {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GoodPrice goodPrice = (GoodPrice) o;
-        return country == goodPrice.country &&
-                good == goodPrice.good &&
-                Double.compare(goodPrice.price, price) == 0;
+        return Objects.equals(country, goodPrice.country) &&
+                Objects.equals(good, goodPrice.good) &&
+                Objects.equals(price, goodPrice.price);
     }
 
     @Override
