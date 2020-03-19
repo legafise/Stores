@@ -8,9 +8,9 @@ import java.util.List;
 public interface GoodPriceDao {
     void add(GoodPrice goodPrice) throws DaoStoreException;
 
-    List<GoodPrice> getAll() throws DaoStoreException;
+    List<GoodPrice> findAll() throws DaoStoreException;
 
-    GoodPrice getByCountryAndGood(long countryId, long goodId) throws DaoStoreException;
+    GoodPrice findByCountryAndGood(long countryId, long goodId) throws DaoStoreException;
 
     void update(long countryId, long goodId, GoodPrice goodPrice) throws DaoStoreException;
 
