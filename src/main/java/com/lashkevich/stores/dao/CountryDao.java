@@ -8,9 +8,9 @@ import java.util.List;
 public interface CountryDao {
     void add(Country country) throws DaoStoreException;
 
-    List<Country> getAll() throws DaoStoreException;
+    List<Country> findAll() throws DaoStoreException;
 
-    Country getById(long id) throws DaoStoreException;
+    Country findById(long id) throws DaoStoreException;
 
     void update(Country country) throws DaoStoreException;
 

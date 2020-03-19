@@ -13,8 +13,8 @@ import java.util.List;
 
 public class CoutryDaoImpl implements CountryDao {
     private static final String ADD_COUNTRY_SQL = "INSERT INTO countries (id, name) VALUES (?, ?);";
-    private static final String FIND_ALL_COUNTRIES_SQL = "SELECT id, name FROM countries;";
-    private static final String FIND_COUNTRY_BY_ID_SQL = "SELECT id, name FROM countries WHERE id = ?;";
+    private static final String FIND_ALL_COUNTRIES_SQL = "SELECT country_id, country_name FROM countries;";
+    private static final String FIND_COUNTRY_BY_ID_SQL = "SELECT country_id, country_name FROM countries WHERE id = ?;";
     private static final String DELETE_COUNTRY_BY_ID_SQL = "DELETE FROM countries WHERE id = ?;";
     private static final String UPDATE_COUNTRY_SQL = "UPDATE countries SET name = ? WHERE id = ?;";
 
@@ -31,7 +31,7 @@ public class CoutryDaoImpl implements CountryDao {
     }
 
     @Override
-    public List<Country> getAll() throws DaoStoreException {
+    public List<Country> findAll() throws DaoStoreException {
         try (Connection connection = ConnectionUtil.getConnection();
              Statement statement = connection.createStatement()) {
             List<Country> countries = new ArrayList<>();
@@ -48,7 +48,7 @@ public class CoutryDaoImpl implements CountryDao {
     }
 
     @Override
-    public Country getById(long id) throws DaoStoreException {
+    public Country findById(long id) throws DaoStoreException {
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_COUNTRY_BY_ID_SQL)) {
             preparedStatement.setLong(1, id);
