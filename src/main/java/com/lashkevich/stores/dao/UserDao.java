@@ -8,9 +8,9 @@ import java.util.List;
 public interface UserDao {
     void add(User user) throws DaoStoreException;
 
-    List<User> getAll() throws DaoStoreException;
+    List<User> findAll() throws DaoStoreException;
 
-    User getById(long id) throws DaoStoreException;
+    User findById(long id) throws DaoStoreException;
 
     void update(User user) throws DaoStoreException;
 
