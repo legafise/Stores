@@ -8,9 +8,9 @@ import java.util.List;
 public interface RoleDao {
     void add(Role role) throws DaoStoreException;
 
-    List<Role> getAll() throws DaoStoreException;
+    List<Role> findAll() throws DaoStoreException;
 
-    Role getById(long id) throws DaoStoreException;
+    Role findById(long id) throws DaoStoreException;
 
     void update(Role role) throws DaoStoreException;
 

@@ -13,8 +13,8 @@ import java.util.List;
 
 public class RoleDaoImpl implements RoleDao {
     private static final String ADD_ROLE_SQL = "INSERT INTO roles (id, name) VALUES (?, ?);";
-    private static final String FIND_ALL_ROLES_SQL = "SELECT id, name FROM roles;";
-    private static final String FIND_ROLE_BY_ID_SQL = "SELECT id, name FROM roles WHERE id = ?;";
+    private static final String FIND_ALL_ROLES_SQL = "SELECT id AS role_id, name AS role_name FROM roles;";
+    private static final String FIND_ROLE_BY_ID_SQL = "SELECT id AS role_id, name AS role_name  FROM roles WHERE id = ?;";
     private static final String DELETE_ROLE_BY_ID_SQL = "DELETE FROM roles WHERE id = ?;";
     private static final String UPDATE_ROLE_SQL = "UPDATE roles SET name = ? WHERE id = ?;";
 
@@ -31,7 +31,7 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    public List<Role> getAll() throws DaoStoreException {
+    public List<Role> findAll() throws DaoStoreException {
         try (Connection connection = ConnectionUtil.getConnection();
              Statement statement = connection.createStatement()) {
             List<Role> roles = new ArrayList<>();
@@ -48,7 +48,7 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    public Role getById(long id) throws DaoStoreException {
+    public Role findById(long id) throws DaoStoreException {
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_ROLE_BY_ID_SQL)) {
             preparedStatement.setLong(1, id);
