@@ -13,8 +13,10 @@ import java.util.List;
 
 public class GoodDaoImpl implements GoodDao {
     private static final String ADD_GOOD_SQL = "INSERT INTO goods (id, name, summary, description) VALUES (?, ?, ?, ?);";
-    private static final String FIND_ALL_GOODS_SQL = "SELECT id, name, summary, description FROM goods;";
-    private static final String FIND_GOOD_BY_ID_SQL = "SELECT id, name, summary, description FROM goods WHERE id = ?;";
+    private static final String FIND_ALL_GOODS_SQL = "SELECT goods.id AS good_id, goods.name AS good_name, goods.summary AS" +
+            " good_summary, goods.description AS good_description FROM goods;";
+    private static final String FIND_GOOD_BY_ID_SQL = "SELECT goods.id AS good_id, goods.name AS good_name, goods.summary AS" +
+            " good_summary, goods.description AS good_description FROM goods WHERE id = ?;";
     private static final String UPDATE_GOOD_SQL = "UPDATE gods SET name = ?, summary = ?, description = ? WHERE id = ?;";
     private static final String DELETE_GOOD_BY_ID_SQL = "DELETE FROM gods WHERE id = ?;";
 
@@ -33,7 +35,7 @@ public class GoodDaoImpl implements GoodDao {
     }
 
     @Override
-    public List<Good> getAll() throws DaoStoreException {
+    public List<Good> findAll() throws DaoStoreException {
         try (Connection connection = ConnectionUtil.getConnection();
              Statement statement = connection.createStatement()) {
             List<Good> goods = new ArrayList<>();
@@ -50,7 +52,7 @@ public class GoodDaoImpl implements GoodDao {
     }
 
     @Override
-    public Good getById(long id) throws DaoStoreException {
+    public Good findById(long id) throws DaoStoreException {
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_GOOD_BY_ID_SQL)) {
             preparedStatement.setLong(1, id);
