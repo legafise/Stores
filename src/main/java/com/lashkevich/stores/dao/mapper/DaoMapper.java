@@ -45,8 +45,6 @@ public class DaoMapper {
 
     public static User mapUser(ResultSet resultSet) throws SQLException {
         User user = new User();
-        Map<Good, Integer> goods = new HashMap<>();
-        user.setBasket(new Basket(goods));
         while (resultSet.next()) {
             if (user.getId() != resultSet.getLong(USER_ID) && user.getId() != 0) {
                 resultSet.previous();
@@ -56,8 +54,11 @@ public class DaoMapper {
                 fillUserData(resultSet, user);
             }
 
-            goods.put(mapGood(resultSet), resultSet.getInt(QUANTITY));
+            if (resultSet.getString(GOOD_NAME) != null) {
+                user.getBasket().getGoods().put(mapGood(resultSet), resultSet.getInt(QUANTITY));
+            }
         }
+
         return user;
     }
 
@@ -82,6 +83,7 @@ public class DaoMapper {
         Basket basket = new Basket();
         Map<Good, Integer> goods = new HashMap<>();
         goods.put(mapGood(resultSet), resultSet.getInt(QUANTITY));
+        basket.setGoods(goods);
         return basket;
     }
 
