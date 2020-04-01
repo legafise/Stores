@@ -6,13 +6,13 @@ import com.lashkevich.stores.exception.DaoStoreException;
 import java.util.List;
 
 public interface CountryDao {
-    void add(Country country) throws DaoStoreException;
+    boolean add(Country country) throws DaoStoreException;
 
     List<Country> findAll() throws DaoStoreException;
 
     Country findById(long id) throws DaoStoreException;
 
-    void update(Country country) throws DaoStoreException;
+    boolean update(Country country) throws DaoStoreException;
 
-    void remove(long id) throws DaoStoreException;
+    boolean remove(long id) throws DaoStoreException;
 }

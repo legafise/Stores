@@ -1,12 +1,13 @@
 package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.UserDao;
+import com.lashkevich.stores.dao.mapper.DaoMapper;
 import com.lashkevich.stores.entity.User;
 import com.lashkevich.stores.exception.ConnectionStoreException;
 import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.dao.mapper.DaoMapper;
-import com.lashkevich.stores.util.connection.ConnectionUtil;
 import com.lashkevich.stores.util.converter.DateConverter;
+import com.lashkevich.stores.util.provider.ConnectionProvider;
+import com.lashkevich.stores.util.provider.impl.ConnectionProviderImpl;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,11 +34,21 @@ public class UserDaoImpl implements UserDao {
     private static final String UPDATE_USER_BY_ID_SQL = "UPDATE users SET name = ?, surname = ?, login = ?, password = ?," +
             " email = ?, birth_date = ?, role_id = ?, city_id = ? WHERE id = ?;";
 
+    private ConnectionProvider connectionProvider;
+
+    public UserDaoImpl() {
+        connectionProvider = new ConnectionProviderImpl();
+    }
+
+    public void setConnectionProvider(ConnectionProvider connectionProvider) {
+        this.connectionProvider = connectionProvider;
+    }
 
     @Override
-    public void add(User user) throws DaoStoreException {
-        try (Connection connection = ConnectionUtil.getConnection();
+    public boolean add(User user) throws DaoStoreException {
+        try (Connection connection = connectionProvider.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER_SQL)) {
+            connection.setAutoCommit(connectionProvider.getCommitStatus());
             preparedStatement.setLong(1, user.getId());
             preparedStatement.setString(2, user.getName());
             preparedStatement.setString(3, user.getSurname());
@@ -47,7 +58,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setDate(7, DateConverter.convertLocalDateToDate(user.getBirthDate()));
             preparedStatement.setLong(8, user.getRole().getId());
             preparedStatement.setLong(9, user.getCity().getId());
-            preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate() == 1;
         } catch (ConnectionStoreException | SQLException e) {
             throw new DaoStoreException(e);
         }
@@ -55,7 +66,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() throws DaoStoreException {
-        try (Connection connection = ConnectionUtil.getConnection();
+        try (Connection connection = connectionProvider.getConnection();
              Statement statement = connection.createStatement()) {
             List<User> users = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery(FIND_ALL_USERS_SQL);
@@ -72,7 +83,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findById(long id) throws DaoStoreException {
-        try (Connection connection = ConnectionUtil.getConnection();
+        try (Connection connection = connectionProvider.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_ID_SQL)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -83,9 +94,10 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void update(User user) throws DaoStoreException {
-        try (Connection connection = ConnectionUtil.getConnection();
+    public boolean update(User user) throws DaoStoreException {
+        try (Connection connection = connectionProvider.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_BY_ID_SQL)) {
+            connection.setAutoCommit(connectionProvider.getCommitStatus());
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setString(3, user.getLogin());
@@ -95,18 +107,19 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setLong(7, user.getRole().getId());
             preparedStatement.setLong(8, user.getCity().getId());
             preparedStatement.setLong(9, user.getId());
-            preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate() == 1;
         } catch (SQLException | ConnectionStoreException e) {
             throw new DaoStoreException(e);
         }
     }
 
     @Override
-    public void remove(long id) throws DaoStoreException {
-        try (Connection connection = ConnectionUtil.getConnection();
+    public boolean remove(long id) throws DaoStoreException {
+        try (Connection connection = connectionProvider.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_BY_ID_SQL)) {
+            connection.setAutoCommit(connectionProvider.getCommitStatus());
             preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
+            return preparedStatement.executeUpdate() == 1;
         } catch (ConnectionStoreException | SQLException e) {
             throw new DaoStoreException(e);
         }

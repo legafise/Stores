@@ -6,13 +6,13 @@ import com.lashkevich.stores.exception.DaoStoreException;
 import java.util.List;
 
 public interface CityDao {
-    void add(City city) throws DaoStoreException;
+    boolean add(City city) throws DaoStoreException;
 
     List<City> findAll() throws DaoStoreException;
 
     City findById(long id) throws DaoStoreException;
 
-    void update(City city) throws DaoStoreException;
+    boolean update(City city) throws DaoStoreException;
 
-    void remove(long id) throws DaoStoreException;
+    boolean remove(long id) throws DaoStoreException;
 }

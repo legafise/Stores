@@ -6,13 +6,13 @@ import com.lashkevich.stores.exception.DaoStoreException;
 import java.util.List;
 
 public interface RoleDao {
-    void add(Role role) throws DaoStoreException;
+    boolean add(Role role) throws DaoStoreException;
 
     List<Role> findAll() throws DaoStoreException;
 
     Role findById(long id) throws DaoStoreException;
 
-    void update(Role role) throws DaoStoreException;
+    boolean update(Role role) throws DaoStoreException;
 
-    void remove(long id) throws DaoStoreException;
+    boolean remove(long id) throws DaoStoreException;
 }

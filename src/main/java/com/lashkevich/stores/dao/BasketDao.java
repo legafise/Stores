@@ -6,13 +6,13 @@ import com.lashkevich.stores.exception.DaoStoreException;
 import java.util.List;
 
 public interface BasketDao {
-    void add(Basket basket, long userId) throws DaoStoreException;
+    boolean add(Basket basket, long userId) throws DaoStoreException;
 
     List<Basket> findAll() throws DaoStoreException;
 
-    Basket findByUser(long id) throws DaoStoreException;
+    List<Basket> findByUser(long id) throws DaoStoreException;
 
-    void update(Basket basket, long userId) throws DaoStoreException;
+    boolean update(Basket basket, long userId) throws DaoStoreException;
 
-    void remove(long userId) throws DaoStoreException;
+    boolean remove(long userId) throws DaoStoreException;
 }
