@@ -1,6 +1,7 @@
 package com.lashkevich.stores.entity;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class User {
@@ -16,6 +17,8 @@ public class User {
     private Basket basket;
 
     public User() {
+        this.basket = new Basket();
+        basket.setGoods(new HashMap<>());
     }
 
     public User(long id, String name, String surname, String login, String password, String email, LocalDate birthDate, Role role, City city, Basket basket) {
@@ -29,6 +32,20 @@ public class User {
         this.role = role;
         this.city = city;
         this.basket = basket;
+    }
+
+    public User(long id, String name, String surname, String login, String password, String email, LocalDate birthDate, Role role, City city) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.role = role;
+        this.city = city;
+        this.basket = new Basket();
+        basket.setGoods(new HashMap<>());
     }
 
     public long getId() {
