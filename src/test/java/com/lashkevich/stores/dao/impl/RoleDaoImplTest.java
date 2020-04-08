@@ -1,4 +1,4 @@
-package com.lashkevich.stores.test;
+package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.RoleDao;
 import com.lashkevich.stores.dao.impl.RoleDaoImpl;
@@ -12,7 +12,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoleDaoTest {
+public class RoleDaoImplTest {
     private Role firstExpectedRole;
     private Role secondExpectedRole;
     private Role thirdExpectedRole;
@@ -29,7 +29,7 @@ public class RoleDaoTest {
         firstChangeExpectedRole = new Role(1, "Administrator");
 
         roleDao = new RoleDaoImpl();
-        ((RoleDaoImpl) roleDao).setConnectionProvider(new TestConnectionProviderImpl());
+        roleDao.setConnectionProvider(new TestConnectionProviderImpl());
     }
 
     @Test

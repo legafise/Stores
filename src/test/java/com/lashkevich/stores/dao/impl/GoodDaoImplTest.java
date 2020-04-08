@@ -1,4 +1,4 @@
-package com.lashkevich.stores.test;
+package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.GoodDao;
 import com.lashkevich.stores.dao.impl.GoodDaoImpl;
@@ -12,7 +12,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoodDaoTest {
+public class GoodDaoImplTest {
     private Good firstExpectedGood;
     private Good secondExpectedZGood;
     private Good thirdExpectedGood;
@@ -29,7 +29,7 @@ public class GoodDaoTest {
         firstChangeExpectedGood = new Good(22, "Apple", "ios", "Apple");
 
         goodDao = new GoodDaoImpl();
-        ((GoodDaoImpl) goodDao).setConnectionProvider(new TestConnectionProviderImpl());
+        goodDao.setConnectionProvider(new TestConnectionProviderImpl());
     }
 
     @Test

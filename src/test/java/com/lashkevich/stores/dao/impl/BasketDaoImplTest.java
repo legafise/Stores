@@ -1,4 +1,4 @@
-package com.lashkevich.stores.test;
+package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.BasketDao;
 import com.lashkevich.stores.dao.impl.BasketDaoImpl;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BasketDaoTest {
+public class BasketDaoImplTest {
     private Basket firstExpectedBasket;
     private Basket secondExpectedBasket;
     private Basket thirdExpectedBasket;
@@ -47,7 +47,7 @@ public class BasketDaoTest {
         fifthExpectedBasket = new Basket(fifthGoods);
 
         basketDao = new BasketDaoImpl();
-        ((BasketDaoImpl) basketDao).setConnectionProvider(new TestConnectionProviderImpl());
+         basketDao.setConnectionProvider(new TestConnectionProviderImpl());
     }
 
     @Test
