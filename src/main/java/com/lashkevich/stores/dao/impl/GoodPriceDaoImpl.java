@@ -32,6 +32,7 @@ public class GoodPriceDaoImpl implements GoodPriceDao {
         connectionProvider = new ConnectionProviderImpl();
     }
 
+    @Override
     public void setConnectionProvider(ConnectionProvider connectionProvider) {
         this.connectionProvider = connectionProvider;
     }

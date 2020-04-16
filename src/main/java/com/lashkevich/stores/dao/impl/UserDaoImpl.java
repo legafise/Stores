@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
-    private static final String ADD_USER_SQL = "INSERT INTO users (id, name, surname, login, password, email, " +
-            "birth_date, role_id, city_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    private static final String ADD_USER_SQL = "INSERT INTO users (name, surname, login, password, email, " +
+            "birth_date, role_id, city_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String FIND_ALL_USERS_SQL = "SELECT users.id AS user_id, users.name AS user_name, users.surname, users.login, users.password," +
             " users.email, users.birth_date, users.role_id AS primary_key_role_id, users.city_id AS primary_key_city_id," +
             " roles.id AS role_id, roles.name AS role_name, cities.id AS city_id, cities.name AS city_name, cities.country_id AS" +
@@ -40,6 +40,7 @@ public class UserDaoImpl implements UserDao {
         connectionProvider = new ConnectionProviderImpl();
     }
 
+    @Override
     public void setConnectionProvider(ConnectionProvider connectionProvider) {
         this.connectionProvider = connectionProvider;
     }
@@ -49,15 +50,14 @@ public class UserDaoImpl implements UserDao {
         try (Connection connection = connectionProvider.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER_SQL)) {
             connection.setAutoCommit(connectionProvider.getCommitStatus());
-            preparedStatement.setLong(1, user.getId());
-            preparedStatement.setString(2, user.getName());
-            preparedStatement.setString(3, user.getSurname());
-            preparedStatement.setString(4, user.getLogin());
-            preparedStatement.setString(5, user.getPassword());
-            preparedStatement.setString(6, user.getEmail());
-            preparedStatement.setDate(7, DateConverter.convertLocalDateToDate(user.getBirthDate()));
-            preparedStatement.setLong(8, user.getRole().getId());
-            preparedStatement.setLong(9, user.getCity().getId());
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getSurname());
+            preparedStatement.setString(3, user.getLogin());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(5, user.getEmail());
+            preparedStatement.setDate(6, DateConverter.convertLocalDateToDate(user.getBirthDate()));
+            preparedStatement.setLong(7, user.getRole().getId());
+            preparedStatement.setLong(8, user.getCity().getId());
             return preparedStatement.executeUpdate() == 1;
         } catch (ConnectionStoreException | SQLException e) {
             throw new DaoStoreException(e);

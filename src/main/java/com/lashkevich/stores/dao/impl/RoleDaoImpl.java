@@ -25,6 +25,7 @@ public class RoleDaoImpl implements RoleDao {
         connectionProvider = new ConnectionProviderImpl();
     }
 
+    @Override
     public void setConnectionProvider(ConnectionProvider connectionProvider) {
         this.connectionProvider = connectionProvider;
     }
