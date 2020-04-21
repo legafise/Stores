@@ -24,7 +24,7 @@ public class CityValidator {
         }
 
         for (Country countries : countryList) {
-            if (country.getId() == countries.getId() && country.getName().equals(countries.getName())) {
+            if (country.equals(countries)) {
                 return true;
             }
         }
