@@ -17,7 +17,7 @@ public class GoodPriceDaoImpl implements GoodPriceDao {
     private static final String FIND_ALL_PRICES_SQL = "SELECT good_prices.country_id AS primary_key_country_id, good_prices.good_id" +
             " AS primary_key_good_id, good_prices.price, countries.id AS country_id, countries.name AS country_name, goods.id AS" +
             " good_id, goods.name AS good_name, goods.summary AS good_summary, goods.description AS good_description FROM " +
-            "good_prices INNER JOIN countries ON good_prices.country_id = countries.id INNER JOIN goods ON good_prices.good_id = goods.id;";
+            "good_prices INNER JOIN countries ON good_prices.country_id = countries.id INNER JOIN goods ON good_prices.good_id = goods.id ORDER BY country_id;";
     private static final String FIND_PRICE_BY_COUNTRY_AND_GOOD_SQL = "SELECT good_prices.country_id AS primary_key_country_id, good_prices.good_id" +
             " AS primary_key_good_id, good_prices.price, countries.id AS country_id, countries.name AS country_name, goods.id AS" +
             " good_id, goods.name AS good_name, goods.summary AS good_summary, goods.description AS good_description FROM " +
