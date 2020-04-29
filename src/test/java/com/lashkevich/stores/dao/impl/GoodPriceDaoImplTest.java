@@ -41,8 +41,8 @@ public class GoodPriceDaoImplTest {
         List<GoodPrice> expectedGoodPrices = new ArrayList<>();
         expectedGoodPrices.add(firstExpectedGoodPrice);
         expectedGoodPrices.add(secondExpectedGoodPrice);
-        expectedGoodPrices.add(thirdExpectedGoodPrice);
         expectedGoodPrices.add(fourthExpectedGoodPrice);
+        expectedGoodPrices.add(thirdExpectedGoodPrice);
         Assert.assertEquals(expectedGoodPrices, goodPriceDao.findAll());
     }
 
