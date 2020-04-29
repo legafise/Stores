@@ -1,53 +1,18 @@
 package com.lashkevich.stores.util.validator;
 
-import com.lashkevich.stores.entity.Country;
-import com.lashkevich.stores.entity.Good;
 import com.lashkevich.stores.entity.GoodPrice;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class GoodPriceValidator {
-    private static final String minPrice = "0.1";
+    private static final String MIN_PRICE = "0.1";
 
-    public static boolean validate(GoodPrice goodPrice, List<Country> countryList, List<Good> goodList) {
-        return validatePrice(goodPrice.getPrice()) && validateCountry(goodPrice.getCountry(), countryList) &&
-                validateGood(goodPrice.getGood(), goodList);
+    public static boolean validate(GoodPrice goodPrice) {
+        return goodPrice != null && validatePrice(goodPrice.getPrice()) && CountryValidator.validate(goodPrice.getCountry()) &&
+                GoodValidator.validate(goodPrice.getGood());
     }
 
     private static boolean validatePrice(BigDecimal price) {
-        if (price == null) {
-            return false;
-        }
-
-        return price.compareTo(new BigDecimal(minPrice)) >= 0;
-    }
-
-    private static boolean validateCountry(Country country, List<Country> countryList) {
-        if (country == null) {
-            return false;
-        }
-
-        for (Country countries : countryList) {
-            if (country.equals(countries)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static boolean validateGood(Good good, List<Good> goodList) {
-        if (good == null) {
-            return false;
-        }
-
-        for (Good goods : goodList) {
-            if (good.equals(goods)) {
-                return true;
-            }
-        }
-
-        return false;
+        return price != null && price.compareTo(new BigDecimal(MIN_PRICE)) >= 0;
     }
 }

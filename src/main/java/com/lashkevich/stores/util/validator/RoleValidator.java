@@ -4,14 +4,10 @@ import com.lashkevich.stores.entity.Role;
 
 public class RoleValidator {
     public static boolean validate(Role role) {
-        return validateName(role.getName());
+        return role != null && validateName(role.getName());
     }
 
     private static boolean validateName(String name) {
-        if (name == null) {
-            return false;
-        }
-
-        return name.length() >= 1 && name.length() <= 45;
+        return name != null && (name.length() >= 1 && name.length() <= 45);
     }
 }

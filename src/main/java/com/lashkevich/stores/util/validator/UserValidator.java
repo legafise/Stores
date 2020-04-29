@@ -4,69 +4,44 @@ import com.lashkevich.stores.entity.City;
 import com.lashkevich.stores.entity.User;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class UserValidator {
-    public static boolean validate(User user, List<City> cityList) {
-        return validateName(user.getName()) && validateSurname(user.getSurname()) && validateLogin(user.getLogin()) &&
+    public static final String EMAIL_PATTERN = "^[a-zA-Z0-9А-Яа-я](([a-zA-Z0-9А-Яа-я])|([^a-zA-Z0-9А-Яа-я@][a-zA-Z0-9А-Яа-я]))" +
+            "+@[^@.](([a-zA-Z0-9А-Яа-я])|([^a-zA-Z0-9А-Яа-я@!#$%&'*+/=?^_`{|}~][a-zA-Z0-9А-Яа-я]))+[.][^@.!#$%&'*+-/=?^_`{|}~]+$";
+
+    public static boolean validate(User user) {
+        return user != null && validateName(user.getName()) && validateSurname(user.getSurname()) && validateLogin(user.getLogin()) &&
                 validatePassword(user.getPassword()) && validateBirthDate(user.getBirthDate()) &&
-                validateEmail(user.getEmail()) && validateCity(user.getCity(), cityList);
+                validateEmail(user.getEmail()) && validateCity(user.getCity()) && BasketValidator.validate(user.getBasket());
     }
 
     private static boolean validateName(String name) {
-        if (name == null) {
-            return false;
-        }
-        return name.length() >= 2 && name.length() <= 45;
+        return name != null && name.length() >= 2 && name.length() <= 45;
     }
 
-    public static boolean validateEmail(String email) {
-        if (email == null || email.length() > 45) {
-            return false;
-        } return Pattern.matches("^[a-zA-Z0-9А-Яа-я](([a-zA-Z0-9А-Яа-я])|([^a-zA-Z0-9А-Яа-я@][a-zA-Z0-9А-Яа-я]))+@[^@.](([a-zA-Z0-9А-Яа-я])|([^a-zA-Z0-9А-Яа-я@!#$%&'*+/=?^_`{|}~][a-zA-Z0-9А-Яа-я]))+[.][^@.!#$%&'*+-/=?^_`{|}~]+$", email);
+    private static boolean validateEmail(String email) {
+        return email != null && email.length() <= 45 && Pattern.matches(EMAIL_PATTERN, email);
     }
 
     private static boolean validateSurname(String surname) {
-        if (surname == null) {
-            return false;
-        }
-        return surname.length() >= 2 && surname.length() <= 45;
+        return surname != null && surname.length() >= 2 && surname.length() <= 45;
     }
 
     private static boolean validateLogin(String login) {
-        if (login == null) {
-            return false;
-        }
-        return login.length() >= 2 && login.length() <= 45;
+        return login != null && login.length() >= 2 && login.length() <= 45;
     }
 
     private static boolean validatePassword(String password) {
-        if (password == null) {
-            return false;
-        }
-        return password.length() >= 4 && password.length() <= 45;
+        return password != null && password.length() >= 4 && password.length() <= 45;
     }
 
 
     private static boolean validateBirthDate(LocalDate birthDate) {
-        if (birthDate == null || birthDate.getYear() > 2004) {
-            return false;
-        }
-        return birthDate.getYear() >= 1920;
+        return birthDate != null && birthDate.getYear() <= 2004 && birthDate.getYear() >= 1920;
     }
 
-    private static boolean validateCity(City city, List<City> cityList) {
-        if (city == null) {
-            return false;
-        }
-
-        for (City cities : cityList) {
-            if (city.equals(cities)) {
-                return true;
-            }
-        }
-
-        return false;
+    private static boolean validateCity(City city) {
+        return CityValidator.validate(city);
     }
 }
