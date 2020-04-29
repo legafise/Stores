@@ -3,99 +3,32 @@ package com.lashkevich.stores.service;
 import com.lashkevich.stores.dao.CountryDao;
 import com.lashkevich.stores.dao.GoodDao;
 import com.lashkevich.stores.dao.GoodPriceDao;
-import com.lashkevich.stores.dao.impl.CountryDaoImpl;
-import com.lashkevich.stores.dao.impl.GoodDaoImpl;
-import com.lashkevich.stores.dao.impl.GoodPriceDaoImpl;
 import com.lashkevich.stores.entity.GoodPrice;
-import com.lashkevich.stores.exception.DaoStoreException;
 import com.lashkevich.stores.exception.ServiceStoreException;
-import com.lashkevich.stores.util.checker.GoodPriceDuplicationsChecker;
-import com.lashkevich.stores.util.validator.GoodPriceValidator;
 
 import java.util.List;
 
-public class GoodPriceService {
-    private GoodPriceDao goodPriceDao;
-    private GoodDao goodDao;
-    private CountryDao countryDao;
+public interface GoodPriceService {
 
+    GoodPriceDao getGoodPriceDao();
 
-    public GoodPriceService() {
-        goodPriceDao = new GoodPriceDaoImpl();
-        goodDao = new GoodDaoImpl();
-        countryDao = new CountryDaoImpl();
-    }
+    void setGoodPriceDao(GoodPriceDao goodPriceDao);
 
-    public GoodPriceDao getGoodPriceDao() {
-        return goodPriceDao;
-    }
+    GoodDao getGoodDao();
 
-    public void setGoodPriceDao(GoodPriceDao goodPriceDao) {
-        this.goodPriceDao = goodPriceDao;
-    }
+    void setGoodDao(GoodDao goodDao);
 
-    public GoodDao getGoodDao() {
-        return goodDao;
-    }
+    CountryDao getCountryDao();
 
-    public void setGoodDao(GoodDao goodDao) {
-        this.goodDao = goodDao;
-    }
+    void setCountryDao(CountryDao countryDao);
 
-    public CountryDao getCountryDao() {
-        return countryDao;
-    }
+    boolean addGoodPrice(GoodPrice goodPrice) throws ServiceStoreException;
 
-    public void setCountryDao(CountryDao countryDao) {
-        this.countryDao = countryDao;
-    }
+    List<GoodPrice> findAllGoodPrices() throws ServiceStoreException ;
 
-    public boolean addGoodPrice(GoodPrice goodPrice) throws ServiceStoreException {
-        try {
-            if (GoodPriceValidator.validate(goodPrice, countryDao.findAll(), goodDao.findAll()) && GoodPriceDuplicationsChecker.addCheck(goodPrice, goodPriceDao.findAll())) {
-                return goodPriceDao.add(goodPrice);
-            }
+    GoodPrice findGoodPriceByCountryAndGoodId(String countryId, String goodId) throws ServiceStoreException;
 
-            return false;
-        } catch (DaoStoreException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
+    boolean removeGoodPriceByCountryAndGoodId(String countryId, String goodId) throws ServiceStoreException;
 
-    public List<GoodPrice> findAllGoodPrices() throws ServiceStoreException {
-        try {
-            return goodPriceDao.findAll();
-        } catch (DaoStoreException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
-
-    public GoodPrice findGoodPriceByCountryAndGoodId(String countryId, String goodId) throws ServiceStoreException {
-        try {
-            return goodPriceDao.findByCountryAndGood(Long.parseLong(countryId), Long.parseLong(goodId));
-        } catch (DaoStoreException | NumberFormatException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
-
-    public boolean removeGoodPriceByCountryAndGoodId(String countryId, String goodId) throws ServiceStoreException {
-        try {
-            return goodPriceDao.remove(Long.parseLong(countryId), Long.parseLong(goodId));
-        } catch (DaoStoreException | NumberFormatException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
-
-    public boolean updateGoodPriceByCountryAndGoodId(String countryId, String goodId, GoodPrice goodPrice) throws ServiceStoreException {
-        try {
-            if (GoodPriceValidator.validate(goodPrice, countryDao.findAll(), goodDao.findAll()) &&
-                    GoodPriceDuplicationsChecker.updateCheck(goodPrice, goodPriceDao.findAll(), Long.parseLong(goodId), Long.parseLong(countryId))) {
-                return goodPriceDao.update(Long.parseLong(countryId), Long.parseLong(goodId), goodPrice);
-            }
-
-            return false;
-        } catch (DaoStoreException | NumberFormatException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
+    boolean updateGoodPriceByCountryAndGoodId(String countryId, String goodId, GoodPrice goodPrice) throws ServiceStoreException;
 }

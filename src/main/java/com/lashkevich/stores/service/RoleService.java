@@ -1,75 +1,24 @@
 package com.lashkevich.stores.service;
 
 import com.lashkevich.stores.dao.RoleDao;
-import com.lashkevich.stores.dao.impl.RoleDaoImpl;
 import com.lashkevich.stores.entity.Role;
-import com.lashkevich.stores.exception.DaoStoreException;
 import com.lashkevich.stores.exception.ServiceStoreException;
-import com.lashkevich.stores.util.checker.RoleDuplicationsChecker;
-import com.lashkevich.stores.util.validator.RoleValidator;
 
 import java.util.List;
 
-public class RoleService {
-    private RoleDao roleDao;
+public interface RoleService {
 
-    public RoleService() {
-        roleDao = new RoleDaoImpl();
-    }
+    RoleDao getRoleDao();
 
-    public RoleDao getRoleDao() {
-        return roleDao;
-    }
+    void setRoleDao(RoleDao roleDao);
 
-    public void setRoleDao(RoleDao roleDao) {
-        this.roleDao = roleDao;
-    }
+    boolean addRole(Role role) throws ServiceStoreException;
 
-    public boolean addRole(Role role) throws ServiceStoreException {
-        try {
-            if (RoleValidator.validate(role) && RoleDuplicationsChecker.check(role, roleDao.findAll())) {
-                return roleDao.add(role);
-            }
+    List<Role> findAllRoles() throws ServiceStoreException;
 
-            return false;
-        } catch (DaoStoreException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
+    Role findRoleById(String id) throws ServiceStoreException;
 
-    public List<Role> findAllRoles() throws ServiceStoreException {
-        try {
-            return roleDao.findAll();
-        } catch (DaoStoreException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
+    boolean removeRole(String id) throws ServiceStoreException;
 
-    public Role findRoleById(String id) throws ServiceStoreException {
-        try {
-            return roleDao.findById(Long.parseLong(id));
-        } catch (DaoStoreException | NumberFormatException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
-
-    public boolean removeRole(String id) throws ServiceStoreException {
-        try {
-            return roleDao.remove(Long.parseLong(id));
-        } catch (DaoStoreException | NumberFormatException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
-
-    public boolean updateRole(Role role) throws ServiceStoreException {
-        try {
-            if (RoleValidator.validate(role) && RoleDuplicationsChecker.check(role, roleDao.findAll())) {
-                return roleDao.update(role);
-            }
-
-            return false;
-        } catch (DaoStoreException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
+    boolean updateRole(Role role) throws ServiceStoreException;
 }

@@ -3,98 +3,31 @@ package com.lashkevich.stores.service;
 import com.lashkevich.stores.dao.BasketDao;
 import com.lashkevich.stores.dao.GoodDao;
 import com.lashkevich.stores.dao.UserDao;
-import com.lashkevich.stores.dao.impl.BasketDaoImpl;
-import com.lashkevich.stores.dao.impl.GoodDaoImpl;
-import com.lashkevich.stores.dao.impl.UserDaoImpl;
 import com.lashkevich.stores.entity.Basket;
-import com.lashkevich.stores.exception.DaoStoreException;
 import com.lashkevich.stores.exception.ServiceStoreException;
-import com.lashkevich.stores.util.checker.BasketDuplicationsChecker;
-import com.lashkevich.stores.util.validator.BasketValidator;
 
 import java.util.List;
 
-public class BasketService {
-    private BasketDao basketDao;
-    private GoodDao goodDao;
-    private UserDao userDao;
+public interface BasketService {
+    BasketDao getBasketDao();
 
-    public BasketService() {
-        basketDao = new BasketDaoImpl();
-        goodDao = new GoodDaoImpl();
-        userDao = new UserDaoImpl();
-    }
+    void setBasketDao(BasketDao basketDao);
 
-    public BasketDao getBasketDao() {
-        return basketDao;
-    }
+    GoodDao getGoodDao();
 
-    public void setBasketDao(BasketDao basketDao) {
-        this.basketDao = basketDao;
-    }
+    void setGoodDao(GoodDao goodDao);
 
-    public GoodDao getGoodDao() {
-        return goodDao;
-    }
+    UserDao getUserDao();
 
-    public void setGoodDao(GoodDao goodDao) {
-        this.goodDao = goodDao;
-    }
+    void setUserDao(UserDao userDao);
 
-    public UserDao getUserDao() {
-        return userDao;
-    }
+    boolean addBasket(Basket basket, String userId) throws ServiceStoreException;
 
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    List<Basket> findAllBaskets() throws ServiceStoreException;
 
-    public boolean addBasket(Basket basket, String userId) throws ServiceStoreException {
-        try {
-            if (BasketValidator.validate(basket, goodDao.findAll(), Integer.parseInt(userId), userDao.findAll()) &&
-                    BasketDuplicationsChecker.check(basket, basketDao.findByUser(Long.parseLong(userId)))) {
-                return basketDao.add(basket, Long.parseLong(userId));
-            }
+    List<Basket> findBasketByUserId(String userId) throws ServiceStoreException;
 
-            return false;
-        } catch (DaoStoreException | NumberFormatException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
+    boolean removeBasket(String id) throws ServiceStoreException;
 
-    public List<Basket> findAllBaskets() throws ServiceStoreException {
-        try {
-            return basketDao.findAll();
-        } catch (DaoStoreException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
-
-    public List<Basket> findBasketByUserId(String userId) throws ServiceStoreException {
-        try {
-            return basketDao.findByUser(Integer.parseInt(userId));
-        } catch (DaoStoreException | NumberFormatException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
-
-    public boolean removeBasket(String id) throws ServiceStoreException {
-        try {
-            return basketDao.remove(Long.parseLong(id));
-        } catch (DaoStoreException | NumberFormatException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
-
-    public boolean updateBasket(Basket basket, String userId) throws ServiceStoreException {
-        try {
-            if (BasketValidator.validate(basket, goodDao.findAll(), Integer.parseInt(userId), userDao.findAll())) {
-                return basketDao.update(basket, Integer.parseInt(userId));
-            }
-
-            return false;
-        } catch (DaoStoreException | NumberFormatException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
+    boolean updateBasket(Basket basket, String userId) throws ServiceStoreException;
 }

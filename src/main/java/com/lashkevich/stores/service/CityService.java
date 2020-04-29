@@ -2,85 +2,28 @@ package com.lashkevich.stores.service;
 
 import com.lashkevich.stores.dao.CityDao;
 import com.lashkevich.stores.dao.CountryDao;
-import com.lashkevich.stores.dao.impl.CityDaoImpl;
-import com.lashkevich.stores.dao.impl.CountryDaoImpl;
 import com.lashkevich.stores.entity.City;
-import com.lashkevich.stores.exception.DaoStoreException;
 import com.lashkevich.stores.exception.ServiceStoreException;
-import com.lashkevich.stores.util.validator.CityValidator;
 
 import java.util.List;
 
-public class CityService {
-    private CityDao cityDao;
-    private CountryDao countryDao;
+public interface CityService {
 
-    public CityService() {
-        cityDao = new CityDaoImpl();
-        countryDao = new CountryDaoImpl();
-    }
+    CityDao getCityDao();
 
-    public CityDao getCityDao() {
-        return cityDao;
-    }
+    void setCityDao(CityDao cityDao);
 
-    public void setCityDao(CityDao cityDao) {
-        this.cityDao = cityDao;
-    }
+    CountryDao getCountryDao();
 
-    public CountryDao getCountryDao() {
-        return countryDao;
-    }
+    void setCountryDao(CountryDao countryDao);
 
-    public void setCountryDao(CountryDao countryDao) {
-        this.countryDao = countryDao;
-    }
+    boolean addCity(City city) throws ServiceStoreException;
 
-    public boolean addCity(City city) throws ServiceStoreException {
-        try {
-            if (CityValidator.validate(city, countryDao.findAll())) {
-                return cityDao.add(city);
-            }
+    List<City> findAllCities() throws ServiceStoreException;
 
-            return false;
-        } catch (DaoStoreException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
+    City findCityById(String id) throws ServiceStoreException;
 
-    public List<City> findAllCities() throws ServiceStoreException {
-        try {
-            return cityDao.findAll();
-        } catch (DaoStoreException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
+    boolean removeCity(String id) throws ServiceStoreException;
 
-    public City findCityById(String id) throws ServiceStoreException {
-        try {
-            return cityDao.findById(Long.parseLong(id));
-        } catch (DaoStoreException | NumberFormatException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
-
-    public boolean removeCity(String id) throws ServiceStoreException {
-        try {
-            return cityDao.remove(Long.parseLong(id));
-        } catch (DaoStoreException | NumberFormatException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
-
-    public boolean updateCity(City city) throws ServiceStoreException {
-        try {
-            if (CityValidator.validate(city, countryDao.findAll())) {
-                return cityDao.update(city);
-            }
-
-            return false;
-        } catch (DaoStoreException e) {
-            throw new ServiceStoreException(e);
-        }
-    }
+    boolean updateCity(City city) throws ServiceStoreException;
 }
