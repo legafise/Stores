@@ -1,7 +1,6 @@
 package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.BasketDao;
-import com.lashkevich.stores.dao.impl.BasketDaoImpl;
 import com.lashkevich.stores.entity.Basket;
 import com.lashkevich.stores.entity.Good;
 import com.lashkevich.stores.exception.DaoStoreException;

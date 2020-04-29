@@ -1,7 +1,6 @@
 package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.GoodPriceDao;
-import com.lashkevich.stores.dao.impl.GoodPriceDaoImpl;
 import com.lashkevich.stores.entity.Country;
 import com.lashkevich.stores.entity.Good;
 import com.lashkevich.stores.entity.GoodPrice;

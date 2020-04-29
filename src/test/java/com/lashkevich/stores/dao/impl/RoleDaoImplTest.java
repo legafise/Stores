@@ -1,7 +1,6 @@
 package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.RoleDao;
-import com.lashkevich.stores.dao.impl.RoleDaoImpl;
 import com.lashkevich.stores.entity.Role;
 import com.lashkevich.stores.exception.DaoStoreException;
 import com.lashkevich.stores.util.provider.impl.TestConnectionProviderImpl;

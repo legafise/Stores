@@ -1,7 +1,6 @@
 package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.GoodDao;
-import com.lashkevich.stores.dao.impl.GoodDaoImpl;
 import com.lashkevich.stores.entity.Good;
 import com.lashkevich.stores.exception.DaoStoreException;
 import com.lashkevich.stores.util.provider.impl.TestConnectionProviderImpl;
