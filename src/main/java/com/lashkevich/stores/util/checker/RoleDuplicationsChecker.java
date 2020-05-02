@@ -6,8 +6,8 @@ import java.util.List;
 
 public class RoleDuplicationsChecker {
     public static boolean check(Role role, List<Role> roleList) {
-        for (Role roles : roleList) {
-            if (roles.getName().equals(role.getName())) {
+        for (Role currentRole : roleList) {
+            if (currentRole.getName().equals(role.getName())) {
                 return false;
             }
         }

@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDuplicationsChecker {
-    public static boolean addCheck(List<User> usersList, User user) {
-        for (User users : usersList) {
-            if (user.getId() == users.getId() || user.getLogin().equals(users.getLogin()) ||
-                    user.getEmail().equals(users.getEmail())) {
+    public static boolean checkUserAdding(List<User> usersList, User user) {
+        for (User currentUser : usersList) {
+            if (user.getId() == currentUser.getId() || user.getLogin().equals(currentUser.getLogin()) ||
+                    user.getEmail().equals(currentUser.getEmail())) {
                 return false;
             }
         }
@@ -17,12 +17,12 @@ public class UserDuplicationsChecker {
         return true;
     }
 
-    public static boolean updateCheck(List<User> usersList, User user) {
+    public static boolean checkUserUpdating(List<User> usersList, User user) {
         List<User> duplicateUsers = new ArrayList<>();
 
-        for (User users : usersList) {
-            if (user.getLogin().equals(users.getLogin()) || user.getEmail().equals(users.getEmail())) {
-                duplicateUsers.add(users);
+        for (User currentUser : usersList) {
+            if (user.getLogin().equals(currentUser.getLogin()) || user.getEmail().equals(currentUser.getEmail())) {
+                duplicateUsers.add(currentUser);
             }
         }
 
