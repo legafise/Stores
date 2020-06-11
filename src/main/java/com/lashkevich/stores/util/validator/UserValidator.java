@@ -1,6 +1,5 @@
 package com.lashkevich.stores.util.validator;
 
-import com.lashkevich.stores.entity.City;
 import com.lashkevich.stores.entity.User;
 
 import java.time.LocalDate;
@@ -13,7 +12,7 @@ public class UserValidator {
     public static boolean validate(User user) {
         return user != null && validateName(user.getName()) && validateSurname(user.getSurname()) && validateLogin(user.getLogin()) &&
                 validatePassword(user.getPassword()) && validateBirthDate(user.getBirthDate()) &&
-                validateEmail(user.getEmail()) && validateCity(user.getCity()) && BasketValidator.validate(user.getBasket());
+                validateEmail(user.getEmail()) && CityValidator.validate(user.getCity()) && BasketValidator.validate(user.getBasket());
     }
 
     private static boolean validateName(String name) {
@@ -39,9 +38,5 @@ public class UserValidator {
 
     private static boolean validateBirthDate(LocalDate birthDate) {
         return birthDate != null && birthDate.getYear() <= 2004 && birthDate.getYear() >= 1920;
-    }
-
-    private static boolean validateCity(City city) {
-        return CityValidator.validate(city);
     }
 }
