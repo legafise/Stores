@@ -14,6 +14,7 @@ import com.lashkevich.stores.exception.ServiceStoreException;
 import com.lashkevich.stores.service.BasketService;
 import com.lashkevich.stores.util.checker.BasketDuplicationsChecker;
 import com.lashkevich.stores.util.validator.BasketValidator;
+import com.lashkevich.stores.util.validator.GoodValidator;
 
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class BasketServiceImpl implements BasketService {
     public boolean addBasket(Basket basket, String userId) throws ServiceStoreException {
         try {
             if (BasketValidator.validate(basket) && BasketDuplicationsChecker.check(basket, basketDao.findByUser(Long.parseLong(userId))) &&
-                    isGoodCreated(basket, goodDao.findAll()) && isUserCreated(Long.parseLong(userId), userDao.findAll())) {
+                    isValidGood(basket.getGoods()) && isGoodCreated(basket, goodDao.findAll()) && isUserCreated(Long.parseLong(userId), userDao.findAll())) {
                 return basketDao.add(basket, Long.parseLong(userId));
             }
 
@@ -103,8 +104,8 @@ public class BasketServiceImpl implements BasketService {
     @Override
     public boolean updateBasket(Basket basket, String userId) throws ServiceStoreException {
         try {
-            if (BasketValidator.validate(basket) && isUserCreated(Long.parseLong(userId), userDao.findAll())
-                    && isGoodCreated(basket, goodDao.findAll())) {
+            if (BasketValidator.validate(basket) && isUserCreated(Long.parseLong(userId), userDao.findAll()) &&
+                    isValidGood(basket.getGoods()) && isGoodCreated(basket, goodDao.findAll())) {
                 return basketDao.update(basket, Long.parseLong(userId));
             }
 
@@ -117,6 +118,16 @@ public class BasketServiceImpl implements BasketService {
     private static boolean isGoodCreated(Basket basket, List<Good> goodList) {
         for (Map.Entry<Good, Integer> good : basket.getGoods().entrySet()) {
             if (!goodList.contains(good.getKey())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static boolean isValidGood(Map<Good, Integer> goods) {
+        for (Map.Entry<Good, Integer> good : goods.entrySet()) {
+            if (!GoodValidator.validate(good.getKey()) || good.getValue() == 0) {
                 return false;
             }
         }
