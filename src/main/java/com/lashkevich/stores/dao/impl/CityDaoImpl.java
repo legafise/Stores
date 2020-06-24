@@ -27,6 +27,7 @@ public class CityDaoImpl implements CityDao {
         connectionProvider = new ConnectionProviderImpl();
     }
 
+    @Override
     public void setConnectionProvider(ConnectionProvider connectionProvider) {
         this.connectionProvider = connectionProvider;
     }

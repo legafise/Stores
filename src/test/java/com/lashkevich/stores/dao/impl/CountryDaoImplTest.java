@@ -1,7 +1,6 @@
-package com.lashkevich.stores.test;
+package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.CountryDao;
-import com.lashkevich.stores.dao.impl.CoutryDaoImpl;
 import com.lashkevich.stores.entity.Country;
 import com.lashkevich.stores.exception.DaoStoreException;
 import com.lashkevich.stores.util.provider.impl.TestConnectionProviderImpl;
@@ -12,7 +11,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CountryDaoTest {
+public class CountryDaoImplTest {
     private Country firstExpectedCountry;
     private Country secondExpectedCountry;
     private Country thirdExpectedCountry;
@@ -28,8 +27,8 @@ public class CountryDaoTest {
         fourthExpectedCountry = new Country(4, "Ukraine");
         firstChangeExpectedCountry = new Country(1, "Belarussia");
 
-        countryDao = new CoutryDaoImpl();
-        ((CoutryDaoImpl) countryDao).setConnectionProvider(new TestConnectionProviderImpl());
+        countryDao = new CountryDaoImpl();
+        countryDao.setConnectionProvider(new TestConnectionProviderImpl());
     }
 
     @Test

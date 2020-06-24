@@ -2,10 +2,13 @@ package com.lashkevich.stores.dao;
 
 import com.lashkevich.stores.entity.Role;
 import com.lashkevich.stores.exception.DaoStoreException;
+import com.lashkevich.stores.util.provider.ConnectionProvider;
 
 import java.util.List;
 
 public interface RoleDao {
+    void setConnectionProvider(ConnectionProvider connectionProvider);
+
     boolean add(Role role) throws DaoStoreException;
 
     List<Role> findAll() throws DaoStoreException;

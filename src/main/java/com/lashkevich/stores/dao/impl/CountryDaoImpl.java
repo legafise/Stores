@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CoutryDaoImpl implements CountryDao {
+public class CountryDaoImpl implements CountryDao {
     private static final String ADD_COUNTRY_SQL = "INSERT INTO countries (id, name) VALUES (?, ?);";
     private static final String FIND_ALL_COUNTRIES_SQL = "SELECT countries.id AS country_id, countries.name AS country_name FROM countries;";
     private static final String FIND_COUNTRY_BY_ID_SQL = "SELECT countries.id AS country_id, countries.name AS country_name FROM countries WHERE id = ?;";
@@ -21,10 +21,11 @@ public class CoutryDaoImpl implements CountryDao {
 
     private ConnectionProvider connectionProvider;
 
-    public CoutryDaoImpl() {
+    public CountryDaoImpl() {
         connectionProvider = new ConnectionProviderImpl();
     }
 
+    @Override
     public void setConnectionProvider(ConnectionProvider connectionProvider) {
         this.connectionProvider = connectionProvider;
     }

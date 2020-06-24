@@ -1,7 +1,6 @@
-package com.lashkevich.stores.test;
+package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.GoodPriceDao;
-import com.lashkevich.stores.dao.impl.GoodPriceDaoImpl;
 import com.lashkevich.stores.entity.Country;
 import com.lashkevich.stores.entity.Good;
 import com.lashkevich.stores.entity.GoodPrice;
@@ -15,7 +14,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoodPriceDaoTest {
+public class GoodPriceDaoImplTest {
     private GoodPrice firstExpectedGoodPrice;
     private GoodPrice secondExpectedGoodPrice;
     private GoodPrice thirdExpectedGoodPrice;
@@ -34,7 +33,7 @@ public class GoodPriceDaoTest {
         fifthExpectedGoodPrice = new GoodPrice(new Country(1, "Belarus"), new Good(22, "Apple", "Apple", "Apple"), new BigDecimal("4.0"));
 
         goodPriceDao = new GoodPriceDaoImpl();
-        ((GoodPriceDaoImpl) goodPriceDao).setConnectionProvider(new TestConnectionProviderImpl());
+        goodPriceDao.setConnectionProvider(new TestConnectionProviderImpl());
     }
 
     @Test
@@ -42,8 +41,8 @@ public class GoodPriceDaoTest {
         List<GoodPrice> expectedGoodPrices = new ArrayList<>();
         expectedGoodPrices.add(firstExpectedGoodPrice);
         expectedGoodPrices.add(secondExpectedGoodPrice);
-        expectedGoodPrices.add(thirdExpectedGoodPrice);
         expectedGoodPrices.add(fourthExpectedGoodPrice);
+        expectedGoodPrices.add(thirdExpectedGoodPrice);
         Assert.assertEquals(expectedGoodPrices, goodPriceDao.findAll());
     }
 

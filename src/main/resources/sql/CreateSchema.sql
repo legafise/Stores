@@ -45,11 +45,11 @@ DROP TABLE IF EXISTS `cities`;
 CREATE TABLE `cities` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) COLLATE utf8_bin NOT NULL,
-  `country_Id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY `city_country_idx` (`country_Id`),
-  CONSTRAINT `city_country` FOREIGN KEY (`country_Id`) REFERENCES `countries` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `city_country_idx` (`country_id`),
+  CONSTRAINT `city_country` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -76,12 +76,12 @@ DROP TABLE IF EXISTS `good_prices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `good_prices` (
-  `country_Id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
   `good_id` int(11) NOT NULL,
   `price` double NOT NULL,
   KEY `prices_goods_idx` (`good_id`),
-  KEY `prices_countries_idx` (`country_Id`),
-  CONSTRAINT `prices_countries` FOREIGN KEY (`country_Id`) REFERENCES `countries` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `prices_countries_idx` (`country_id`),
+  CONSTRAINT `prices_countries` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `prices_goods` FOREIGN KEY (`good_id`) REFERENCES `goods` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;

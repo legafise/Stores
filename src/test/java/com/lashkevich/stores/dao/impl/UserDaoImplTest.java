@@ -1,7 +1,6 @@
-package com.lashkevich.stores.test;
+package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.UserDao;
-import com.lashkevich.stores.dao.impl.UserDaoImpl;
 import com.lashkevich.stores.entity.*;
 import com.lashkevich.stores.exception.DaoStoreException;
 import com.lashkevich.stores.util.provider.impl.TestConnectionProviderImpl;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class UserDaoTest {
+public class UserDaoImplTest {
     private User firstExpectedUser;
     private User secondExpectedUser;
     private User thirdExpectedUser;
@@ -55,7 +54,7 @@ public class UserDaoTest {
                 new City(1, "Minsk", new Country(1, "Belarus")));
 
         userDao = new UserDaoImpl();
-        ((UserDaoImpl) userDao).setConnectionProvider(new TestConnectionProviderImpl());
+        userDao.setConnectionProvider(new TestConnectionProviderImpl());
     }
 
     @Test

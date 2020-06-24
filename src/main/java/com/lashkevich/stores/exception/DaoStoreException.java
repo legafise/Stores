@@ -1,7 +1,6 @@
 package com.lashkevich.stores.exception;
 
 public class DaoStoreException extends Exception {
-
     public DaoStoreException() {
     }
 

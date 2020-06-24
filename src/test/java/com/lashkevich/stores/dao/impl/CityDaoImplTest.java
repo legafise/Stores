@@ -1,4 +1,4 @@
-package com.lashkevich.stores.test;
+package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.CityDao;
 import com.lashkevich.stores.dao.impl.CityDaoImpl;
@@ -13,7 +13,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CityDaoTest {
+public class CityDaoImplTest {
     private City firstExpectedCity;
     private City secondExpectedCity;
     private City thirdExpectedCity;
@@ -30,7 +30,7 @@ public class CityDaoTest {
         firstChangeExpectedCity = new City(1, "Menesk", new Country(1, "Belarus"));
 
         cityDao = new CityDaoImpl();
-        ((CityDaoImpl) cityDao).setConnectionProvider(new TestConnectionProviderImpl());
+        cityDao.setConnectionProvider(new TestConnectionProviderImpl());
     }
 
     @Test
