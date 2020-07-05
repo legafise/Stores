@@ -2,8 +2,11 @@ package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.GoodDao;
 import com.lashkevich.stores.entity.Good;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.util.provider.impl.TestConnectionProviderImpl;
+import com.lashkevich.stores.exception.NNSConnectionPoolException;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.pool.NNSConnectionPool;
+import com.lashkevich.stores.util.reader.PropertiesReader;
+import com.lashkevich.stores.util.reader.impl.NNSTestPropertiesReader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +14,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoodDaoImplTest {
+public class NNSGoodDaoTest {
     private Good firstExpectedGood;
     private Good secondExpectedZGood;
     private Good thirdExpectedGood;
@@ -20,19 +23,24 @@ public class GoodDaoImplTest {
     private GoodDao goodDao;
 
     @Before
-    public void setUp() {
+    public void setUp() throws NNSConnectionPoolException {
+        PropertiesReader testPropertiesReader = new NNSTestPropertiesReader();
+
+        NNSConnectionPool.getInstance().setPropertiesReader(testPropertiesReader);
+        NNSConnectionPool.getInstance().initializeConnectionPool(1);
+
         firstExpectedGood = new Good(22, "Apple", "Apple", "Apple");
         secondExpectedZGood = new Good(23, "Android", "Android", "Android");
         thirdExpectedGood = new Good(24, "Xiaomi", "Xiaomi", "Xiaomi");
         fourthExpectedZGood = new Good(25, "Samsung", "Samsung", "Samsung");
         firstChangeExpectedGood = new Good(22, "Apple", "ios", "Apple");
 
-        goodDao = new GoodDaoImpl();
-        goodDao.setConnectionProvider(new TestConnectionProviderImpl());
+        goodDao = new NNSGoodDao();
+        goodDao.setPropertiesReader(testPropertiesReader);
     }
 
     @Test
-    public void findAllTest() throws DaoStoreException {
+    public void findAllTest() throws NSSDaoStoreException {
         List<Good> expectedGoods = new ArrayList<>();
         expectedGoods.add(firstExpectedGood);
         expectedGoods.add(secondExpectedZGood);
@@ -42,22 +50,22 @@ public class GoodDaoImplTest {
     }
 
     @Test
-    public void findByIdTest() throws DaoStoreException {
-        Assert.assertEquals(firstExpectedGood, goodDao.findById(22));
+    public void findByIdTest() throws NSSDaoStoreException {
+        Assert.assertEquals(firstExpectedGood, goodDao.findById(22).get());
     }
 
     @Test
-    public void addTest() throws DaoStoreException {
+    public void addTest() throws NSSDaoStoreException {
         Assert.assertTrue(goodDao.add(fourthExpectedZGood));
     }
 
     @Test
-    public void removeTest() throws DaoStoreException {
+    public void removeTest() throws NSSDaoStoreException {
         Assert.assertTrue(goodDao.remove(24));
     }
 
     @Test
-    public void updateTest() throws DaoStoreException {
+    public void updateTest() throws NSSDaoStoreException {
         Assert.assertTrue(goodDao.update(firstChangeExpectedGood));
     }
 }

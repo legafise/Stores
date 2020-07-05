@@ -1,21 +1,22 @@
 package com.lashkevich.stores.dao;
 
 import com.lashkevich.stores.entity.User;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.util.provider.ConnectionProvider;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.util.reader.PropertiesReader;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserDao {
-    void setConnectionProvider(ConnectionProvider connectionProvider);
+    void setPropertiesReader(PropertiesReader propertiesReader);
 
-    boolean add(User user) throws DaoStoreException;
+    boolean add(User user) throws NSSDaoStoreException;
 
-    List<User> findAll() throws DaoStoreException;
+    List<User> findAll() throws NSSDaoStoreException;
 
-    User findById(long id) throws DaoStoreException;
+    Optional<User> findById(long id) throws NSSDaoStoreException;
 
-    boolean update(User user) throws DaoStoreException;
+    boolean update(User user) throws NSSDaoStoreException;
 
-    boolean remove(long id) throws DaoStoreException;
+    boolean remove(long id) throws NSSDaoStoreException;
 }

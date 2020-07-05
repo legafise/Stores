@@ -3,8 +3,11 @@ package com.lashkevich.stores.dao.impl;
 import com.lashkevich.stores.dao.BasketDao;
 import com.lashkevich.stores.entity.Basket;
 import com.lashkevich.stores.entity.Good;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.util.provider.impl.TestConnectionProviderImpl;
+import com.lashkevich.stores.exception.NNSConnectionPoolException;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.pool.NNSConnectionPool;
+import com.lashkevich.stores.util.reader.PropertiesReader;
+import com.lashkevich.stores.util.reader.impl.NNSTestPropertiesReader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,16 +17,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BasketDaoImplTest {
+public class NNSBasketDaoTest {
     private Basket firstExpectedBasket;
     private Basket secondExpectedBasket;
     private Basket thirdExpectedBasket;
     private Basket fourthExpectedBasket;
     private Basket fifthExpectedBasket;
+    private Basket sixthExpectedBasket;
     private BasketDao basketDao;
 
     @Before
-    public void setUp() {
+    public void setUp() throws NNSConnectionPoolException {
+        PropertiesReader testPropertiesReader = new NNSTestPropertiesReader();
+
+        NNSConnectionPool.getInstance().setPropertiesReader(testPropertiesReader);
+        NNSConnectionPool.getInstance().initializeConnectionPool(1);
+
         Map<Good, Integer> firstGoods = new HashMap<>();
         firstGoods.put(new Good(23, "Android", "Android", "Android"), 1);
         firstExpectedBasket = new Basket(firstGoods);
@@ -45,12 +54,17 @@ public class BasketDaoImplTest {
         fifthGoods.put(new Good(23, "Android", "Android", "Android"), 2);
         fifthExpectedBasket = new Basket(fifthGoods);
 
-        basketDao = new BasketDaoImpl();
-         basketDao.setConnectionProvider(new TestConnectionProviderImpl());
+        Map<Good, Integer> sixthGoods = new HashMap<>();
+        sixthGoods.put(new Good(23, "Android", "Android", "Android"), 1);
+        sixthGoods.put(new Good(22, "Apple", "Apple", "Apple"), 2);
+        sixthExpectedBasket = new Basket(sixthGoods);
+
+        basketDao = new NNSBasketDao();
+        basketDao.setPropertiesReader(testPropertiesReader);
     }
 
     @Test
-    public void findAllTest() throws DaoStoreException {
+    public void findAllTest() throws NSSDaoStoreException {
         List<Basket> expectedBaskets = new ArrayList<>();
         expectedBaskets.add(secondExpectedBasket);
         expectedBaskets.add(thirdExpectedBasket);
@@ -61,25 +75,23 @@ public class BasketDaoImplTest {
     }
 
     @Test
-    public void findByUserTest() throws DaoStoreException {
-        List<Basket> expectedBaskets = new ArrayList<>();
-        expectedBaskets.add(secondExpectedBasket);
-        expectedBaskets.add(firstExpectedBasket);
-
-        Assert.assertEquals(expectedBaskets, basketDao.findByUser(8));
+    public void findByUserTest() throws NSSDaoStoreException {
+        Assert.assertEquals(sixthExpectedBasket, basketDao.findByUser(8).get());
     }
 
     @Test
-    public void addTest() throws DaoStoreException {
-        Assert.assertTrue(basketDao.add(firstExpectedBasket,10));
+    public void addTest() throws NSSDaoStoreException {
+        Assert.assertTrue(basketDao.add(firstExpectedBasket, 10));
     }
 
     @Test
-    public void removeTest() throws DaoStoreException {
+    public void removeTest() throws NSSDaoStoreException {
         Assert.assertTrue(basketDao.remove(9));
 
-    }@Test
-    public void updateTest() throws DaoStoreException {
+    }
+
+    @Test
+    public void updateTest() throws NSSDaoStoreException {
         Assert.assertTrue(basketDao.update(fifthExpectedBasket, 9));
     }
 }

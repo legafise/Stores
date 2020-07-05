@@ -1,11 +1,13 @@
 package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.CityDao;
-import com.lashkevich.stores.dao.impl.CityDaoImpl;
 import com.lashkevich.stores.entity.City;
 import com.lashkevich.stores.entity.Country;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.util.provider.impl.TestConnectionProviderImpl;
+import com.lashkevich.stores.exception.NNSConnectionPoolException;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.pool.NNSConnectionPool;
+import com.lashkevich.stores.util.reader.PropertiesReader;
+import com.lashkevich.stores.util.reader.impl.NNSTestPropertiesReader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,28 +15,31 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CityDaoImplTest {
+public class NNSCityDaoTest {
     private City firstExpectedCity;
     private City secondExpectedCity;
     private City thirdExpectedCity;
     private City fourthExpectedCity;
-    private City firstChangeExpectedCity;
     private CityDao cityDao;
 
     @Before
-    public void setUp() {
+    public void setUp() throws NNSConnectionPoolException {
+        PropertiesReader testPropertiesReader = new NNSTestPropertiesReader();
+
+        NNSConnectionPool.getInstance().setPropertiesReader(testPropertiesReader);
+        NNSConnectionPool.getInstance().initializeConnectionPool(1);
+
         firstExpectedCity = new City(1, "Minsk", new Country(1, "Belarus"));
         secondExpectedCity = new City(2, "Moscow", new Country(2, "Russia"));
         thirdExpectedCity = new City(3, "Gomel", new Country(1, "Belarus"));
         fourthExpectedCity = new City(4, "Smolensk", new Country(2, "Russia"));
-        firstChangeExpectedCity = new City(1, "Menesk", new Country(1, "Belarus"));
 
-        cityDao = new CityDaoImpl();
-        cityDao.setConnectionProvider(new TestConnectionProviderImpl());
+        cityDao = new NNSCityDao();
+        cityDao.setPropertiesReader(testPropertiesReader);
     }
 
     @Test
-    public void findAllTest() throws DaoStoreException {
+    public void findAllTest() throws NSSDaoStoreException {
         List<City> expectedCities = new ArrayList<>();
         expectedCities.add(firstExpectedCity);
         expectedCities.add(secondExpectedCity);
@@ -44,22 +49,22 @@ public class CityDaoImplTest {
     }
 
     @Test
-    public void findByIdTest() throws DaoStoreException {
-        Assert.assertEquals(firstExpectedCity, cityDao.findById(1));
+    public void findByIdTest() throws NSSDaoStoreException {
+        Assert.assertEquals(firstExpectedCity, cityDao.findById(1).get());
     }
 
     @Test
-    public void addTest() throws DaoStoreException {
+    public void addTest() throws NSSDaoStoreException {
         Assert.assertTrue(cityDao.add(fourthExpectedCity));
     }
 
     @Test
-    public void removeTest() throws DaoStoreException {
+    public void removeTest() throws NSSDaoStoreException {
         Assert.assertTrue(cityDao.remove(3));
     }
 
     @Test
-    public void updateTest() throws DaoStoreException {
+    public void updateTest() throws NSSDaoStoreException {
         Assert.assertTrue(cityDao.update(firstExpectedCity));
     }
 }

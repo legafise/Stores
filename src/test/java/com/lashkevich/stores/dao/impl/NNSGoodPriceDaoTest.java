@@ -4,8 +4,11 @@ import com.lashkevich.stores.dao.GoodPriceDao;
 import com.lashkevich.stores.entity.Country;
 import com.lashkevich.stores.entity.Good;
 import com.lashkevich.stores.entity.GoodPrice;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.util.provider.impl.TestConnectionProviderImpl;
+import com.lashkevich.stores.exception.NNSConnectionPoolException;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.pool.NNSConnectionPool;
+import com.lashkevich.stores.util.reader.PropertiesReader;
+import com.lashkevich.stores.util.reader.impl.NNSTestPropertiesReader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoodPriceDaoImplTest {
+public class NNSGoodPriceDaoTest {
     private GoodPrice firstExpectedGoodPrice;
     private GoodPrice secondExpectedGoodPrice;
     private GoodPrice thirdExpectedGoodPrice;
@@ -24,7 +27,12 @@ public class GoodPriceDaoImplTest {
     private GoodPriceDao goodPriceDao;
 
     @Before
-    public void setUp() {
+    public void setUp() throws NNSConnectionPoolException {
+        PropertiesReader testPropertiesReader = new NNSTestPropertiesReader();
+
+        NNSConnectionPool.getInstance().setPropertiesReader(testPropertiesReader);
+        NNSConnectionPool.getInstance().initializeConnectionPool(1);
+
         firstExpectedGoodPrice = new GoodPrice(new Country(1, "Belarus"), new Good(22, "Apple", "Apple", "Apple"), new BigDecimal("1.0"));
         secondExpectedGoodPrice = new GoodPrice(new Country(1, "Belarus"), new Good(23, "Android", "Android", "Android"), new BigDecimal("2.0"));
         thirdExpectedGoodPrice = new GoodPrice(new Country(2, "Russia"), new Good(23, "Android", "Android", "Android"), new BigDecimal("2.0"));
@@ -32,12 +40,12 @@ public class GoodPriceDaoImplTest {
         firstChangeExpectedGoodPrice = new GoodPrice(new Country(1, "Belarus"), new Good(22, "Apple", "Apple", "Apple"), new BigDecimal("2.0"));
         fifthExpectedGoodPrice = new GoodPrice(new Country(1, "Belarus"), new Good(22, "Apple", "Apple", "Apple"), new BigDecimal("4.0"));
 
-        goodPriceDao = new GoodPriceDaoImpl();
-        goodPriceDao.setConnectionProvider(new TestConnectionProviderImpl());
+        goodPriceDao = new NNSGoodPriceDao();
+        goodPriceDao.setPropertiesReader(testPropertiesReader);
     }
 
     @Test
-    public void findAllTest() throws DaoStoreException {
+    public void findAllTest() throws NSSDaoStoreException {
         List<GoodPrice> expectedGoodPrices = new ArrayList<>();
         expectedGoodPrices.add(firstExpectedGoodPrice);
         expectedGoodPrices.add(secondExpectedGoodPrice);
@@ -47,22 +55,22 @@ public class GoodPriceDaoImplTest {
     }
 
     @Test
-    public void findByIdTest() throws DaoStoreException {
-        Assert.assertEquals(firstExpectedGoodPrice, goodPriceDao.findByCountryAndGood(1,22));
+    public void findByIdTest() throws NSSDaoStoreException {
+        Assert.assertEquals(firstExpectedGoodPrice, goodPriceDao.findByCountryAndGood(1,22).get());
     }
 
     @Test
-    public void removeTest() throws DaoStoreException {
+    public void removeTest() throws NSSDaoStoreException {
         Assert.assertTrue(goodPriceDao.remove(2,22));
     }
 
     @Test
-    public void updateTest() throws DaoStoreException {
+    public void updateTest() throws NSSDaoStoreException {
         Assert.assertTrue(goodPriceDao.update(2, 22, firstChangeExpectedGoodPrice));
     }
 
     @Test
-    public void addTest() throws DaoStoreException {
+    public void addTest() throws NSSDaoStoreException {
         Assert.assertTrue(goodPriceDao.add(fifthExpectedGoodPrice));
     }
 }

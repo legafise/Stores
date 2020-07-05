@@ -1,21 +1,22 @@
 package com.lashkevich.stores.dao;
 
 import com.lashkevich.stores.entity.City;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.util.provider.ConnectionProvider;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.util.reader.PropertiesReader;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CityDao {
-    void setConnectionProvider(ConnectionProvider connectionProvider);
+    void setPropertiesReader(PropertiesReader propertiesReader);
 
-    boolean add(City city) throws DaoStoreException;
+    boolean add(City city) throws NSSDaoStoreException;
 
-    List<City> findAll() throws DaoStoreException;
+    List<City> findAll() throws NSSDaoStoreException;
 
-    City findById(long id) throws DaoStoreException;
+    Optional<City> findById(long id) throws NSSDaoStoreException;
 
-    boolean update(City city) throws DaoStoreException;
+    boolean update(City city) throws NSSDaoStoreException;
 
-    boolean remove(long id) throws DaoStoreException;
+    boolean remove(long id) throws NSSDaoStoreException;
 }

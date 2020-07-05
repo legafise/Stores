@@ -2,8 +2,11 @@ package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.UserDao;
 import com.lashkevich.stores.entity.*;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.util.provider.impl.TestConnectionProviderImpl;
+import com.lashkevich.stores.exception.NNSConnectionPoolException;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.pool.NNSConnectionPool;
+import com.lashkevich.stores.util.reader.PropertiesReader;
+import com.lashkevich.stores.util.reader.impl.NNSTestPropertiesReader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class UserDaoImplTest {
+public class NNSUserDaoTest {
     private User firstExpectedUser;
     private User secondExpectedUser;
     private User thirdExpectedUser;
@@ -24,7 +27,12 @@ public class UserDaoImplTest {
     private UserDao userDao;
 
     @Before
-    public void setUp() {
+    public void setUp() throws NNSConnectionPoolException {
+        PropertiesReader testPropertiesReader = new NNSTestPropertiesReader();
+
+        NNSConnectionPool.getInstance().setPropertiesReader(testPropertiesReader);
+        NNSConnectionPool.getInstance().initializeConnectionPool(1);
+
         Map<Good, Integer> firstGoods = new HashMap<>();
         firstGoods.put(new Good(22, "Apple", "Apple", "Apple"), 2);
         firstGoods.put(new Good(23, "Android", "Android", "Android"), 1);
@@ -53,17 +61,17 @@ public class UserDaoImplTest {
                 "V", LocalDate.of(2010,04,12), new Role(2, "User"),
                 new City(1, "Minsk", new Country(1, "Belarus")));
 
-        userDao = new UserDaoImpl();
-        userDao.setConnectionProvider(new TestConnectionProviderImpl());
+        userDao = new NNSUserDao();
+        userDao.setPropertiesReader(testPropertiesReader);
     }
 
     @Test
-    public void findByIdTest() throws DaoStoreException {
-        Assert.assertEquals(firstExpectedUser, userDao.findById(8));
+    public void findByIdTest() throws NSSDaoStoreException {
+        Assert.assertEquals(firstExpectedUser, userDao.findById(8).get());
     }
 
     @Test
-    public void findAllTest() throws DaoStoreException {
+    public void findAllTest() throws NSSDaoStoreException {
         List<User> expectedUsers = new ArrayList<>();
         expectedUsers.add(firstExpectedUser);
         expectedUsers.add(secondExpectedUser);
@@ -72,17 +80,17 @@ public class UserDaoImplTest {
     }
 
     @Test
-    public void addTest() throws DaoStoreException {
+    public void addTest() throws NSSDaoStoreException {
         Assert.assertTrue(userDao.add(fourthExpectedUser));
     }
 
     @Test
-    public void updateTest() throws DaoStoreException {
+    public void updateTest() throws NSSDaoStoreException {
         Assert.assertTrue(userDao.update(firstChangeExpectedUser));
     }
 
     @Test
-    public void removeTest() throws DaoStoreException{
+    public void removeTest() throws NSSDaoStoreException {
         Assert.assertTrue(userDao.remove(10));
     }
 }

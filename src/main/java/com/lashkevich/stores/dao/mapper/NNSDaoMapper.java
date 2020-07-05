@@ -1,14 +1,14 @@
 package com.lashkevich.stores.dao.mapper;
 
 import com.lashkevich.stores.entity.*;
-import com.lashkevich.stores.util.converter.DateConverter;
+import com.lashkevich.stores.util.converter.NNSDateConverter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DaoMapper {
+public class NNSDaoMapper {
     private static final String SURNAME = "surname";
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
@@ -79,7 +79,19 @@ public class DaoMapper {
         return good;
     }
 
-    public static Basket mapBasket(ResultSet resultSet) throws SQLException {
+    public static Basket mapUserBasket(ResultSet resultSet) throws SQLException {
+        Basket basket = new Basket();
+        Map<Good, Integer> goods = new HashMap<>();
+
+        while (resultSet.next()) {
+            goods.put(mapGood(resultSet), resultSet.getInt(QUANTITY));
+        }
+
+        basket.setGoods(goods);
+        return basket;
+    }
+
+    public static Basket mapAllBaskets(ResultSet resultSet) throws SQLException {
         Basket basket = new Basket();
         Map<Good, Integer> goods = new HashMap<>();
         goods.put(mapGood(resultSet), resultSet.getInt(QUANTITY));
@@ -102,7 +114,7 @@ public class DaoMapper {
         user.setLogin(resultSet.getString(LOGIN));
         user.setPassword(resultSet.getString(PASSWORD));
         user.setEmail(resultSet.getString(EMAIL));
-        user.setBirthDate(DateConverter.convertDateToLocalDate(resultSet.getDate(BIRTH_DATE)));
+        user.setBirthDate(NNSDateConverter.convertDateToLocalDate(resultSet.getDate(BIRTH_DATE)));
         user.setRole(mapRole(resultSet));
         user.setCity(mapCity(resultSet));
     }

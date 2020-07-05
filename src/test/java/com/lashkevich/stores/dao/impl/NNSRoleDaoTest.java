@@ -2,8 +2,11 @@ package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.RoleDao;
 import com.lashkevich.stores.entity.Role;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.util.provider.impl.TestConnectionProviderImpl;
+import com.lashkevich.stores.exception.NNSConnectionPoolException;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.pool.NNSConnectionPool;
+import com.lashkevich.stores.util.reader.PropertiesReader;
+import com.lashkevich.stores.util.reader.impl.NNSTestPropertiesReader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,28 +14,33 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoleDaoImplTest {
+public class NNSRoleDaoTest {
+    private RoleDao roleDao;
     private Role firstExpectedRole;
     private Role secondExpectedRole;
     private Role thirdExpectedRole;
     private Role fourthExpectedRole;
     private Role firstChangeExpectedRole;
-    private RoleDao roleDao;
 
     @Before
-    public void setUp() {
+    public void setUp() throws NNSConnectionPoolException {
+        PropertiesReader testPropertiesReader = new NNSTestPropertiesReader();
+
+        NNSConnectionPool.getInstance().setPropertiesReader(testPropertiesReader);
+        NNSConnectionPool.getInstance().initializeConnectionPool(1);
+
+        roleDao = new NNSRoleDao();
+        roleDao.setPropertiesReader(testPropertiesReader);
+
         firstExpectedRole = new Role(1, "Admin");
         secondExpectedRole = new Role(2, "User");
         thirdExpectedRole = new Role(3, "Slave");
         fourthExpectedRole = new Role(4, "God");
         firstChangeExpectedRole = new Role(1, "Administrator");
-
-        roleDao = new RoleDaoImpl();
-        roleDao.setConnectionProvider(new TestConnectionProviderImpl());
     }
 
     @Test
-    public void findAllTest() throws DaoStoreException {
+    public void findAllTest() throws NSSDaoStoreException {
         List<Role> expectedRoles = new ArrayList<>();
         expectedRoles.add(firstExpectedRole);
         expectedRoles.add(secondExpectedRole);
@@ -41,22 +49,22 @@ public class RoleDaoImplTest {
     }
 
     @Test
-    public void findByIdTest() throws DaoStoreException {
-        Assert.assertEquals(firstExpectedRole, roleDao.findById(1));
+    public void findByIdTest() throws NSSDaoStoreException {
+        Assert.assertEquals(firstExpectedRole, roleDao.findById(1).get());
     }
 
     @Test
-    public void removeTest() throws DaoStoreException {
+    public void removeTest() throws NSSDaoStoreException {
         Assert.assertTrue(roleDao.remove(3));
     }
 
     @Test
-    public void addTest() throws DaoStoreException {
+    public void addTest() throws NSSDaoStoreException {
         Assert.assertTrue(roleDao.add(fourthExpectedRole));
     }
 
     @Test
-    public void update() throws DaoStoreException {
+    public void update() throws NSSDaoStoreException {
         Assert.assertTrue(roleDao.update(firstChangeExpectedRole));
     }
 }

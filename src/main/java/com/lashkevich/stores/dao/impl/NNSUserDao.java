@@ -1,19 +1,22 @@
 package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.UserDao;
-import com.lashkevich.stores.dao.mapper.DaoMapper;
+import com.lashkevich.stores.dao.mapper.NNSDaoMapper;
 import com.lashkevich.stores.entity.User;
-import com.lashkevich.stores.exception.ConnectionStoreException;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.util.converter.DateConverter;
-import com.lashkevich.stores.util.provider.ConnectionProvider;
-import com.lashkevich.stores.util.provider.impl.ConnectionProviderImpl;
+import com.lashkevich.stores.exception.NNSConnectionPoolException;
+import com.lashkevich.stores.exception.NNSUtilException;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.pool.NNSConnectionPool;
+import com.lashkevich.stores.util.converter.NNSDateConverter;
+import com.lashkevich.stores.util.reader.PropertiesReader;
+import com.lashkevich.stores.util.reader.impl.NNSProdPropertiesReader;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class UserDaoImpl implements UserDao {
+public class NNSUserDao implements UserDao {
     private static final String ADD_USER_SQL = "INSERT INTO users (name, surname, login, password, email, " +
             "birth_date, role_id, city_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String FIND_ALL_USERS_SQL = "SELECT users.id AS user_id, users.name AS user_name, users.surname, users.login, users.password," +
@@ -34,94 +37,98 @@ public class UserDaoImpl implements UserDao {
     private static final String UPDATE_USER_BY_ID_SQL = "UPDATE users SET name = ?, surname = ?, login = ?, password = ?," +
             " email = ?, birth_date = ?, role_id = ?, city_id = ? WHERE id = ?;";
 
-    private ConnectionProvider connectionProvider;
+    private PropertiesReader propertiesReader;
 
-    public UserDaoImpl() {
-        connectionProvider = new ConnectionProviderImpl();
+    public NNSUserDao() {
+        propertiesReader = new NNSProdPropertiesReader();
     }
 
     @Override
-    public void setConnectionProvider(ConnectionProvider connectionProvider) {
-        this.connectionProvider = connectionProvider;
+    public void setPropertiesReader(PropertiesReader propertiesReader) {
+        this.propertiesReader = propertiesReader;
     }
 
+
     @Override
-    public boolean add(User user) throws DaoStoreException {
-        try (Connection connection = connectionProvider.getConnection();
+    public boolean add(User user) throws NSSDaoStoreException {
+        try (Connection connection = NNSConnectionPool.getInstance().acquireConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER_SQL)) {
-            connection.setAutoCommit(connectionProvider.getCommitStatus());
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getSurname());
-            preparedStatement.setString(3, user.getLogin());
-            preparedStatement.setString(4, user.getPassword());
-            preparedStatement.setString(5, user.getEmail());
-            preparedStatement.setDate(6, DateConverter.convertLocalDateToDate(user.getBirthDate()));
-            preparedStatement.setLong(7, user.getRole().getId());
-            preparedStatement.setLong(8, user.getCity().getId());
-            return preparedStatement.executeUpdate() == 1;
-        } catch (ConnectionStoreException | SQLException e) {
-            throw new DaoStoreException(e);
+            connection.setAutoCommit(propertiesReader.readCommitStatus());
+            return fillUser(preparedStatement, user);
+        } catch (SQLException | NNSConnectionPoolException | NNSUtilException e) {
+            throw new NSSDaoStoreException(e);
         }
     }
 
     @Override
-    public List<User> findAll() throws DaoStoreException {
-        try (Connection connection = connectionProvider.getConnection();
+    public List<User> findAll() throws NSSDaoStoreException {
+        try (Connection connection = NNSConnectionPool.getInstance().acquireConnection();
              Statement statement = connection.createStatement()) {
             List<User> users = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery(FIND_ALL_USERS_SQL);
 
             while (!resultSet.isAfterLast()) {
-                users.add(DaoMapper.mapUser(resultSet));
+                users.add(NNSDaoMapper.mapUser(resultSet));
             }
 
             return users;
-        } catch (ConnectionStoreException | SQLException e) {
-            throw new DaoStoreException(e);
+        } catch (SQLException | NNSConnectionPoolException e) {
+            throw new NSSDaoStoreException(e);
         }
     }
 
     @Override
-    public User findById(long id) throws DaoStoreException {
-        try (Connection connection = connectionProvider.getConnection();
+    public Optional<User> findById(long id) throws NSSDaoStoreException {
+        try (Connection connection = NNSConnectionPool.getInstance().acquireConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_ID_SQL)) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            return DaoMapper.mapUser(resultSet);
-        } catch (ConnectionStoreException | SQLException e) {
-            throw new DaoStoreException(e);
+            User user = NNSDaoMapper.mapUser(resultSet);
+
+            Optional<User> userOptional = Optional.empty();
+            if (user.getId() != 0) {
+                userOptional = Optional.of(user);
+            }
+
+            return userOptional;
+        } catch (SQLException | NNSConnectionPoolException e) {
+            throw new NSSDaoStoreException(e);
         }
     }
 
     @Override
-    public boolean update(User user) throws DaoStoreException {
-        try (Connection connection = connectionProvider.getConnection();
+    public boolean update(User user) throws NSSDaoStoreException {
+        try (Connection connection = NNSConnectionPool.getInstance().acquireConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_BY_ID_SQL)) {
-            connection.setAutoCommit(connectionProvider.getCommitStatus());
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getSurname());
-            preparedStatement.setString(3, user.getLogin());
-            preparedStatement.setString(4, user.getPassword());
-            preparedStatement.setString(5, user.getEmail());
-            preparedStatement.setDate(6, DateConverter.convertLocalDateToDate(user.getBirthDate()));
-            preparedStatement.setLong(7, user.getRole().getId());
-            preparedStatement.setLong(8, user.getCity().getId());
+            connection.setAutoCommit(propertiesReader.readCommitStatus());
             preparedStatement.setLong(9, user.getId());
-            return preparedStatement.executeUpdate() == 1;
-        } catch (SQLException | ConnectionStoreException e) {
-            throw new DaoStoreException(e);
+            return fillUser(preparedStatement, user);
+        } catch (SQLException | NNSConnectionPoolException | NNSUtilException e) {
+            throw new NSSDaoStoreException(e);
         }
     }
 
     @Override
-    public boolean remove(long id) throws DaoStoreException {
-        try (Connection connection = connectionProvider.getConnection();
+    public boolean remove(long id) throws NSSDaoStoreException {
+        try (Connection connection = NNSConnectionPool.getInstance().acquireConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_BY_ID_SQL)) {
-            connection.setAutoCommit(connectionProvider.getCommitStatus());
+            connection.setAutoCommit(propertiesReader.readCommitStatus());
             preparedStatement.setLong(1, id);
             return preparedStatement.executeUpdate() == 1;
-        } catch (ConnectionStoreException | SQLException e) {
-            throw new DaoStoreException(e);
+        } catch (SQLException | NNSConnectionPoolException | NNSUtilException e) {
+            throw new NSSDaoStoreException(e);
         }
+    }
+
+    private boolean fillUser(PreparedStatement preparedStatement, User user) throws SQLException {
+        preparedStatement.setString(1, user.getName());
+        preparedStatement.setString(2, user.getSurname());
+        preparedStatement.setString(3, user.getLogin());
+        preparedStatement.setString(4, user.getPassword());
+        preparedStatement.setString(5, user.getEmail());
+        preparedStatement.setDate(6, NNSDateConverter.convertLocalDateToDate(user.getBirthDate()));
+        preparedStatement.setLong(7, user.getRole().getId());
+        preparedStatement.setLong(8, user.getCity().getId());
+        return preparedStatement.executeUpdate() == 1;
     }
 }
