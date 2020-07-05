@@ -18,6 +18,9 @@ import java.util.concurrent.locks.ReentrantLock;
 public class NNSConnectionPool {
     private static final AtomicBoolean INSTANCE_CREATED = new AtomicBoolean(false);
     private static final String PROPERTY_DRIVER_KEY = "driverName";
+    private static final String CONNECTION_IS_NULL_ENTER_MESSAGE = "Connection cannot be null";
+    private static final String INCORRECT_CONNECTION_ENTER_MESSAGE = "Return connection does not exist";
+    private static final String CONNECTIONS_NOT_CREATED_ENTER_MESSAGE = "Connections not created";
     private static final Lock INSTANCE_LOCK = new ReentrantLock();
     private static final Lock CONNECTION_LOCK = new ReentrantLock();
     private static final Condition CONNECTION_CONDITION = CONNECTION_LOCK.newCondition();
@@ -87,7 +90,7 @@ public class NNSConnectionPool {
                 busyConnections.push(connection);
                 return connection;
             } else {
-                throw new NNSConnectionPoolException();
+                throw new NNSConnectionPoolException(CONNECTIONS_NOT_CREATED_ENTER_MESSAGE);
             }
         } catch (InterruptedException e) {
             throw new NNSConnectionPoolException(e);
@@ -98,7 +101,7 @@ public class NNSConnectionPool {
 
     public void putBackConnection(Connection connection) throws NNSConnectionPoolException {
         if (connection == null) {
-            throw new NNSConnectionPoolException();
+            throw new NNSConnectionPoolException(CONNECTION_IS_NULL_ENTER_MESSAGE);
         }
 
         try {
@@ -109,7 +112,7 @@ public class NNSConnectionPool {
                     CONNECTION_CONDITION.signal();
                 }
             } else {
-                throw new NNSConnectionPoolException();
+                throw new NNSConnectionPoolException(INCORRECT_CONNECTION_ENTER_MESSAGE);
             }
         } finally {
             CONNECTION_LOCK.unlock();
