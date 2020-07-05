@@ -1,38 +1,42 @@
-package com.lashkevich.stores.service;
+package com.lashkevich.stores.service.impl;
 
 import com.lashkevich.stores.dao.RoleDao;
 import com.lashkevich.stores.entity.Role;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.exception.ServiceStoreException;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.exception.NNSServiceStoreException;
+import com.lashkevich.stores.service.RoleService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class RoleServiceTest {
+public class NNSRoleServiceTest {
     private RoleService roleService;
     private RoleDao roleDao;
     private Role firstTestRole;
+    private Optional<Role> firstTestRoleOptional;
     private Role firstChangeTestRole;
     private Role secondTestRole;
 
     @Before
     public void setUp() {
-        roleService = new RoleService();
+        roleService = new NNSRoleService();
         roleDao = mock(RoleDao.class);
         roleService.setRoleDao(roleDao);
         firstTestRole = new Role(1, "Admin");
+        firstTestRoleOptional = Optional.of(firstTestRole);
         firstChangeTestRole = new Role(1, "Dog");
         secondTestRole = new Role(2, "User");
     }
 
     @Test
-    public void addRolePositiveTest() throws DaoStoreException, ServiceStoreException {
+    public void addRolePositiveTest() throws NSSDaoStoreException, NNSServiceStoreException {
         when(roleDao.add(firstTestRole)).thenReturn(true);
         List<Role> roles = new ArrayList<>();
         roles.add(secondTestRole);
@@ -41,7 +45,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void addRoleNegativeTest() throws DaoStoreException, ServiceStoreException {
+    public void addRoleNegativeTest() throws NSSDaoStoreException, NNSServiceStoreException {
         firstTestRole.setName("");
         when(roleDao.add(firstTestRole)).thenReturn(true);
         List<Role> roles = new ArrayList<>();
@@ -51,7 +55,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void findAllRolesTest() throws DaoStoreException, ServiceStoreException {
+    public void findAllRolesTest() throws NSSDaoStoreException, NNSServiceStoreException {
         List<Role> roles = new ArrayList<>();
         roles.add(firstTestRole);
         when(roleDao.findAll()).thenReturn(roles);
@@ -59,29 +63,29 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void findRoleByIdPositiveTest() throws DaoStoreException, ServiceStoreException {
-        when(roleDao.findById(1)).thenReturn(firstTestRole);
+    public void findRoleByIdPositiveTest() throws NSSDaoStoreException, NNSServiceStoreException {
+        when(roleDao.findById(1)).thenReturn(firstTestRoleOptional);
         Assert.assertEquals(roleService.findRoleById("1"), firstTestRole);
     }
 
-    @Test(expected = ServiceStoreException.class)
-    public void findRoleByIdWithInvalidRoleIdTest() throws ServiceStoreException {
+    @Test(expected = NNSServiceStoreException.class)
+    public void findRoleByIdWithInvalidRoleIdTest() throws NNSServiceStoreException {
         roleService.findRoleById("ege");
     }
 
     @Test
-    public void removeRoleTest() throws DaoStoreException, ServiceStoreException {
+    public void removeRoleTest() throws NSSDaoStoreException, NNSServiceStoreException {
         when(roleDao.remove(1)).thenReturn(true);
         Assert.assertTrue(roleService.removeRole("1"));
     }
 
-    @Test(expected = ServiceStoreException.class)
-    public void removeUserWithInvalidRemoveTest() throws ServiceStoreException {
+    @Test(expected = NNSServiceStoreException.class)
+    public void removeUserWithInvalidRemoveTest() throws NNSServiceStoreException {
         roleService.removeRole("Ivan");
     }
 
     @Test
-    public void updateRolePositiveTest() throws DaoStoreException, ServiceStoreException {
+    public void updateRolePositiveTest() throws NSSDaoStoreException, NNSServiceStoreException {
         List<Role> roles = new ArrayList<>();
         roles.add(firstTestRole);
         roles.add(secondTestRole);
@@ -91,7 +95,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void updateRoleNegativeTest() throws DaoStoreException, ServiceStoreException {
+    public void updateRoleNegativeTest() throws NSSDaoStoreException, NNSServiceStoreException {
         List<Role> roles = new ArrayList<>();
         roles.add(firstTestRole);
         roles.add(secondTestRole);

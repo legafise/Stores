@@ -1,10 +1,8 @@
 package com.lashkevich.stores.service;
 
-import com.lashkevich.stores.dao.CountryDao;
-import com.lashkevich.stores.dao.GoodDao;
 import com.lashkevich.stores.dao.GoodPriceDao;
 import com.lashkevich.stores.entity.GoodPrice;
-import com.lashkevich.stores.exception.ServiceStoreException;
+import com.lashkevich.stores.exception.NNSServiceStoreException;
 
 import java.util.List;
 
@@ -14,21 +12,21 @@ public interface GoodPriceService {
 
     void setGoodPriceDao(GoodPriceDao goodPriceDao);
 
-    GoodDao getGoodDao();
+    GoodService getGoodService();
 
-    void setGoodDao(GoodDao goodDao);
+    void setGoodService(GoodService goodService);
 
-    CountryDao getCountryDao();
+    CountryService getCountryService();
 
-    void setCountryDao(CountryDao countryDao);
+    void setCountryService(CountryService countryService);
 
-    boolean addGoodPrice(GoodPrice goodPrice) throws ServiceStoreException;
+    boolean addGoodPrice(GoodPrice goodPrice) throws NNSServiceStoreException;
 
-    List<GoodPrice> findAllGoodPrices() throws ServiceStoreException ;
+    List<GoodPrice> findAllGoodPrices() throws NNSServiceStoreException;
 
-    GoodPrice findGoodPriceByCountryAndGoodId(String countryId, String goodId) throws ServiceStoreException;
+    GoodPrice findGoodPriceByCountryAndGoodId(String countryId, String goodId) throws NNSServiceStoreException;
 
-    boolean removeGoodPriceByCountryAndGoodId(String countryId, String goodId) throws ServiceStoreException;
+    boolean removeGoodPriceByCountryAndGoodId(String countryId, String goodId) throws NNSServiceStoreException;
 
-    boolean updateGoodPriceByCountryAndGoodId(String countryId, String goodId, GoodPrice goodPrice) throws ServiceStoreException;
+    boolean updateGoodPriceByCountryAndGoodId(String countryId, String goodId, GoodPrice goodPrice) throws NNSServiceStoreException;
 }

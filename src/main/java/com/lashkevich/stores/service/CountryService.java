@@ -2,7 +2,7 @@ package com.lashkevich.stores.service;
 
 import com.lashkevich.stores.dao.CountryDao;
 import com.lashkevich.stores.entity.Country;
-import com.lashkevich.stores.exception.ServiceStoreException;
+import com.lashkevich.stores.exception.NNSServiceStoreException;
 
 import java.util.List;
 
@@ -12,13 +12,13 @@ public interface CountryService {
 
     void setCountryDao(CountryDao countryDao);
 
-    boolean addCountry(Country country) throws ServiceStoreException;
+    boolean addCountry(Country country) throws NNSServiceStoreException;
 
-    List<Country> findAllCountries() throws ServiceStoreException;
+    List<Country> findAllCountries() throws NNSServiceStoreException;
 
-    Country findCountryById(String id) throws ServiceStoreException;
+    Country findCountryById(String id) throws NNSServiceStoreException;
 
-    boolean removeCountry(String id) throws ServiceStoreException;
+    boolean removeCountry(String id) throws NNSServiceStoreException;
 
-    boolean updateCountry(Country country) throws ServiceStoreException;
+    boolean updateCountry(Country country) throws NNSServiceStoreException;
 }
