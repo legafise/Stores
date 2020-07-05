@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CountryDuplicationsCheckerTest {
+public class NNSCountryDuplicationsCheckerTest {
     private Country firstTestCountry;
     private Country secondTestCountry;
     private List<Country> testCountryList;
@@ -23,12 +23,12 @@ public class CountryDuplicationsCheckerTest {
 
     @Test
     public void checkPositiveTest() {
-        Assert.assertTrue(CountryDuplicationsChecker.check(firstTestCountry, testCountryList));
+        Assert.assertTrue(NNSCountryDuplicationsChecker.check(firstTestCountry, testCountryList));
     }
 
     @Test
     public void checkNegativeTest() {
         testCountryList.add(firstTestCountry);
-        Assert.assertFalse(CountryDuplicationsChecker.check(firstTestCountry, testCountryList));
+        Assert.assertFalse(NNSCountryDuplicationsChecker.check(firstTestCountry, testCountryList));
     }
 }

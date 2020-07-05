@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CountryValidatorTest {
+public class NNSCountryValidatorTest {
     private Country testCountry;
 
     @Before
@@ -15,12 +15,12 @@ public class CountryValidatorTest {
 
     @Test
     public void validatePositiveTest() {
-        Assert.assertTrue(CountryValidator.validate(testCountry));
+        Assert.assertTrue(NNSCountryValidator.validate(testCountry));
     }
 
     @Test
     public void validateNegativeTest() {
         testCountry.setName("");
-        Assert.assertFalse(CountryValidator.validate(testCountry));
+        Assert.assertFalse(NNSCountryValidator.validate(testCountry));
     }
 }

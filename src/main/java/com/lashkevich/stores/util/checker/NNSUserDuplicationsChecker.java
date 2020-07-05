@@ -5,7 +5,10 @@ import com.lashkevich.stores.entity.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDuplicationsChecker {
+public final class NNSUserDuplicationsChecker {
+    private NNSUserDuplicationsChecker() {
+    }
+
     public static boolean checkUserAdding(List<User> usersList, User user) {
         for (User currentUser : usersList) {
             if (user.getId() == currentUser.getId() || user.getLogin().equals(currentUser.getLogin()) ||

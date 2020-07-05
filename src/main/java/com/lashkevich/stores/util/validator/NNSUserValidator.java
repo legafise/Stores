@@ -5,14 +5,17 @@ import com.lashkevich.stores.entity.User;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
-public class UserValidator {
+public final class NNSUserValidator {
     public static final String EMAIL_PATTERN = "^[a-zA-Z0-9А-Яа-я](([a-zA-Z0-9А-Яа-я])|([^a-zA-Z0-9А-Яа-я@][a-zA-Z0-9А-Яа-я]))" +
             "+@[^@.](([a-zA-Z0-9А-Яа-я])|([^a-zA-Z0-9А-Яа-я@!#$%&'*+/=?^_`{|}~][a-zA-Z0-9А-Яа-я]))+[.][^@.!#$%&'*+-/=?^_`{|}~]+$";
+
+    private NNSUserValidator() {
+    }
 
     public static boolean validate(User user) {
         return user != null && validateName(user.getName()) && validateSurname(user.getSurname()) && validateLogin(user.getLogin()) &&
                 validatePassword(user.getPassword()) && validateBirthDate(user.getBirthDate()) &&
-                validateEmail(user.getEmail()) && CityValidator.validate(user.getCity()) && BasketValidator.validate(user.getBasket());
+                validateEmail(user.getEmail()) && NNSCityValidator.validate(user.getCity()) && NNSBasketValidator.validate(user.getBasket());
     }
 
     private static boolean validateName(String name) {

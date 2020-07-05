@@ -2,7 +2,10 @@ package com.lashkevich.stores.util.validator;
 
 import com.lashkevich.stores.entity.Role;
 
-public class RoleValidator {
+public final class NNSRoleValidator {
+    private NNSRoleValidator() {
+    }
+
     public static boolean validate(Role role) {
         return role != null && validateName(role.getName());
     }

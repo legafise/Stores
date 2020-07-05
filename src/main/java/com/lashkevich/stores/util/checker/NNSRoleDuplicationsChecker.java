@@ -4,7 +4,10 @@ import com.lashkevich.stores.entity.Role;
 
 import java.util.List;
 
-public class RoleDuplicationsChecker {
+public final class NNSRoleDuplicationsChecker {
+    private NNSRoleDuplicationsChecker() {
+    }
+
     public static boolean check(Role role, List<Role> roleList) {
         for (Role currentRole : roleList) {
             if (currentRole.getName().equals(role.getName())) {

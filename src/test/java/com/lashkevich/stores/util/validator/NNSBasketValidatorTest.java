@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BasketValidatorTest {
+public class NNSBasketValidatorTest {
     private Basket testBasket;
     private Good testGood;
 
@@ -23,11 +23,11 @@ public class BasketValidatorTest {
 
     @Test
     public void validatePositiveTest() {
-        Assert.assertTrue(BasketValidator.validate(testBasket));
+        Assert.assertTrue(NNSBasketValidator.validate(testBasket));
     }
 
     @Test
     public void validateNegativeTest() {
-        Assert.assertFalse(BasketValidator.validate(null));
+        Assert.assertFalse(NNSBasketValidator.validate(null));
     }
 }

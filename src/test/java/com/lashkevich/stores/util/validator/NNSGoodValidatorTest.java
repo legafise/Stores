@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GoodValidatorTest {
+public class NNSGoodValidatorTest {
     private Good testGood;
 
     @Before
@@ -15,12 +15,12 @@ public class GoodValidatorTest {
 
     @Test
     public void validatePositiveTest() {
-        Assert.assertTrue(GoodValidator.validate(testGood));
+        Assert.assertTrue(NNSGoodValidator.validate(testGood));
     }
 
     @Test
     public void validateNegativeTest() {
         testGood.setName("s");
-        Assert.assertFalse(GoodValidator.validate(testGood));
+        Assert.assertFalse(NNSGoodValidator.validate(testGood));
     }
 }

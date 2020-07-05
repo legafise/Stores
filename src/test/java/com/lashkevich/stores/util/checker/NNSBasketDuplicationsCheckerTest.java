@@ -6,15 +6,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class BasketDuplicationsCheckerTest {
+public class NNSBasketDuplicationsCheckerTest {
     private Basket firstTestBasket;
     private Basket secondTestBasket;
-    private List<Basket> testBasketList;
     private Good firstTestGood;
     private Good secondTestGood;
 
@@ -29,19 +26,15 @@ public class BasketDuplicationsCheckerTest {
         Map<Good, Integer>  secondTestGoodMap = new HashMap<>();
         secondTestGoodMap.put(secondTestGood, 2);
         secondTestBasket = new Basket(secondTestGoodMap);
-
-        testBasketList = new ArrayList<>();
-        testBasketList.add(secondTestBasket);
     }
 
     @Test
     public void checkPositiveTest() {
-        Assert.assertTrue(BasketDuplicationsChecker.check(firstTestBasket, testBasketList));
+        Assert.assertTrue(NNSBasketDuplicationsChecker.check(firstTestBasket, secondTestBasket));
     }
 
     @Test
     public void checkNegativeTest() {
-        testBasketList.add(firstTestBasket);
-        Assert.assertFalse(BasketDuplicationsChecker.check(firstTestBasket, testBasketList));
+        Assert.assertFalse(NNSBasketDuplicationsChecker.check(firstTestBasket, firstTestBasket));
     }
 }

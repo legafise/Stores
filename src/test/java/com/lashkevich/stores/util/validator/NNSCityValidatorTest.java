@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CityValidatorTest {
+public class NNSCityValidatorTest {
     private City testCity;
 
     @Before
@@ -16,12 +16,12 @@ public class CityValidatorTest {
 
     @Test
     public void validatePositiveTest() {
-        Assert.assertTrue(CityValidator.validate(testCity));
+        Assert.assertTrue(NNSCityValidator.validate(testCity));
     }
 
     @Test
     public void validateNegativeTest() {
         testCity.setName("");
-        Assert.assertFalse(CityValidator.validate(testCity));
+        Assert.assertFalse(NNSCityValidator.validate(testCity));
     }
 }

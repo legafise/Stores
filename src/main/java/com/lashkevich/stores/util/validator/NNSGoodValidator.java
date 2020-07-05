@@ -2,7 +2,10 @@ package com.lashkevich.stores.util.validator;
 
 import com.lashkevich.stores.entity.Good;
 
-public class GoodValidator {
+public final class NNSGoodValidator {
+    private NNSGoodValidator() {
+    }
+
     public static boolean validate(Good good) {
         return good != null && validateDescription(good.getDescription()) && validateName(good.getName()) && validateSummary(good.getSummary());
     }

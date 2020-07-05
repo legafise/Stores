@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 
-public class GoodPriceValidatorTest {
+public class NNSGoodPriceValidatorTest {
     private GoodPrice testGoodPrice;
 
     @Before
@@ -19,12 +19,12 @@ public class GoodPriceValidatorTest {
 
     @Test
     public void validatePositiveTest() {
-        Assert.assertTrue(GoodPriceValidator.validate(testGoodPrice));
+        Assert.assertTrue(NNSGoodPriceValidator.validate(testGoodPrice));
     }
 
     @Test
     public void validateNegativeTest() {
         testGoodPrice.setPrice(new BigDecimal("0.0"));
-        Assert.assertFalse(GoodPriceValidator.validate(testGoodPrice));
+        Assert.assertFalse(NNSGoodPriceValidator.validate(testGoodPrice));
     }
 }

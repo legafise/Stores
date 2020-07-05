@@ -4,7 +4,10 @@ import com.lashkevich.stores.entity.GoodPrice;
 
 import java.util.List;
 
-public class GoodPriceDuplicationsChecker {
+public final class NNSGoodPriceDuplicationsChecker {
+    private NNSGoodPriceDuplicationsChecker() {
+    }
+
     public static boolean checkGoodAdding(GoodPrice goodPrice, List<GoodPrice> goodPriceList) {
         for (GoodPrice currentGoodPrice : goodPriceList) {
             if (goodPrice.getCountry().equals(currentGoodPrice.getCountry()) && goodPrice.getGood().equals(currentGoodPrice.getGood())) {

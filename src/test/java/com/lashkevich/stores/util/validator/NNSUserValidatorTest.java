@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
-public class UserValidatorTest {
+public class NNSUserValidatorTest {
     private User testUser;
 
     @Before
@@ -22,12 +22,12 @@ public class UserValidatorTest {
 
     @Test
     public void validatePositiveTest() {
-        Assert.assertTrue(UserValidator.validate(testUser));
+        Assert.assertTrue(NNSUserValidator.validate(testUser));
     }
 
     @Test
     public void validateNegativeTest() {
         testUser.setEmail("roma");
-        Assert.assertFalse(UserValidator.validate(testUser));
+        Assert.assertFalse(NNSUserValidator.validate(testUser));
     }
 }

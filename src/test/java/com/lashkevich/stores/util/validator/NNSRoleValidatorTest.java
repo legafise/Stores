@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class RoleValidatorTest {
+public class NNSRoleValidatorTest {
     private Role testRole;
 
     @Before
@@ -15,12 +15,12 @@ public class RoleValidatorTest {
 
     @Test
     public void validatePositiveTest() {
-        Assert.assertTrue(RoleValidator.validate(testRole));
+        Assert.assertTrue(NNSRoleValidator.validate(testRole));
     }
 
     @Test
     public void validateNegativeTest() {
         testRole.setName("");
-        Assert.assertFalse(RoleValidator.validate(testRole));
+        Assert.assertFalse(NNSRoleValidator.validate(testRole));
     }
 }

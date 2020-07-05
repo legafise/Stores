@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoodPriceDuplicationsCheckerTest {
+public class NNSGoodPriceDuplicationsCheckerTest {
     private GoodPrice firstTestGoodPrice;
     private GoodPrice firstChangeTestGoodPrice;
     private GoodPrice secondTestGoodPrice;
@@ -28,24 +28,24 @@ public class GoodPriceDuplicationsCheckerTest {
 
     @Test
     public void checkGoodAddingPositiveTest() {
-        Assert.assertTrue(GoodPriceDuplicationsChecker.checkGoodAdding(firstTestGoodPrice, testGoodPriceList));
+        Assert.assertTrue(NNSGoodPriceDuplicationsChecker.checkGoodAdding(firstTestGoodPrice, testGoodPriceList));
     }
 
     @Test
     public void checkGoodAddingNegativeTest() {
         testGoodPriceList.add(firstChangeTestGoodPrice);
-        Assert.assertFalse(GoodPriceDuplicationsChecker.checkGoodAdding(firstTestGoodPrice, testGoodPriceList));
+        Assert.assertFalse(NNSGoodPriceDuplicationsChecker.checkGoodAdding(firstTestGoodPrice, testGoodPriceList));
     }
 
     @Test
     public void checkGoodUpdatingPositiveTest() {
         testGoodPriceList.add(firstTestGoodPrice);
-        Assert.assertTrue(GoodPriceDuplicationsChecker.checkGoodUpdating(firstChangeTestGoodPrice, testGoodPriceList, 22, 1));
+        Assert.assertTrue(NNSGoodPriceDuplicationsChecker.checkGoodUpdating(firstChangeTestGoodPrice, testGoodPriceList, 22, 1));
     }
 
     @Test
     public void checkGoodUpdatingNegativeTest() {
         testGoodPriceList.add(firstTestGoodPrice);
-        Assert.assertFalse(GoodPriceDuplicationsChecker.checkGoodUpdating(secondTestGoodPrice, testGoodPriceList, 22, 1));
+        Assert.assertFalse(NNSGoodPriceDuplicationsChecker.checkGoodUpdating(secondTestGoodPrice, testGoodPriceList, 22, 1));
     }
 }

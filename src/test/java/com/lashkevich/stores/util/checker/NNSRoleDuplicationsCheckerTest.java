@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoleDuplicationsCheckerTest {
+public class NNSRoleDuplicationsCheckerTest {
     private Role firstTestRole;
     private Role secondTestRole;
     private List<Role> testRoleList;
@@ -23,12 +23,12 @@ public class RoleDuplicationsCheckerTest {
 
     @Test
     public void checkPositiveTest() {
-        Assert.assertTrue(RoleDuplicationsChecker.check(firstTestRole, testRoleList));
+        Assert.assertTrue(NNSRoleDuplicationsChecker.check(firstTestRole, testRoleList));
     }
 
     @Test
     public void checkNegativeTest() {
         testRoleList.add(firstTestRole);
-        Assert.assertFalse(RoleDuplicationsChecker.check(firstTestRole, testRoleList));
+        Assert.assertFalse(NNSRoleDuplicationsChecker.check(firstTestRole, testRoleList));
     }
 }

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDuplicationsCheckerTest {
+public class NNSUserDuplicationsCheckerTest {
     private User firstTestUser;
     private User firstChangeTestUser;
     private User secondTestUser;
@@ -39,24 +39,24 @@ public class UserDuplicationsCheckerTest {
 
     @Test
     public void checkUserAddingPositiveTest() {
-        Assert.assertTrue(UserDuplicationsChecker.checkUserAdding(testUserList, firstTestUser));
+        Assert.assertTrue(NNSUserDuplicationsChecker.checkUserAdding(testUserList, firstTestUser));
     }
 
     @Test
     public void checkUserAddingNegativeTest() {
         testUserList.add(firstChangeTestUser);
-        Assert.assertFalse(UserDuplicationsChecker.checkUserAdding(testUserList, firstTestUser));
+        Assert.assertFalse(NNSUserDuplicationsChecker.checkUserAdding(testUserList, firstTestUser));
     }
 
     @Test
     public void checkUserUpdatingPositiveTest() {
         testUserList.add(firstTestUser);
-        Assert.assertTrue(UserDuplicationsChecker.checkUserUpdating(testUserList, firstChangeTestUser));
+        Assert.assertTrue(NNSUserDuplicationsChecker.checkUserUpdating(testUserList, firstChangeTestUser));
     }
 
     @Test
     public void checkUserUpdatingNegativeTest() {
         testUserList.add(firstTestUser);
-        Assert.assertFalse(UserDuplicationsChecker.checkUserUpdating(testUserList, secondChangeTestUser));
+        Assert.assertFalse(NNSUserDuplicationsChecker.checkUserUpdating(testUserList, secondChangeTestUser));
     }
 }
