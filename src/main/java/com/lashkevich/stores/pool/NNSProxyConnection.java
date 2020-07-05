@@ -1,17 +1,17 @@
 package com.lashkevich.stores.pool;
 
-import com.lashkevich.stores.exception.ConnectionPoolException;
-import com.lashkevich.stores.exception.ProxyConnectionException;
+import com.lashkevich.stores.exception.NNSConnectionPoolException;
+import com.lashkevich.stores.exception.NNSProxyConnectionException;
 
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-public class ProxyConnection implements Connection {
+public class NNSProxyConnection implements Connection {
     private Connection connection;
 
-    public ProxyConnection(Connection connection) {
+    public NNSProxyConnection(Connection connection) {
         this.connection = connection;
     }
 
@@ -26,9 +26,9 @@ public class ProxyConnection implements Connection {
     @Override
     public void close() {
         try {
-            ConnectionPool.getInstance().putBackConnection(this);
-        } catch (ConnectionPoolException e) {
-            throw new ProxyConnectionException();
+            NNSConnectionPool.getInstance().putBackConnection(this);
+        } catch (NNSConnectionPoolException e) {
+            throw new NNSProxyConnectionException();
         }
     }
 
