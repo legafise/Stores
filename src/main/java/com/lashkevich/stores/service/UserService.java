@@ -1,9 +1,8 @@
 package com.lashkevich.stores.service;
 
-import com.lashkevich.stores.dao.CityDao;
 import com.lashkevich.stores.dao.UserDao;
 import com.lashkevich.stores.entity.User;
-import com.lashkevich.stores.exception.ServiceStoreException;
+import com.lashkevich.stores.exception.NNSServiceStoreException;
 
 import java.util.List;
 
@@ -13,18 +12,18 @@ public interface UserService {
 
     void setUserDao(UserDao userDao);
 
-    CityDao getCityDao();
+    CityService getCityService();
 
-    void setCityDao(CityDao cityDao);
+    void setCityService(CityService cityService);
 
-    User findUserById(String id) throws ServiceStoreException;
+    User findUserById(String id) throws NNSServiceStoreException;
 
-    List<User> findAllUsers() throws ServiceStoreException;
+    List<User> findAllUsers() throws NNSServiceStoreException;
 
-    boolean addUser(User user) throws ServiceStoreException;
+    boolean addUser(User user) throws NNSServiceStoreException;
 
-    boolean updateUser(User user) throws ServiceStoreException;
+    boolean updateUser(User user) throws NNSServiceStoreException;
 
-    boolean removeUser(String id) throws ServiceStoreException;
+    boolean removeUser(String id) throws NNSServiceStoreException;
 
 }

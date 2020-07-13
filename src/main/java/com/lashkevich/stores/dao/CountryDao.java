@@ -1,21 +1,22 @@
 package com.lashkevich.stores.dao;
 
 import com.lashkevich.stores.entity.Country;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.util.provider.ConnectionProvider;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.util.reader.PropertiesReader;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CountryDao {
-    void setConnectionProvider(ConnectionProvider connectionProvider);
+    void setPropertiesReader(PropertiesReader propertiesReader);
 
-    boolean add(Country country) throws DaoStoreException;
+    boolean add(Country country) throws NSSDaoStoreException;
 
-    List<Country> findAll() throws DaoStoreException;
+    List<Country> findAll() throws NSSDaoStoreException;
 
-    Country findById(long id) throws DaoStoreException;
+    Optional<Country> findById(long id) throws NSSDaoStoreException;
 
-    boolean update(Country country) throws DaoStoreException;
+    boolean update(Country country) throws NSSDaoStoreException;
 
-    boolean remove(long id) throws DaoStoreException;
+    boolean remove(long id) throws NSSDaoStoreException;
 }

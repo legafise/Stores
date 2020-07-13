@@ -1,10 +1,8 @@
 package com.lashkevich.stores.service;
 
 import com.lashkevich.stores.dao.BasketDao;
-import com.lashkevich.stores.dao.GoodDao;
-import com.lashkevich.stores.dao.UserDao;
 import com.lashkevich.stores.entity.Basket;
-import com.lashkevich.stores.exception.ServiceStoreException;
+import com.lashkevich.stores.exception.NNSServiceStoreException;
 
 import java.util.List;
 
@@ -13,21 +11,21 @@ public interface BasketService {
 
     void setBasketDao(BasketDao basketDao);
 
-    GoodDao getGoodDao();
+    GoodService getGoodService();
 
-    void setGoodDao(GoodDao goodDao);
+    void setGoodService(GoodService goodService);
 
-    UserDao getUserDao();
+    UserService getUserService();
 
-    void setUserDao(UserDao userDao);
+    void setUserService(UserService userService);
 
-    boolean addBasket(Basket basket, String userId) throws ServiceStoreException;
+    boolean addBasket(Basket basket, String userId) throws NNSServiceStoreException;
 
-    List<Basket> findAllBaskets() throws ServiceStoreException;
+    List<Basket> findAllBaskets() throws NNSServiceStoreException;
 
-    List<Basket> findBasketByUserId(String userId) throws ServiceStoreException;
+    Basket findBasketByUserId(String userId) throws NNSServiceStoreException;
 
-    boolean removeBasket(String id) throws ServiceStoreException;
+    boolean removeBasket(String id) throws NNSServiceStoreException;
 
-    boolean updateBasket(Basket basket, String userId) throws ServiceStoreException;
+    boolean updateBasket(Basket basket, String userId) throws NNSServiceStoreException;
 }

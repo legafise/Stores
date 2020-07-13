@@ -1,21 +1,22 @@
 package com.lashkevich.stores.dao;
 
 import com.lashkevich.stores.entity.Good;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.util.provider.ConnectionProvider;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.util.reader.PropertiesReader;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GoodDao {
-    void setConnectionProvider(ConnectionProvider connectionProvider);
+    void setPropertiesReader(PropertiesReader propertiesReader);
 
-    boolean add(Good good) throws DaoStoreException;
+    boolean add(Good good) throws NSSDaoStoreException;
 
-    List<Good> findAll() throws DaoStoreException;
+    List<Good> findAll() throws NSSDaoStoreException;
 
-    Good findById(long id) throws DaoStoreException;
+    Optional<Good> findById(long id) throws NSSDaoStoreException;
 
-    boolean update(Good good) throws DaoStoreException;
+    boolean update(Good good) throws NSSDaoStoreException;
 
-    boolean remove(long id) throws DaoStoreException;
+    boolean remove(long id) throws NSSDaoStoreException;
 }

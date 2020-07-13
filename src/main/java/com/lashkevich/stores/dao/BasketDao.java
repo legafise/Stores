@@ -1,21 +1,22 @@
 package com.lashkevich.stores.dao;
 
 import com.lashkevich.stores.entity.Basket;
-import com.lashkevich.stores.exception.DaoStoreException;
-import com.lashkevich.stores.util.provider.ConnectionProvider;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
+import com.lashkevich.stores.util.reader.PropertiesReader;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BasketDao {
-    void setConnectionProvider(ConnectionProvider connectionProvider);
+    void setPropertiesReader(PropertiesReader propertiesReader);
 
-    boolean add(Basket basket, long userId) throws DaoStoreException;
+    boolean add(Basket basket, long userId) throws NSSDaoStoreException;
 
-    List<Basket> findAll() throws DaoStoreException;
+    List<Basket> findAll() throws NSSDaoStoreException;
 
-    List<Basket> findByUser(long id) throws DaoStoreException;
+    Optional<Basket> findByUser(long id) throws NSSDaoStoreException;
 
-    boolean update(Basket basket, long userId) throws DaoStoreException;
+    boolean update(Basket basket, long userId) throws NSSDaoStoreException;
 
-    boolean remove(long userId) throws DaoStoreException;
+    boolean remove(long userId) throws NSSDaoStoreException;
 }

@@ -1,9 +1,8 @@
 package com.lashkevich.stores.service;
 
 import com.lashkevich.stores.dao.CityDao;
-import com.lashkevich.stores.dao.CountryDao;
 import com.lashkevich.stores.entity.City;
-import com.lashkevich.stores.exception.ServiceStoreException;
+import com.lashkevich.stores.exception.NNSServiceStoreException;
 
 import java.util.List;
 
@@ -13,17 +12,17 @@ public interface CityService {
 
     void setCityDao(CityDao cityDao);
 
-    CountryDao getCountryDao();
+    CountryService getCountryService();
 
-    void setCountryDao(CountryDao countryDao);
+    void setCountryService(CountryService countryService);
 
-    boolean addCity(City city) throws ServiceStoreException;
+    boolean addCity(City city) throws NNSServiceStoreException;
 
-    List<City> findAllCities() throws ServiceStoreException;
+    List<City> findAllCities() throws NNSServiceStoreException;
 
-    City findCityById(String id) throws ServiceStoreException;
+    City findCityById(String id) throws NNSServiceStoreException;
 
-    boolean removeCity(String id) throws ServiceStoreException;
+    boolean removeCity(String id) throws NNSServiceStoreException;
 
-    boolean updateCity(City city) throws ServiceStoreException;
+    boolean updateCity(City city) throws NNSServiceStoreException;
 }
