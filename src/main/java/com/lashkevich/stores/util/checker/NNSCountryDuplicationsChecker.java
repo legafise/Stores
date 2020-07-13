@@ -9,12 +9,7 @@ public final class NNSCountryDuplicationsChecker {
     }
 
     public static boolean check(Country country, List<Country> countryList) {
-        for (Country currentCounty : countryList) {
-            if (country.getName().equals(currentCounty.getName())) {
-                return false;
-            }
-        }
-
-        return true;
+        return countryList.stream()
+                .noneMatch(currentCountry -> country.getName().equals(currentCountry.getName()));
     }
 }

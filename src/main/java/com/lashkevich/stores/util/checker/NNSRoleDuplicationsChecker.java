@@ -9,12 +9,7 @@ public final class NNSRoleDuplicationsChecker {
     }
 
     public static boolean check(Role role, List<Role> roleList) {
-        for (Role currentRole : roleList) {
-            if (currentRole.getName().equals(role.getName())) {
-                return false;
-            }
-        }
-
-        return true;
+        return roleList.stream()
+                .noneMatch(currentRole -> currentRole.getName().equals(role.getName()));
     }
 }

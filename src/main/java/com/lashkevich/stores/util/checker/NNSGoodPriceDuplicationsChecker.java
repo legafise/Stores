@@ -9,13 +9,9 @@ public final class NNSGoodPriceDuplicationsChecker {
     }
 
     public static boolean checkGoodAdding(GoodPrice goodPrice, List<GoodPrice> goodPriceList) {
-        for (GoodPrice currentGoodPrice : goodPriceList) {
-            if (goodPrice.getCountry().equals(currentGoodPrice.getCountry()) && goodPrice.getGood().equals(currentGoodPrice.getGood())) {
-                return false;
-            }
-        }
-
-        return true;
+        return goodPriceList.stream()
+                .noneMatch(currentGoodPrice -> goodPrice.getCountry().equals(currentGoodPrice.getCountry()) &&
+                        goodPrice.getGood().equals(currentGoodPrice.getGood()));
     }
 
     public static boolean checkGoodUpdating(GoodPrice goodPrice, List<GoodPrice> goodPriceList, long goodId, long countryId) {
@@ -23,12 +19,8 @@ public final class NNSGoodPriceDuplicationsChecker {
             return true;
         }
 
-        for (GoodPrice currentGoodPrice : goodPriceList) {
-            if (goodPrice.getGood().equals(currentGoodPrice.getGood()) && goodPrice.getCountry().equals(currentGoodPrice.getCountry())) {
-                return false;
-            }
-        }
-
-        return true;
+        return goodPriceList.stream()
+                .noneMatch(currentGoodPrice -> goodPrice.getGood().equals(currentGoodPrice.getGood()) &&
+                        goodPrice.getCountry().equals(currentGoodPrice.getCountry()));
     }
 }

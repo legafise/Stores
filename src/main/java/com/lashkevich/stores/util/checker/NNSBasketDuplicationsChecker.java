@@ -7,7 +7,8 @@ public final class NNSBasketDuplicationsChecker {
     }
 
     public static boolean check(Basket currentUserBasket, Basket addUserBasket) {
-        return addUserBasket.getGoods().entrySet().stream().noneMatch((good) -> currentUserBasket.getGoods().containsKey(good.getKey()));
+        return addUserBasket.getGoods().entrySet().stream()
+                .noneMatch(good -> currentUserBasket.getGoods().containsKey(good.getKey()));
     }
 }
 
