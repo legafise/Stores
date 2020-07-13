@@ -11,5 +11,3 @@ public final class NNSBasketDuplicationsChecker {
                 .noneMatch(good -> currentUserBasket.getGoods().containsKey(good.getKey()));
     }
 }
-
-
