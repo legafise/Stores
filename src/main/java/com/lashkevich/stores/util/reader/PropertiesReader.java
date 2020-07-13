@@ -19,7 +19,7 @@ public interface PropertiesReader {
             FileInputStream fileInputStream = new FileInputStream(path);
             properties.load(fileInputStream);
         } catch (IOException e) {
-            throw new NNSUtilException();
+            throw new NNSUtilException(e);
         }
 
         return properties;
