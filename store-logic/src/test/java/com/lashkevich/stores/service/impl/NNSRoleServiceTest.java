@@ -2,8 +2,8 @@ package com.lashkevich.stores.service.impl;
 
 import com.lashkevich.stores.dao.RoleDao;
 import com.lashkevich.stores.entity.Role;
-import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.exception.NNSServiceStoreException;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.service.RoleService;
 import org.junit.Assert;
 import org.junit.Before;

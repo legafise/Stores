@@ -3,8 +3,8 @@ package com.lashkevich.stores.service.impl;
 import com.lashkevich.stores.dao.GoodDao;
 import com.lashkevich.stores.dao.impl.NNSGoodDao;
 import com.lashkevich.stores.entity.Good;
-import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.exception.NNSServiceStoreException;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.service.GoodService;
 import com.lashkevich.stores.util.validator.NNSGoodValidator;
 

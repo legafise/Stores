@@ -2,8 +2,8 @@ package com.lashkevich.stores.service.impl;
 
 import com.lashkevich.stores.dao.BasketDao;
 import com.lashkevich.stores.entity.*;
-import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.exception.NNSServiceStoreException;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.service.BasketService;
 import com.lashkevich.stores.service.GoodService;
 import com.lashkevich.stores.service.UserService;
