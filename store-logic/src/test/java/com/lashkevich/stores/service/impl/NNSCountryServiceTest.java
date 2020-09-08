@@ -2,8 +2,8 @@ package com.lashkevich.stores.service.impl;
 
 import com.lashkevich.stores.dao.CountryDao;
 import com.lashkevich.stores.entity.Country;
-import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.exception.NNSServiceStoreException;
+import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.service.CountryService;
 import org.junit.Assert;
 import org.junit.Before;
