@@ -1,0 +1,182 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 65px;
+}
+
+main {
+	margin-bottom: 100px;
+}
+
+footer {
+	position: absolute;
+  	bottom: 0;
+  	width: 100%;
+  	height: 65px;
+	background-color: #303B44;
+	color: #fff;
+	font-size: 18px;
+	font-family: "Segoe UI";
+}
+
+.navbar	{
+	background-color: #303B44!important;
+}
+
+.navbar-brand {
+	font-family: Tahoma;
+	max-height: 50px;
+	font-size: 2.5rem;
+	display: flex;
+	align-items: center;
+	margin: 0;
+}
+
+.nav-link {
+	font-family: "Segoe UI";
+	font-size: 1.3rem;
+
+}
+
+.basket-indents {
+	margin-right: 8px;
+}
+
+.name {
+	font-family: Tahoma;
+	margin-top: 20px;
+	font-size: 3vh!important;
+}
+
+.footer-indents {
+	margin-top: 4px;
+}
+
+.description {
+	font-size: 1.22rem;
+	font-family: Arial;
+}
+
+.good-idents {
+	margin-top: 8px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.basket-button {
+  background: url("../img/black_basket.png") 5px center no-repeat;
+  background-size: 30px;
+}
+
+.basket-button:hover {
+	background: url("../img/gray_basket.png") 5px center no-repeat;
+	background-size: 31px;
+	color: #E7E7E7;
+	background-color: #303B44;
+	font-size: 23px;
+	padding-left: 42px;
+}
+
+.basket-button {
+    background-color: #FFFFFF;
+	font-size: 20px;
+	padding: 5px;
+	padding-left: 40px;
+	color: #303B44;
+	float: left;
+	margin-right: 10px;
+	font-family: "Franklin Gothic Medium";
+	border: 2px solid #303B44;
+	border-radius: 4px;
+	background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: 20px left;
+    transition: all .4s;
+}
+
+.more-button:hover {
+	color: #E7E7E7;
+	background-color: #303B44;
+	font-size: 1.3rem;
+}
+
+.more-button {
+	background-color: #FFFFFF;
+	font-size: 1.2rem;
+	padding: 5px;
+	color: #303B44;
+	font-family: "Franklin Gothic Medium";
+	border: 2px solid #303B44;
+	border-radius: 4px;
+	transition: all .3s;
+}
+
+.buy-button:hover {
+	color: #E7E7E7;
+	background-color: #303B44;
+	font-size: 23px;
+}
+
+.buy-button {
+	background-color: #FFFFFF;
+	font-size: 20px;
+	padding: 5px;
+	color: #303B44;
+	float: left;
+	margin-right: 10px;
+	font-family: "Franklin Gothic Medium";
+	border: 2px solid #303B44;
+	border-radius: 4px;
+	transition: all .3s;
+}
+
+.buttons-idents {
+	margin-bottom: 60px;
+}
+
+.img-idents {
+	margin-bottom: 10px;
+}
+
+.price {
+	font-family: Tahoma;
+	font-weight: bold;
+	font-size: 1.25rem;
+	margin-bottom: 6px;
+}
+
+.short-description {
+	font-family: Tahoma;
+	font-weight: bold;
+	font-size: 1.15rem;
+}
+
+.short-description>a {
+	color: black!important;
+}
+
+.card-title {
+	font-size: 1.3rem!important;
+}
+
+.short-description>a:hover {
+	text-decoration: none;
+}
+
+.img-size {
+	height: 30vh;
+	overflow: hidden;
+}
+
+.card-size {
+	overflow: hidden;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    min-height: 45vh;
+}
+
