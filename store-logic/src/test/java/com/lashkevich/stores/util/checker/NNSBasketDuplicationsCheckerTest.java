@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,12 +18,12 @@ public class NNSBasketDuplicationsCheckerTest {
 
     @Before
     public void setUp() {
-        firstTestGood = new Good(23, "Android", "Android", "Android");
+        firstTestGood = new Good(23, "Android", new BigDecimal("2.0"), "Android", "Android", "Android");
         Map<Good, Integer> firstTestGoodMap = new HashMap<>();
         firstTestGoodMap.put(firstTestGood, 1);
         firstTestBasket = new Basket(firstTestGoodMap);
 
-        secondTestGood = new Good(22, "Apple", "Apple", "Apple");
+        secondTestGood = new Good(22, "Apple", new BigDecimal("1.0"), "Apple", "Apple", "Apple");
         Map<Good, Integer>  secondTestGoodMap = new HashMap<>();
         secondTestGoodMap.put(secondTestGood, 2);
         secondTestBasket = new Basket(secondTestGoodMap);
