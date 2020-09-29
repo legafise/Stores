@@ -3,6 +3,7 @@ package com.lashkevich.stores.dao.impl;
 import com.lashkevich.stores.dao.CityDao;
 import com.lashkevich.stores.entity.City;
 import com.lashkevich.stores.entity.Country;
+import com.lashkevich.stores.entity.Currency;
 import com.lashkevich.stores.exception.NNSConnectionPoolException;
 import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.pool.NNSConnectionPool;
@@ -12,6 +13,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +31,10 @@ public class NNSCityDaoTest {
         NNSConnectionPool.getInstance().setPropertiesReader(testPropertiesReader);
         NNSConnectionPool.getInstance().initializeConnectionPool(1);
 
-        firstExpectedCity = new City(1, "Minsk", new Country(1, "Belarus"));
-        secondExpectedCity = new City(2, "Moscow", new Country(2, "Russia"));
-        thirdExpectedCity = new City(3, "Gomel", new Country(1, "Belarus"));
-        fourthExpectedCity = new City(4, "Smolensk", new Country(2, "Russia"));
+        firstExpectedCity = new City(1, "Minsk", new Country(1, "Belarus", new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN")));
+        secondExpectedCity = new City(2, "Moscow", new Country(2, "Russia", new Currency(3, "Russian ruble", new BigDecimal("76.8"), "RUB")));
+        thirdExpectedCity = new City(3, "Gomel", new Country(1, "Belarus", new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN")));
+        fourthExpectedCity = new City(4, "Smolensk", new Country(2, "Russia", new Currency(3, "Russian ruble", new BigDecimal("76.8"), "RUB")));
 
         cityDao = new NNSCityDao();
         cityDao.setPropertiesReader(testPropertiesReader);

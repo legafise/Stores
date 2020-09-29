@@ -17,16 +17,21 @@ public class NNSDaoMapper {
     private static final String ROLE_ID = "role_id";
     private static final String ROLE_NAME = "role_name";
     private static final String CITY_ID = "city_id";
+    private static final String CURRENCY_ID = "currency_id";
     private static final String CITY_NAME = "city_name";
     private static final String COUNTRY_ID = "country_id";
     private static final String COUNTRY_NAME = "country_name";
+    private static final String CURRENCY_NAME = "currency_name";
+    private static final String CURRENCY_COEFFICIENT = "currency_coefficient";
+    private static final String CURRENCY_SYMBOL = "currency_symbol";
     private static final String GOOD_ID = "good_id";
+    private static final String GOOD_IMG = "good_img";
     private static final String GOOD_NAME = "good_name";
     private static final String GOOD_SUMMARY = "good_summary";
     private static final String GOOD_DESCRIPTION = "good_description";
     private static final String USER_ID = "user_id";
     private static final String USER_NAME = "user_name";
-    private static final String PRICE = "price";
+    private static final String GOOD_PRICE = "good_price";
     private static final String QUANTITY = "quantity";
 
     public static Role mapRole(ResultSet resultSet) throws SQLException {
@@ -40,6 +45,7 @@ public class NNSDaoMapper {
         Country country = new Country();
         country.setId(resultSet.getLong(COUNTRY_ID));
         country.setName(resultSet.getString(COUNTRY_NAME));
+        country.setCurrency(mapCurrency(resultSet));
         return country;
     }
 
@@ -76,6 +82,9 @@ public class NNSDaoMapper {
         good.setName(resultSet.getString(GOOD_NAME));
         good.setSummary(resultSet.getString(GOOD_SUMMARY));
         good.setDescription(resultSet.getString(GOOD_DESCRIPTION));
+        good.setPrice(resultSet.getBigDecimal(GOOD_PRICE));
+        good.setImgURL(resultSet.getString(GOOD_IMG));
+
         return good;
     }
 
@@ -99,12 +108,14 @@ public class NNSDaoMapper {
         return basket;
     }
 
-    public static GoodPrice mapGoodPrice(ResultSet resultSet) throws SQLException {
-        GoodPrice goodPrice = new GoodPrice();
-        goodPrice.setCountry(mapCountry(resultSet));
-        goodPrice.setGood(mapGood(resultSet));
-        goodPrice.setPrice(resultSet.getBigDecimal(PRICE));
-        return goodPrice;
+    public static Currency mapCurrency(ResultSet resultSet) throws SQLException {
+        Currency currency = new Currency();
+        currency.setId(resultSet.getLong(CURRENCY_ID));
+        currency.setName(resultSet.getString(CURRENCY_NAME));
+        currency.setCoefficient(resultSet.getBigDecimal(CURRENCY_COEFFICIENT));
+        currency.setSymbol(resultSet.getString(CURRENCY_SYMBOL));
+
+        return currency;
     }
 
     private static void fillUserData(ResultSet resultSet, User user) throws SQLException {

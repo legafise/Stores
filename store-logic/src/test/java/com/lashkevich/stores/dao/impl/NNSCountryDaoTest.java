@@ -2,6 +2,7 @@ package com.lashkevich.stores.dao.impl;
 
 import com.lashkevich.stores.dao.CountryDao;
 import com.lashkevich.stores.entity.Country;
+import com.lashkevich.stores.entity.Currency;
 import com.lashkevich.stores.exception.NNSConnectionPoolException;
 import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.pool.NNSConnectionPool;
@@ -11,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +31,11 @@ public class NNSCountryDaoTest {
         NNSConnectionPool.getInstance().setPropertiesReader(testPropertiesReader);
         NNSConnectionPool.getInstance().initializeConnectionPool(1);
 
-        firstExpectedCountry = new Country(1, "Belarus");
-        secondExpectedCountry = new Country(2, "Russia");
-        thirdExpectedCountry = new Country(3, "USA");
-        fourthExpectedCountry = new Country(4, "Ukraine");
-        firstChangeExpectedCountry = new Country(1, "Belarussia");
+        firstExpectedCountry = new Country(1, "Belarus", new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN"));
+        secondExpectedCountry = new Country(2, "Russia", new Currency(3, "Russian ruble", new BigDecimal("76.8"), "RUB"));
+        thirdExpectedCountry = new Country(3, "USA", new Currency(1, "United States Dollar", new BigDecimal("1.0"), "$"));
+        fourthExpectedCountry = new Country(4, "Ukraine", new Currency(1, "United States Dollar", new BigDecimal("1"), "$"));
+        firstChangeExpectedCountry = new Country(1, "Belarussia", new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN"));
 
         countryDao = new NNSCountryDao();
         countryDao.setPropertiesReader(testPropertiesReader);
