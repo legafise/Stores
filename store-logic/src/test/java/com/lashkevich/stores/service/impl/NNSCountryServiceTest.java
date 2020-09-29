@@ -2,6 +2,7 @@ package com.lashkevich.stores.service.impl;
 
 import com.lashkevich.stores.dao.CountryDao;
 import com.lashkevich.stores.entity.Country;
+import com.lashkevich.stores.entity.Currency;
 import com.lashkevich.stores.exception.NNSServiceStoreException;
 import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.service.CountryService;
@@ -9,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,10 +32,10 @@ public class NNSCountryServiceTest {
         countryService = new NNSCountryService();
         countryDao = mock(CountryDao.class);
         countryService.setCountryDao(countryDao);
-        firstTestCountry = new Country(1, "Belarus");
+        firstTestCountry = new Country(1, "Belarus", new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN"));
         firstTestCountryOptional = Optional.of(firstTestCountry);
-        firstChangeTestCountry = new Country(1, "Ukraine");
-        secondTestCountry = new Country(2, "Russia");
+        firstChangeTestCountry = new Country(1, "Ukraine", new Currency(1, "United States Dollar", new BigDecimal("1"), "$"));
+        secondTestCountry = new Country(2, "Russia", new Currency(3, "Russian ruble", new BigDecimal("76.8"), "RUB"));
     }
 
     @Test

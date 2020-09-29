@@ -3,14 +3,17 @@ package com.lashkevich.stores.service.impl;
 import com.lashkevich.stores.dao.BasketDao;
 import com.lashkevich.stores.dao.impl.NNSBasketDao;
 import com.lashkevich.stores.entity.Basket;
+import com.lashkevich.stores.entity.Currency;
 import com.lashkevich.stores.entity.Good;
 import com.lashkevich.stores.entity.User;
 import com.lashkevich.stores.exception.NNSServiceStoreException;
 import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.service.BasketService;
+import com.lashkevich.stores.service.CurrencyService;
 import com.lashkevich.stores.service.GoodService;
 import com.lashkevich.stores.service.UserService;
 import com.lashkevich.stores.util.checker.NNSBasketDuplicationsChecker;
+import com.lashkevich.stores.util.converter.NNSGoodPriceConverter;
 import com.lashkevich.stores.util.validator.NNSBasketValidator;
 import com.lashkevich.stores.util.validator.NNSGoodValidator;
 
@@ -19,14 +22,18 @@ import java.util.Map;
 import java.util.Optional;
 
 public class NNSBasketService implements BasketService {
+    private static final String STANDARD_CURRENCY_ID = "1";
+
     private BasketDao basketDao;
     private GoodService goodService;
     private UserService userService;
+    private CurrencyService currencyService;
 
     public NNSBasketService() {
         basketDao = new NNSBasketDao();
         goodService = new NNSGoodService();
         userService = new NNSUserService();
+        currencyService = new NNSCurrencyService();
     }
 
     @Override
@@ -35,8 +42,17 @@ public class NNSBasketService implements BasketService {
     }
 
     @Override
+    public void setCurrencyService(CurrencyService currencyService) {
+        this.currencyService = currencyService;
+    }
+
+    @Override
     public void setBasketDao(BasketDao basketDao) {
         this.basketDao = basketDao;
+    }
+
+    public CurrencyService getCurrencyService() {
+        return currencyService;
     }
 
     public GoodService getGoodService() {
@@ -59,9 +75,9 @@ public class NNSBasketService implements BasketService {
     public boolean addBasket(Basket basket, String userId) throws NNSServiceStoreException {
         try {
             boolean isValidBasket = NNSBasketValidator.validate(basket);
-            boolean isDuplicateBasket = NNSBasketDuplicationsChecker.check(basket, findBasketByUserId(userId));
+            boolean isDuplicateBasket = NNSBasketDuplicationsChecker.check(basket, findBasketByUserId(userId, STANDARD_CURRENCY_ID));
 
-            if (isValidBasket && isDuplicateBasket && isValidGood(basket.getGoods()) && isGoodCreated(basket, goodService.findAllGoods()) &&
+            if (isValidBasket && isDuplicateBasket && isValidGood(basket.getGoods()) && isGoodCreated(basket, goodService.findAllGoods("1")) &&
                     isUserCreated(Long.parseLong(userId), userService.findAllUsers())) {
                 return basketDao.add(basket, Long.parseLong(userId));
             }
@@ -73,23 +89,23 @@ public class NNSBasketService implements BasketService {
     }
 
     @Override
-    public List<Basket> findAllBaskets() throws NNSServiceStoreException {
+    public List<Basket> findAllBaskets(String currencyId) throws NNSServiceStoreException {
         try {
-            return basketDao.findAll();
+            return convertGoodPriceInBasketList(basketDao.findAll(), currencyService.findCurrencyById(currencyId));
         } catch (NSSDaoStoreException e) {
             throw new NNSServiceStoreException(e);
         }
     }
 
     @Override
-    public Basket findBasketByUserId(String userId) throws NNSServiceStoreException {
+    public Basket findBasketByUserId(String userId, String currencyId) throws NNSServiceStoreException {
         try {
             Optional<Basket> basketOptional = basketDao.findByUser(Integer.parseInt(userId));
             if (!basketOptional.isPresent()) {
                 throw new NNSServiceStoreException();
             }
 
-            return basketOptional.get();
+            return convertGoodPriceInBasket(basketOptional.get(), currencyService.findCurrencyById(currencyId));
         } catch (NumberFormatException | NSSDaoStoreException e) {
             throw new NNSServiceStoreException(e);
         }
@@ -110,7 +126,7 @@ public class NNSBasketService implements BasketService {
             boolean isValidBasket = NNSBasketValidator.validate(basket);
 
             if (isValidBasket && isUserCreated(Long.parseLong(userId), userService.findAllUsers()) &&
-                    isValidGood(basket.getGoods()) && isGoodCreated(basket, goodService.findAllGoods())) {
+                    isValidGood(basket.getGoods()) && isGoodCreated(basket, goodService.findAllGoods("1"))) {
                 return basketDao.update(basket, Long.parseLong(userId));
             }
 
@@ -152,6 +168,16 @@ public class NNSBasketService implements BasketService {
         }
 
         return false;
+    }
+
+    private static Basket convertGoodPriceInBasket(Basket basket, Currency currency) {
+        basket.getGoods().keySet().forEach(currentGood -> currentGood = NNSGoodPriceConverter.convert(currentGood, currency));
+        return basket;
+    }
+
+    private static List<Basket> convertGoodPriceInBasketList(List <Basket> basketList, Currency currency) {
+        basketList.forEach(currentBasket -> currentBasket = convertGoodPriceInBasket(currentBasket, currency));
+        return basketList;
     }
 }
 

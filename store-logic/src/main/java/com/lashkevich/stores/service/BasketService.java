@@ -15,15 +15,17 @@ public interface BasketService {
 
     void setGoodService(GoodService goodService);
 
+    void setCurrencyService(CurrencyService currencyService);
+
     UserService getUserService();
 
     void setUserService(UserService userService);
 
     boolean addBasket(Basket basket, String userId) throws NNSServiceStoreException;
 
-    List<Basket> findAllBaskets() throws NNSServiceStoreException;
+    List<Basket> findAllBaskets(String currencyId) throws NNSServiceStoreException;
 
-    Basket findBasketByUserId(String userId) throws NNSServiceStoreException;
+    Basket findBasketByUserId(String userId, String currencyId) throws NNSServiceStoreException;
 
     boolean removeBasket(String id) throws NNSServiceStoreException;
 
