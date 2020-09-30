@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `nonamestore` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `nonamestore`;
 -- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
 -- Host: localhost    Database: nonamestore
@@ -15,7 +17,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-USE nonamestore;
 --
 -- Dumping data for table `baskets`
 --
@@ -42,18 +43,18 @@ UNLOCK TABLES;
 
 LOCK TABLES `countries` WRITE;
 /*!40000 ALTER TABLE `countries` DISABLE KEYS */;
-INSERT INTO `countries` VALUES (1,'Belarus'),(2,'Russia'),(3,'Ukraine'),(4,'Poland');
+INSERT INTO `countries` VALUES (1,'Belarus',2),(2,'Russia',3),(3,'Ukraine',5),(4,'Poland',4),(5,'USA',1);
 /*!40000 ALTER TABLE `countries` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Dumping data for table `good_prices`
+-- Dumping data for table `currencies`
 --
 
-LOCK TABLES `good_prices` WRITE;
-/*!40000 ALTER TABLE `good_prices` DISABLE KEYS */;
-INSERT INTO `good_prices` VALUES (1,17,160),(2,17,180.5),(3,17,170.2),(4,17,149.99),(1,18,220.78),(2,18,230),(3,18,220.5),(4,18,200),(1,19,500),(2,19,555.55),(3,19,490),(4,19,450),(1,20,1699.9),(2,20,1750.78),(3,20,1700),(4,20,1625.68),(1,21,29.99),(2,21,35),(3,21,25.5),(4,21,22.4);
-/*!40000 ALTER TABLE `good_prices` ENABLE KEYS */;
+LOCK TABLES `currencies` WRITE;
+/*!40000 ALTER TABLE `currencies` DISABLE KEYS */;
+INSERT INTO `currencies` VALUES (1,'United States Dollar',1,'$'),(2,'Belarusian ruble',2.6,'BYN'),(3,'Russian ruble',76.8,'RUB'),(4,'Polish zloty',3.91,'PLN'),(5,'Ukrainian hryvnia',28.31,'UAH');
+/*!40000 ALTER TABLE `currencies` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -62,7 +63,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `goods` WRITE;
 /*!40000 ALTER TABLE `goods` DISABLE KEYS */;
-INSERT INTO `goods` VALUES (17,'Apple AirPods','Headphones','Plugs for majors'),(18,'Xiaomi Redmi Note 7 4/64GB','Smartphone','Best for its value'),(19,'Sony PlayStation 4 Pro','Game console','Living classic'),(20,'Apple MacBook Pro 13','Laptop','Bullshit on which bloggers mount'),(21,'Xiaomi Smart Scale 2','Libra','Useful thing for home');
+INSERT INTO `goods` VALUES (17,'Apple AirPods',146.21,'Headphones','Plugs for majors','https://www.freepngimg.com/thumb/apple/94073-hardware-airpods-tap-apple-headphones-free-transparent-image-hd.png'),(18,'Xiaomi Redmi Note 7 4/64GB',190.37,'Smartphone','Best for its value','https://gbvisionsolutions.com/wp-content/uploads/2019/06/232-abf7d1-1000x1000.jpeg'),(19,'Sony PlayStation 4 Pro',437.86,'Game console','Living classic','https://tehnot.com/wp-content/uploads/2017/01/340949-sony-playstation-4.jpg'),(20,'Apple MacBook Pro 13',1047.31,'Laptop','Bullshit on which bloggers mount','https://twigo.ru/center/iblock/33b/apple_macbook_air_2020_256_space_gray_images_17747545375_2.jpg'),(21,'Xiaomi Smart Scale 2',25,'Libra','Useful thing for home','https://images.by.prom.st/151482275_w640_h640_umnye-vesy-xiaomi.jpg');
 /*!40000 ALTER TABLE `goods` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,4 +96,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-09 21:22:58
+-- Dump completed on 2020-09-30 16:39:32

@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `nonamestore` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `nonamestore`;
 -- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
 --
 -- Host: localhost    Database: nonamestore
@@ -15,13 +17,11 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE DATABASE IF NOT EXISTS nonamestore;
-USE nonamestore;
-
 --
 -- Table structure for table `baskets`
 --
 
+DROP TABLE IF EXISTS `baskets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `baskets` (
@@ -63,27 +63,29 @@ DROP TABLE IF EXISTS `countries`;
 CREATE TABLE `countries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) COLLATE utf8_bin NOT NULL,
+  `currency_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `countries_currencies_idx` (`currency_id`),
+  CONSTRAINT `countries_currencies` FOREIGN KEY (`currency_id`) REFERENCES `currencies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `good_prices`
+-- Table structure for table `currencies`
 --
 
-DROP TABLE IF EXISTS `good_prices`;
+DROP TABLE IF EXISTS `currencies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `good_prices` (
-  `country_id` int(11) NOT NULL,
-  `good_id` int(11) NOT NULL,
-  `price` double NOT NULL,
-  KEY `prices_goods_idx` (`good_id`),
-  KEY `prices_countries_idx` (`country_id`),
-  CONSTRAINT `prices_countries` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `prices_goods` FOREIGN KEY (`good_id`) REFERENCES `goods` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+CREATE TABLE `currencies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) COLLATE utf8_bin NOT NULL,
+  `coefficient` double NOT NULL,
+  `symbol` varchar(45) COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,8 +98,10 @@ DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) COLLATE utf8_bin NOT NULL,
+  `price` double NOT NULL,
   `summary` varchar(45) COLLATE utf8_bin NOT NULL,
   `description` varchar(45) COLLATE utf8_bin NOT NULL,
+  `img` longtext COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -153,4 +157,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-09 21:23:56
+-- Dump completed on 2020-09-30 16:38:58
