@@ -17,10 +17,14 @@ import java.util.Optional;
 
 public class NNSCityDao implements CityDao {
     private static final String ADD_CITY_SQL = "INSERT INTO cities (id, name, country_id) VALUES (?, ?, ?);";
-    private static final String FIND_ALL_CITIES_SQL = "SELECT cities.id AS city_id, cities.name AS city_name, cities.country_id AS primary_key_country_id," +
-            " countries.id AS country_id, countries.name AS country_name FROM cities INNER JOIN countries ON cities.country_id = countries.id ORDER BY cities.id;";
-    private static final String FIND_CITY_BY_ID_SQL = "SELECT cities.id AS city_id, cities.name AS city_name, cities.country_id AS primary_key_country_id," +
-            " countries.id AS country_id, countries.name AS country_name FROM cities INNER JOIN countries ON cities.country_id = countries.id WHERE cities.id = ?";
+    private static final String FIND_ALL_CITIES_SQL = "SELECT cities.id AS city_id, cities.name AS city_name, cities.country_id AS primary_key_country_id, countries.id AS" +
+            " country_id, countries.name AS country_name, countries.currency_id AS currency_id, currencies.name AS currency_name, currencies.coefficient AS" +
+            " currency_coefficient, currencies.symbol AS currency_symbol FROM cities INNER JOIN countries ON cities.country_id = countries.id INNER JOIN currencies ON" +
+            " countries.currency_id = currencies.id ORDER BY cities.id;";
+    private static final String FIND_CITY_BY_ID_SQL = "SELECT cities.id AS city_id, cities.name AS city_name, cities.country_id AS" +
+            " primary_key_country_id, countries.id AS country_id, countries.name AS country_name, countries.currency_id AS currency_id, currencies.name AS" +
+            " currency_name, currencies.coefficient AS currency_coefficient, currencies.symbol AS currency_symbol FROM cities INNER JOIN countries ON" +
+            " cities.country_id = countries.id INNER JOIN currencies ON countries.currency_id = currencies.id WHERE cities.id = ?;";
     private static final String UPDATE_CITY_SQL = "UPDATE cities SET name = ?, country_id = ? WHERE id = ?;";
     private static final String DELETE_CITY_BY_ID_SQL = "DELETE FROM cities WHERE id = ?;";
 
