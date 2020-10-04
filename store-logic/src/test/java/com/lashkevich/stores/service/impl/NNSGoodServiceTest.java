@@ -68,7 +68,7 @@ public class NNSGoodServiceTest {
         Assert.assertEquals(goodsAfterConversion, goodService.findAllGoods("2"));
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void findAllGoodsTestWithInvalidCurrencyIdTest() throws NNSServiceStoreException {
         goodService.findAllGoods("Roma");
     }
@@ -105,7 +105,7 @@ public class NNSGoodServiceTest {
         Assert.assertTrue(goodService.removeGood("1"));
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void removeGoodWithInvalidRemoveTest() throws NNSServiceStoreException {
         goodService.removeGood("dfw");
     }

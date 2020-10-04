@@ -27,7 +27,7 @@ public class NNSConnectionPoolTest {
         Assert.assertEquals(1, NNSConnectionPool.getInstance().getBusyConnectionsSize());
     }
 
-    @Test (expected = NNSConnectionPoolException.class)
+    @Test(expected = NNSConnectionPoolException.class)
     public void acquireConnectionNegativeTest() throws NNSConnectionPoolException {
         NNSConnectionPool.getInstance().closeConnections();
         NNSConnectionPool.getInstance().acquireConnection();
@@ -40,7 +40,7 @@ public class NNSConnectionPoolTest {
         Assert.assertEquals(2, NNSConnectionPool.getInstance().getFreeConnectionsSize());
     }
 
-    @Test (expected = NNSConnectionPoolException.class)
+    @Test(expected = NNSConnectionPoolException.class)
     public void putBackConnectionNegativeTest() throws NNSConnectionPoolException {
         NNSConnectionPool.getInstance().putBackConnection(null);
     }

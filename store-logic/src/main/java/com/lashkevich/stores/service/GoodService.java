@@ -3,6 +3,7 @@ package com.lashkevich.stores.service;
 import com.lashkevich.stores.dao.GoodDao;
 import com.lashkevich.stores.entity.Good;
 import com.lashkevich.stores.exception.NNSServiceStoreException;
+
 import java.util.List;
 
 public interface GoodService {

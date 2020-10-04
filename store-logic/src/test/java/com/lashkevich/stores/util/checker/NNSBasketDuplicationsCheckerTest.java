@@ -24,7 +24,7 @@ public class NNSBasketDuplicationsCheckerTest {
         firstTestBasket = new Basket(firstTestGoodMap);
 
         secondTestGood = new Good(22, "Apple", new BigDecimal("1.0"), "Apple", "Apple", "Apple");
-        Map<Good, Integer>  secondTestGoodMap = new HashMap<>();
+        Map<Good, Integer> secondTestGoodMap = new HashMap<>();
         secondTestGoodMap.put(secondTestGood, 2);
         secondTestBasket = new Basket(secondTestGoodMap);
     }

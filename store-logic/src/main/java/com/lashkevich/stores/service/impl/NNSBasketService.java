@@ -170,7 +170,7 @@ public class NNSBasketService implements BasketService {
         return false;
     }
 
-    private static List<Basket> convertGoodPriceInBasketList(List <Basket> basketList, Currency currency) {
+    private static List<Basket> convertGoodPriceInBasketList(List<Basket> basketList, Currency currency) {
         return basketList.stream()
                 .map(currentBasket -> currentBasket.convertPrices(currency))
                 .collect(Collectors.toList());

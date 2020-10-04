@@ -25,7 +25,7 @@ public class NNSGoodPriceConverterTest {
         Assert.assertEquals(NNSGoodPriceConverter.convert(firstTestGood, firstTestCurrency), firstTestGoodAfterConversion);
     }
 
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void convertNegativeTest() {
         firstTestGoodAfterConversion.setPrice(new BigDecimal("5000"));
         Assert.assertEquals(NNSGoodPriceConverter.convert(firstTestGood, firstTestCurrency), firstTestGoodAfterConversion);

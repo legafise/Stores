@@ -119,7 +119,7 @@ public class NNSBasketServiceTest {
         Assert.assertFalse(basketService.addBasket(firstTestBasket, "4"));
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void addBasketWithInvalidUserIdTest() throws NNSServiceStoreException {
         basketService.addBasket(firstTestBasket, "ertger");
     }
@@ -138,7 +138,7 @@ public class NNSBasketServiceTest {
         Assert.assertEquals(firstTestBasketAfterConversion, basketService.findBasketByUserId("1", "2"));
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void findBasketByUserIdWithInvalidUserIdTest() throws NNSServiceStoreException {
         basketService.findBasketByUserId("wfwfw", "d2f2wf");
     }
@@ -149,7 +149,7 @@ public class NNSBasketServiceTest {
         Assert.assertTrue(basketService.removeBasket("1"));
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void removeBasketWithInvalidUserIdTest() throws NSSDaoStoreException, NNSServiceStoreException {
         basketService.removeBasket("gfweg");
     }
@@ -172,7 +172,7 @@ public class NNSBasketServiceTest {
         Assert.assertFalse(basketService.updateBasket(firstTestBasket, "3"));
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void updateBasketWithInvalidUserIdTest() throws NNSServiceStoreException {
         basketService.updateBasket(firstTestBasket, "ehgeo");
     }

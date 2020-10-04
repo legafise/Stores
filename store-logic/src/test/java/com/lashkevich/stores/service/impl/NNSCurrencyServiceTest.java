@@ -67,7 +67,7 @@ public class NNSCurrencyServiceTest {
         Assert.assertEquals(currencyService.findCurrencyById("1"), firstTestCurrency);
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void findCurrencyByIdWithInvalidCurrencyIdTest() throws NSSDaoStoreException, NNSServiceStoreException {
         when(currencyDao.findById(1)).thenReturn(firstTestCurrencyOptional);
         Assert.assertEquals(currencyService.findCurrencyById("fgweg"), firstTestCurrency);
@@ -79,7 +79,7 @@ public class NNSCurrencyServiceTest {
         Assert.assertTrue(currencyService.removeCurrency("1"));
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void removeCurrencyWithInvalidCurrencyIdTest() throws NSSDaoStoreException, NNSServiceStoreException {
         when(currencyDao.remove(1)).thenReturn(true);
         Assert.assertTrue(currencyService.removeCurrency("sfhoasdg"));

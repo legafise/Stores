@@ -73,10 +73,10 @@ public class NNSCityServiceTest {
         Assert.assertEquals(cityService.findCityById("1"), testCity);
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void findCityByIdWithInvalidCityIdTest() throws NSSDaoStoreException, NNSServiceStoreException {
         cityService.findCityById("dgd");
-}
+    }
 
     @Test
     public void removeCityPositiveTest() throws NSSDaoStoreException, NNSServiceStoreException {
@@ -84,7 +84,7 @@ public class NNSCityServiceTest {
         Assert.assertTrue(cityService.removeCity("1"));
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void removeCityWithInvalidRemoveTest() throws NNSServiceStoreException {
         cityService.removeCity("egd");
     }

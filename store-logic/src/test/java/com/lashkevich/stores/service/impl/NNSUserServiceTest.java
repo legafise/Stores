@@ -114,7 +114,7 @@ public class NNSUserServiceTest {
         Assert.assertTrue(userService.removeUser("1"));
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void removeUserWithInvalidRemoveTest() throws NNSServiceStoreException {
         Assert.assertFalse(userService.removeUser("ehgeh"));
     }

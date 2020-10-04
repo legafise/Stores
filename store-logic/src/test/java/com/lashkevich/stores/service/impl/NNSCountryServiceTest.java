@@ -23,7 +23,7 @@ public class NNSCountryServiceTest {
     private CountryService countryService;
     private CountryDao countryDao;
     private Country firstTestCountry;
-    private Optional <Country> firstTestCountryOptional;
+    private Optional<Country> firstTestCountryOptional;
     private Country firstChangeTestCountry;
     private Country secondTestCountry;
 
@@ -72,7 +72,7 @@ public class NNSCountryServiceTest {
         Assert.assertEquals(firstTestCountry, countryService.findCountryById("1"));
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void findCountryByIdWithInvalidCountryIdTest() throws NNSServiceStoreException {
         countryService.findCountryById("firstId");
     }
@@ -83,7 +83,7 @@ public class NNSCountryServiceTest {
         Assert.assertTrue(countryService.removeCountry("1"));
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void removeCountryWithInvalidCountryIdTest() throws NNSServiceStoreException {
         countryService.removeCountry("Удали Пендосию к чертям собачьим!");
     }
