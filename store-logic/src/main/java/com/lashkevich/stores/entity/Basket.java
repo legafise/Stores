@@ -1,5 +1,8 @@
 package com.lashkevich.stores.entity;
 
+import com.lashkevich.stores.util.converter.NNSGoodPriceConverter;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -19,6 +22,12 @@ public class Basket {
 
     public void setGoods(Map<Good, Integer> goods) {
         this.goods = goods;
+    }
+
+    public Basket convertPrices(Currency currency) {
+        goods.forEach((key, value) -> NNSGoodPriceConverter.convert(key, currency));
+        this.goods = new HashMap<>(goods);
+        return this;
     }
 
     @Override

@@ -1,9 +1,8 @@
 package com.lashkevich.stores.service.impl;
 
 import com.lashkevich.stores.dao.BasketDao;
-import com.lashkevich.stores.dao.CurrencyDao;
-import com.lashkevich.stores.entity.*;
 import com.lashkevich.stores.entity.Currency;
+import com.lashkevich.stores.entity.*;
 import com.lashkevich.stores.exception.NNSServiceStoreException;
 import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.service.BasketService;
@@ -18,7 +17,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class NNSBasketServiceTest {
     private static final String STANDARD_CURRENCY_ID = "1";
@@ -74,7 +74,6 @@ public class NNSBasketServiceTest {
         firstTestBasketAfterConversion = new Basket(firstGoodsAfterConversion);
         firstTestBasketAfterConversionOptional = Optional.of(firstTestBasketAfterConversion);
 
-
         firstTestBasketList = new ArrayList<>();
         firstTestBasketList.add(firstTestBasket);
 
@@ -125,19 +124,19 @@ public class NNSBasketServiceTest {
         basketService.addBasket(firstTestBasket, "ertger");
     }
 
-//    @Test
-//    public void findAllBasketsTest() throws NSSDaoStoreException, NNSServiceStoreException {
-//        when(basketDao.findAll()).thenReturn(firstTestBasketList);
-//        when(currencyService.findCurrencyById("2")).thenReturn(secondTestCurrency);
-//        Assert.assertEquals(firstTestBasketListAfterConversion, basketService.findAllBaskets("2"));
-//    }
+    @Test
+    public void findAllBasketsTest() throws NSSDaoStoreException, NNSServiceStoreException {
+        when(basketDao.findAll()).thenReturn(firstTestBasketList);
+        when(currencyService.findCurrencyById("2")).thenReturn(secondTestCurrency);
+        Assert.assertEquals(firstTestBasketListAfterConversion.get(0), basketService.findAllBaskets("2").get(0));
+    }
 
-//    @Test
-//    public void findBasketByUserIdPositiveTest() throws NSSDaoStoreException, NNSServiceStoreException {
-//        when(basketDao.findByUser(1)).thenReturn(firstTestBasketOptional);
-//        when(currencyService.findCurrencyById("2")).thenReturn(secondTestCurrency);
-//        Assert.assertEquals(firstTestBasketAfterConversion, basketService.findBasketByUserId("1", "2"));
-//    }
+    @Test
+    public void findBasketByUserIdPositiveTest() throws NSSDaoStoreException, NNSServiceStoreException {
+        when(basketDao.findByUser(1)).thenReturn(firstTestBasketOptional);
+        when(currencyService.findCurrencyById("2")).thenReturn(secondTestCurrency);
+        Assert.assertEquals(firstTestBasketAfterConversion, basketService.findBasketByUserId("1", "2"));
+    }
 
     @Test (expected = NNSServiceStoreException.class)
     public void findBasketByUserIdWithInvalidUserIdTest() throws NNSServiceStoreException {

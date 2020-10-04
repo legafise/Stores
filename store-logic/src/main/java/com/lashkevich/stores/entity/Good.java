@@ -23,6 +23,14 @@ public class Good {
         this.imgURL = imgURL;
     }
 
+    public Good(long id, String name, BigDecimal price, String summary, String description) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.summary = summary;
+        this.description = description;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -85,7 +93,7 @@ public class Good {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, price, summary, description);
+        return Objects.hash(id, name, price, summary, description, imgURL);
     }
 
     @Override
@@ -96,6 +104,7 @@ public class Good {
                 ", price=" + price +
                 ", summary='" + summary + '\'' +
                 ", description='" + description + '\'' +
+                ", imgURL='" + imgURL + '\'' +
                 '}';
     }
 }

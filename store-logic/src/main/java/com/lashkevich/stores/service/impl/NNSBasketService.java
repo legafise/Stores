@@ -13,13 +13,13 @@ import com.lashkevich.stores.service.CurrencyService;
 import com.lashkevich.stores.service.GoodService;
 import com.lashkevich.stores.service.UserService;
 import com.lashkevich.stores.util.checker.NNSBasketDuplicationsChecker;
-import com.lashkevich.stores.util.converter.NNSGoodPriceConverter;
 import com.lashkevich.stores.util.validator.NNSBasketValidator;
 import com.lashkevich.stores.util.validator.NNSGoodValidator;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class NNSBasketService implements BasketService {
     private static final String STANDARD_CURRENCY_ID = "1";
@@ -105,7 +105,7 @@ public class NNSBasketService implements BasketService {
                 throw new NNSServiceStoreException();
             }
 
-            return convertGoodPriceInBasket(basketOptional.get(), currencyService.findCurrencyById(currencyId));
+            return basketOptional.get().convertPrices(currencyService.findCurrencyById(currencyId));
         } catch (NumberFormatException | NSSDaoStoreException e) {
             throw new NNSServiceStoreException(e);
         }
@@ -170,14 +170,10 @@ public class NNSBasketService implements BasketService {
         return false;
     }
 
-    private static Basket convertGoodPriceInBasket(Basket basket, Currency currency) {
-        basket.getGoods().keySet().forEach(currentGood -> currentGood = NNSGoodPriceConverter.convert(currentGood, currency));
-        return basket;
-    }
-
     private static List<Basket> convertGoodPriceInBasketList(List <Basket> basketList, Currency currency) {
-        basketList.forEach(currentBasket -> currentBasket = convertGoodPriceInBasket(currentBasket, currency));
-        return basketList;
+        return basketList.stream()
+                .map(currentBasket -> currentBasket.convertPrices(currency))
+                .collect(Collectors.toList());
     }
 }
 
