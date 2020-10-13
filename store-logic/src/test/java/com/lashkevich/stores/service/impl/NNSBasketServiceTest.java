@@ -40,6 +40,7 @@ public class NNSBasketServiceTest {
     private User secondTestUser;
     private Currency firstTestCurrency;
     private Currency secondTestCurrency;
+    private List<Currency> testCurrenciesList;
     private List<Basket> firstTestBasketList;
     private List<Basket> firstTestBasketListAfterConversion;
     private List<Good> goods;
@@ -82,6 +83,9 @@ public class NNSBasketServiceTest {
 
         firstTestCurrency = new Currency(1, "United States Dollar", new BigDecimal("1.0"), "$");
         secondTestCurrency = new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN");
+        testCurrenciesList = new ArrayList<>();
+        testCurrenciesList.add(firstTestCurrency);
+        testCurrenciesList.add(secondTestCurrency);
 
         Map<Good, Integer> secondGoods = new HashMap<>();
         secondGoods.put(secondTestGood, 2);
@@ -101,6 +105,7 @@ public class NNSBasketServiceTest {
 
     @Test
     public void addBasketPositiveTest() throws NSSDaoStoreException, NNSServiceStoreException {
+        when(currencyService.findAllCurrencies()).thenReturn(testCurrenciesList);
         when(goodService.findAllGoods(STANDARD_CURRENCY_ID)).thenReturn(goods);
         when(currencyService.findCurrencyById(STANDARD_CURRENCY_ID)).thenReturn(firstTestCurrency);
         when(userService.findAllUsers()).thenReturn(users);
@@ -111,6 +116,7 @@ public class NNSBasketServiceTest {
 
     @Test
     public void addBasketNegativeTest() throws NSSDaoStoreException, NNSServiceStoreException {
+        when(currencyService.findAllCurrencies()).thenReturn(testCurrenciesList);
         when(goodService.findAllGoods(STANDARD_CURRENCY_ID)).thenReturn(goods);
         when(currencyService.findCurrencyById(STANDARD_CURRENCY_ID)).thenReturn(firstTestCurrency);
         when(userService.findAllUsers()).thenReturn(users);

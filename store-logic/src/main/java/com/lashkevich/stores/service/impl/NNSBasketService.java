@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class NNSBasketService implements BasketService {
-    private static final String STANDARD_CURRENCY_ID = "1";
+    private static final String STANDARD_CURRENCY_NOT_FOUND_ERROR_MESSAGE = "Standard currency not found";
 
     private BasketDao basketDao;
     private GoodService goodService;
@@ -51,10 +51,6 @@ public class NNSBasketService implements BasketService {
         this.basketDao = basketDao;
     }
 
-    public CurrencyService getCurrencyService() {
-        return currencyService;
-    }
-
     public GoodService getGoodService() {
         return goodService;
     }
@@ -74,10 +70,11 @@ public class NNSBasketService implements BasketService {
     @Override
     public boolean addBasket(Basket basket, String userId) throws NNSServiceStoreException {
         try {
+            String standardCurrencyId = findStandardCurrencyId(currencyService.findAllCurrencies());
             boolean isValidBasket = NNSBasketValidator.validate(basket);
-            boolean isDuplicateBasket = NNSBasketDuplicationsChecker.check(basket, findBasketByUserId(userId, STANDARD_CURRENCY_ID));
+            boolean isDuplicateBasket = NNSBasketDuplicationsChecker.check(basket, findBasketByUserId(userId, standardCurrencyId));
 
-            if (isValidBasket && isDuplicateBasket && isValidGood(basket.getGoods()) && isGoodCreated(basket, goodService.findAllGoods("1")) &&
+            if (isValidBasket && isDuplicateBasket && isValidGood(basket.getGoods()) && isGoodCreated(basket, goodService.findAllGoods(standardCurrencyId)) &&
                     isUserCreated(Long.parseLong(userId), userService.findAllUsers())) {
                 return basketDao.add(basket, Long.parseLong(userId));
             }
@@ -174,6 +171,14 @@ public class NNSBasketService implements BasketService {
         return basketList.stream()
                 .map(currentBasket -> currentBasket.convertPrices(currency))
                 .collect(Collectors.toList());
+    }
+
+    private static String findStandardCurrencyId(List<Currency> currencies) throws NNSServiceStoreException {
+        if (currencies.stream().filter(currentCurrency -> currentCurrency.getSymbol().equals("$")).count() != 1) {
+            throw new NNSServiceStoreException(STANDARD_CURRENCY_NOT_FOUND_ERROR_MESSAGE);
+        }
+
+        return String.valueOf(currencies.get(0).getId());
     }
 }
 
