@@ -5,20 +5,23 @@ import com.lashkevich.stores.dao.impl.NNSGoodDao;
 import com.lashkevich.stores.entity.Currency;
 import com.lashkevich.stores.entity.Good;
 import com.lashkevich.stores.exception.NNSServiceStoreException;
+import com.lashkevich.stores.exception.NNSUtilException;
 import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.service.CurrencyService;
 import com.lashkevich.stores.service.GoodService;
 import com.lashkevich.stores.util.converter.NNSGoodPriceConverter;
+import com.lashkevich.stores.util.reader.PropertiesReader;
+import com.lashkevich.stores.util.reader.impl.NNSGlobalConfigurationPropertiesReader;
 import com.lashkevich.stores.util.validator.NNSGoodValidator;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class NNSGoodService implements GoodService {
-    private static final String STANDARD_IMG = "https://www.everythingvacuums.com/mm5/graphics/00000001/iStock-922962354.jpg";
-
     private GoodDao goodDao;
     private CurrencyService currencyService;
+    private NNSGlobalConfigurationPropertiesReader propertiesReader;
 
     @Override
     public GoodDao getGoodDao() {
@@ -38,13 +41,14 @@ public class NNSGoodService implements GoodService {
     public NNSGoodService() {
         goodDao = new NNSGoodDao();
         currencyService = new NNSCurrencyService();
+        propertiesReader = new NNSGlobalConfigurationPropertiesReader();
     }
 
     @Override
     public boolean addGood(Good good) throws NNSServiceStoreException {
         try {
             if (good.getImgURL() == null) {
-                good.setImgURL(STANDARD_IMG);
+                good.setImgURL(propertiesReader.readStandardImgURL());
             }
 
             if (NNSGoodValidator.validate(good)) {
@@ -52,7 +56,7 @@ public class NNSGoodService implements GoodService {
             }
 
             return false;
-        } catch (NSSDaoStoreException e) {
+        } catch (NSSDaoStoreException | NNSUtilException e) {
             throw new NNSServiceStoreException(e);
         }
     }
@@ -103,7 +107,6 @@ public class NNSGoodService implements GoodService {
     }
 
     private static List<Good> convertGoodList(List<Good> goods, Currency currency) {
-        goods.forEach(currentGood -> currentGood = NNSGoodPriceConverter.convert(currentGood, currency));
-        return goods;
+        return goods.stream().map(currentGood -> NNSGoodPriceConverter.convert(currentGood, currency)).collect(Collectors.toList());
     }
 }
