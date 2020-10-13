@@ -18,7 +18,8 @@ public final class NNSCurrencyDuplicationsChecker {
     public static boolean checkCurrencyUpdating(Currency currency, List<Currency> currencyList) {
         List<Currency> duplicateCurrencies = currencyList.stream()
                 .filter(currentCurrency -> currency.getName().toUpperCase().equals(currentCurrency.getName().toUpperCase()) ||
-                        currency.getSymbol().equals(currentCurrency.getSymbol())).collect(Collectors.toList());
+                        currency.getSymbol().equals(currentCurrency.getSymbol()))
+                .collect(Collectors.toList());
 
         return duplicateCurrencies.size() == 1 && duplicateCurrencies.get(0).getId() == currency.getId();
     }

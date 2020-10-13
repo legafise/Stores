@@ -19,7 +19,8 @@ public final class NNSUserDuplicationsChecker {
     public static boolean checkUserUpdating(List<User> usersList, User user) {
         List<User> duplicateUsers = usersList.stream()
                 .filter(currentUser -> user.getLogin().equals(currentUser.getLogin()) ||
-                        user.getEmail().equals(currentUser.getEmail())).collect(Collectors.toList());
+                        user.getEmail().equals(currentUser.getEmail()))
+                .collect(Collectors.toList());
 
         return duplicateUsers.size() == 1 && duplicateUsers.get(0).getId() == user.getId();
     }
