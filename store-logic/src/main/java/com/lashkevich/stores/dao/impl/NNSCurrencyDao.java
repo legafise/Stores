@@ -79,12 +79,7 @@ public class NNSCurrencyDao implements CurrencyDao {
                 currency = NNSDaoMapper.mapCurrency(resultSet);
             }
 
-            Optional<Currency> currencyOptional = Optional.empty();
-            if (currency.getId() != 0) {
-                currencyOptional = Optional.of(currency);
-            }
-
-            return currencyOptional;
+            return currency.getId() != 0 ? Optional.of(currency) : Optional.empty();
         } catch (SQLException | NNSConnectionPoolException e) {
             throw new NSSDaoStoreException(e);
         }
