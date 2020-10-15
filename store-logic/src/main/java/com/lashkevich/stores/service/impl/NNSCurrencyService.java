@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class NNSCurrencyService implements CurrencyService {
-    private static final String EMPTY_CURRENCY_ERROR_MESSAGE = "Currency is empty";
+    private static final String CURRENCY_ID_DOES_NOT_EXIST_ERROR_MESSAGE_FIRST_PART = "Currency with id = ";
+    private static final String CURRENCY_ID_DOES_NOT_EXIST_ERROR_MESSAGE_SECOND_PART = " doesn't exist";
 
     CurrencyDao currencyDao;
 
@@ -58,7 +59,8 @@ public class NNSCurrencyService implements CurrencyService {
         try {
             Optional<Currency> currencyOptional = currencyDao.findById(Long.parseLong(id));
             if (!currencyOptional.isPresent()) {
-                throw new NNSServiceStoreException(EMPTY_CURRENCY_ERROR_MESSAGE);
+                throw new NNSServiceStoreException(CURRENCY_ID_DOES_NOT_EXIST_ERROR_MESSAGE_FIRST_PART + id +
+                        CURRENCY_ID_DOES_NOT_EXIST_ERROR_MESSAGE_SECOND_PART);
             }
 
             return currencyOptional.get();
