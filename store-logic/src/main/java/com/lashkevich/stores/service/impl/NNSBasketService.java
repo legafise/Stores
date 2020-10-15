@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 public class NNSBasketService implements BasketService {
     private static final String STANDARD_CURRENCY_NOT_FOUND_ERROR_MESSAGE = "Standard currency not found";
+    private static final String STANDARD_CURRENCY_SYMBOL = "$";
 
     private BasketDao basketDao;
     private GoodService goodService;
@@ -120,10 +121,11 @@ public class NNSBasketService implements BasketService {
     @Override
     public boolean updateBasket(Basket basket, String userId) throws NNSServiceStoreException {
         try {
+            String standardCurrencyId = findStandardCurrencyId(currencyService.findAllCurrencies());
             boolean isValidBasket = NNSBasketValidator.validate(basket);
 
             if (isValidBasket && isUserCreated(Long.parseLong(userId), userService.findAllUsers()) &&
-                    isValidGood(basket.getGoods()) && isGoodCreated(basket, goodService.findAllGoods("1"))) {
+                    isValidGood(basket.getGoods()) && isGoodCreated(basket, goodService.findAllGoods(standardCurrencyId))) {
                 return basketDao.update(basket, Long.parseLong(userId));
             }
 
@@ -174,11 +176,10 @@ public class NNSBasketService implements BasketService {
     }
 
     private static String findStandardCurrencyId(List<Currency> currencies) throws NNSServiceStoreException {
-        if (currencies.stream().filter(currentCurrency -> currentCurrency.getSymbol().equals("$")).count() != 1) {
+        if (currencies.stream().filter(currentCurrency -> currentCurrency.getSymbol().equals(STANDARD_CURRENCY_SYMBOL)).count() != 1) {
             throw new NNSServiceStoreException(STANDARD_CURRENCY_NOT_FOUND_ERROR_MESSAGE);
         }
 
         return String.valueOf(currencies.get(0).getId());
     }
 }
-
