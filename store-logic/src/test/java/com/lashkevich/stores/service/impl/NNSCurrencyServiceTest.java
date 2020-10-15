@@ -24,7 +24,6 @@ public class NNSCurrencyServiceTest {
     private Currency secondTestCurrency;
     private List<Currency> testCurrencyList;
     private Optional<Currency> firstTestCurrencyOptional;
-    private Optional<Currency> secondTestCurrencyOptional;
 
     @Before
     public void setUp() {
@@ -35,7 +34,6 @@ public class NNSCurrencyServiceTest {
         firstTestCurrency = new Currency(1, "United States Dollar", new BigDecimal("1.0"), "$");
         secondTestCurrency = new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN");
         firstTestCurrencyOptional = Optional.of(firstTestCurrency);
-        secondTestCurrencyOptional = Optional.of(secondTestCurrency);
 
         testCurrencyList = new ArrayList<>();
         testCurrencyList.add(firstTestCurrency);
