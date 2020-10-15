@@ -107,6 +107,8 @@ public class NNSGoodService implements GoodService {
     }
 
     private static List<Good> convertGoodList(List<Good> goods, Currency currency) {
-        return goods.stream().map(currentGood -> NNSGoodPriceConverter.convert(currentGood, currency)).collect(Collectors.toList());
+        return goods.stream()
+                .map(currentGood -> NNSGoodPriceConverter.convert(currentGood, currency))
+                .collect(Collectors.toList());
     }
 }
