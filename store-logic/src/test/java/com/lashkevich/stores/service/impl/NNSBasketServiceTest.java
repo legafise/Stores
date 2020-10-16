@@ -105,6 +105,7 @@ public class NNSBasketServiceTest {
 
     @Test
     public void addBasketPositiveTest() throws NSSDaoStoreException, NNSServiceStoreException {
+        when(currencyService.findStandardCurrencyId()).thenReturn(STANDARD_CURRENCY_ID);
         when(currencyService.findAllCurrencies()).thenReturn(testCurrenciesList);
         when(goodService.findAllGoods(STANDARD_CURRENCY_ID)).thenReturn(goods);
         when(currencyService.findCurrencyById(STANDARD_CURRENCY_ID)).thenReturn(firstTestCurrency);
@@ -116,6 +117,7 @@ public class NNSBasketServiceTest {
 
     @Test
     public void addBasketNegativeTest() throws NSSDaoStoreException, NNSServiceStoreException {
+        when(currencyService.findStandardCurrencyId()).thenReturn(STANDARD_CURRENCY_ID);
         when(currencyService.findAllCurrencies()).thenReturn(testCurrenciesList);
         when(goodService.findAllGoods(STANDARD_CURRENCY_ID)).thenReturn(goods);
         when(currencyService.findCurrencyById(STANDARD_CURRENCY_ID)).thenReturn(firstTestCurrency);
@@ -127,6 +129,7 @@ public class NNSBasketServiceTest {
 
     @Test(expected = NNSServiceStoreException.class)
     public void addBasketWithInvalidUserIdTest() throws NNSServiceStoreException {
+        when(currencyService.findStandardCurrencyId()).thenReturn(STANDARD_CURRENCY_ID);
         basketService.addBasket(firstTestBasket, "ertger");
     }
 
@@ -156,12 +159,13 @@ public class NNSBasketServiceTest {
     }
 
     @Test(expected = NNSServiceStoreException.class)
-    public void removeBasketWithInvalidUserIdTest() throws NSSDaoStoreException, NNSServiceStoreException {
+    public void removeBasketWithInvalidUserIdTest() throws NNSServiceStoreException {
         basketService.removeBasket("gfweg");
     }
 
     @Test
     public void updateBasketPositiveTest() throws NSSDaoStoreException, NNSServiceStoreException {
+        when(currencyService.findStandardCurrencyId()).thenReturn(STANDARD_CURRENCY_ID);
         when(goodService.findAllGoods(STANDARD_CURRENCY_ID)).thenReturn(goods);
         when(currencyService.findCurrencyById(STANDARD_CURRENCY_ID)).thenReturn(firstTestCurrency);
         when(userService.findAllUsers()).thenReturn(users);
