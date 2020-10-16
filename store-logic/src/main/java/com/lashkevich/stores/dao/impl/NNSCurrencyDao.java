@@ -21,6 +21,8 @@ public class NNSCurrencyDao implements CurrencyDao {
             " currencies.symbol AS currency_symbol FROM currencies ORDER BY currencies.id;";
     private static final String FIND_CURRENCY_BY_ID_SQL = "SELECT currencies.id AS currency_id, currencies.name AS currency_name," +
             " currencies.coefficient AS currency_coefficient, currencies.symbol AS currency_symbol FROM currencies WHERE currencies.id = ?";
+    private static final String FIND_CURRENCY_BY_SYMBOL_SQL = "SELECT currencies.id AS currency_id, currencies.name AS currency_name," +
+            " currencies.coefficient AS currency_coefficient, currencies.symbol AS currency_symbol FROM currencies WHERE currencies.name = ?";
     private static final String UPDATE_CURRENCY_SQL = "UPDATE currencies SET name = ?, coefficient = ?, symbol = ? WHERE id = ?;";
     private static final String DELETE_CURRENCY_BY_ID_SQL = "DELETE FROM currencies WHERE id = ?;";
 
@@ -72,6 +74,24 @@ public class NNSCurrencyDao implements CurrencyDao {
         try (Connection connection = NNSConnectionPool.getInstance().acquireConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_CURRENCY_BY_ID_SQL)) {
             preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Currency currency = new Currency();
+
+            while (resultSet.next()) {
+                currency = NNSDaoMapper.mapCurrency(resultSet);
+            }
+
+            return currency.getId() != 0 ? Optional.of(currency) : Optional.empty();
+        } catch (SQLException | NNSConnectionPoolException e) {
+            throw new NSSDaoStoreException(e);
+        }
+    }
+
+    @Override
+    public Optional<Currency> findByName(String name) throws NSSDaoStoreException {
+        try (Connection connection = NNSConnectionPool.getInstance().acquireConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_CURRENCY_BY_SYMBOL_SQL)) {
+            preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             Currency currency = new Currency();
 

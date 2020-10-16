@@ -72,6 +72,19 @@ public class NNSCurrencyServiceTest {
     }
 
     @Test
+    public void findCurrencyByNamePositiveTest() throws NSSDaoStoreException, NNSServiceStoreException {
+        when(currencyDao.findByName("USD")).thenReturn(firstTestCurrencyOptional);
+        Assert.assertEquals(currencyService.findCurrencyByName("USD"), firstTestCurrency);
+    }
+
+    @Test(expected = NNSServiceStoreException.class)
+    public void findCurrencyByNameWithInvalidCurrencyIdTest() throws NSSDaoStoreException, NNSServiceStoreException {
+        firstTestCurrencyOptional = Optional.empty();
+        when(currencyDao.findByName("USD")).thenReturn(firstTestCurrencyOptional);
+        currencyService.findCurrencyByName("USD");
+    }
+
+    @Test
     public void removeCurrencyPositiveTest() throws NSSDaoStoreException, NNSServiceStoreException {
         when(currencyDao.remove(1)).thenReturn(true);
         Assert.assertTrue(currencyService.removeCurrency("1"));

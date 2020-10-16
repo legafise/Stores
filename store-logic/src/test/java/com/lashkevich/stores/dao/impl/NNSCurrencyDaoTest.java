@@ -60,6 +60,11 @@ public class NNSCurrencyDaoTest {
     }
 
     @Test
+    public void findByNameTest() throws NSSDaoStoreException {
+        Assert.assertEquals(firstExpectedCurrency, currencyDao.findByName("United States Dollar").get());
+    }
+
+    @Test
     public void updateTest() throws NSSDaoStoreException {
         firstExpectedCurrency.setName("USD");
         Assert.assertTrue(currencyDao.update(firstExpectedCurrency));

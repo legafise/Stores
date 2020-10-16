@@ -16,6 +16,8 @@ public interface CurrencyDao {
 
     Optional<Currency> findById(long id) throws NSSDaoStoreException;
 
+    Optional<Currency> findByName(String symbol) throws NSSDaoStoreException;
+
     boolean update(Currency currency) throws NSSDaoStoreException;
 
     boolean remove(long id) throws NSSDaoStoreException;

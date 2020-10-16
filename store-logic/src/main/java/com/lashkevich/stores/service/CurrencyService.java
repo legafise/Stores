@@ -17,7 +17,11 @@ public interface CurrencyService {
 
     Currency findCurrencyById(String id) throws NNSServiceStoreException;
 
+    Currency findCurrencyByName(String symbol) throws NNSServiceStoreException;
+
     boolean removeCurrency(String id) throws NNSServiceStoreException;
 
     boolean updateCurrency(Currency currency) throws NNSServiceStoreException;
+
+    String findStandardCurrencyId() throws NNSServiceStoreException;
 }
