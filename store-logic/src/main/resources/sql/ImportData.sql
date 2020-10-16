@@ -53,7 +53,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `currencies` WRITE;
 /*!40000 ALTER TABLE `currencies` DISABLE KEYS */;
-INSERT INTO `currencies` VALUES (1,'United States Dollar',1,'$'),(2,'Belarusian ruble',2.6,'BYN'),(3,'Russian ruble',76.8,'RUB'),(4,'Polish zloty',3.91,'PLN'),(5,'Ukrainian hryvnia',28.31,'UAH');
+INSERT INTO `currencies` VALUES (1,'USD',1,'$'),(2,'BYN',2.6,'br'),(3,'RUB',76.8,'₽'),(4,'PLN',3.91,'zł'),(5,'UAH',28.31,'₴');
 /*!40000 ALTER TABLE `currencies` ENABLE KEYS */;
 UNLOCK TABLES;
 
