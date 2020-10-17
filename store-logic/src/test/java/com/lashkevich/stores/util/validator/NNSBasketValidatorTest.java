@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public class NNSBasketValidatorTest {
 
     @Before
     public void setUp() {
-        testGood = new Good(23, "Android", "Android", "Android");
+        testGood = new Good(23, "Android", new BigDecimal("2.0"), "Android", "Android", "Android");
         Map<Good, Integer> firstGoods = new HashMap<>();
         firstGoods.put(testGood, 1);
         testBasket = new Basket(firstGoods);

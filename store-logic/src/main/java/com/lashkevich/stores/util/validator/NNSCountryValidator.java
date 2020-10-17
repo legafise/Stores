@@ -7,7 +7,7 @@ public final class NNSCountryValidator {
     }
 
     public static boolean validate(Country country) {
-        return country != null && validateName(country.getName());
+        return country != null && validateName(country.getName()) && NNSCurrencyValidator.validateCurrency(country.getCurrency());
     }
 
     private static boolean validateName(String name) {

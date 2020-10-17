@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,29 +35,29 @@ public class NNSBasketDaoTest {
         NNSConnectionPool.getInstance().initializeConnectionPool(1);
 
         Map<Good, Integer> firstGoods = new HashMap<>();
-        firstGoods.put(new Good(23, "Android", "Android", "Android"), 1);
+        firstGoods.put(new Good(23, "Android", new BigDecimal("2.0"), "Android", "Android", "Android"), 1);
         firstExpectedBasket = new Basket(firstGoods);
 
         Map<Good, Integer> secondGoods = new HashMap<>();
-        secondGoods.put(new Good(22, "Apple", "Apple", "Apple"), 2);
+        secondGoods.put(new Good(22, "Apple", new BigDecimal("1.0"), "Apple", "Apple", "Apple"), 2);
         secondExpectedBasket = new Basket(secondGoods);
 
         Map<Good, Integer> thirdGoods = new HashMap<>();
-        thirdGoods.put(new Good(22, "Apple", "Apple", "Apple"), 2);
+        thirdGoods.put(new Good(22, "Apple", new BigDecimal("1.0"), "Apple", "Apple", "Apple"), 2);
         thirdExpectedBasket = new Basket(thirdGoods);
 
         Map<Good, Integer> fourthGoods = new HashMap<>();
-        fourthGoods.put(new Good(23, "Android", "Android", "Android"), 1);
+        fourthGoods.put(new Good(23, "Android", new BigDecimal("2.0"), "Android", "Android", "Android"), 1);
         fourthExpectedBasket = new Basket(fourthGoods);
 
         Map<Good, Integer> fifthGoods = new HashMap<>();
-        fifthGoods.put(new Good(22, "Apple", "Apple", "Apple"), 1);
-        fifthGoods.put(new Good(23, "Android", "Android", "Android"), 2);
+        fifthGoods.put(new Good(22, "Apple", new BigDecimal("1.0"), "Apple", "Apple", "Apple"), 1);
+        fifthGoods.put(new Good(23, "Android", new BigDecimal("2.0"), "Android", "Android", "Android"), 2);
         fifthExpectedBasket = new Basket(fifthGoods);
 
         Map<Good, Integer> sixthGoods = new HashMap<>();
-        sixthGoods.put(new Good(23, "Android", "Android", "Android"), 1);
-        sixthGoods.put(new Good(22, "Apple", "Apple", "Apple"), 2);
+        sixthGoods.put(new Good(23, "Android", new BigDecimal("2.0"), "Android", "Android", "Android"), 1);
+        sixthGoods.put(new Good(22, "Apple", new BigDecimal("1.0"), "Apple", "Apple", "Apple"), 2);
         sixthExpectedBasket = new Basket(sixthGoods);
 
         basketDao = new NNSBasketDao();

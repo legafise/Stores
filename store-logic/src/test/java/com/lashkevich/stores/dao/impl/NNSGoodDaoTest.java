@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +30,11 @@ public class NNSGoodDaoTest {
         NNSConnectionPool.getInstance().setPropertiesReader(testPropertiesReader);
         NNSConnectionPool.getInstance().initializeConnectionPool(1);
 
-        firstExpectedGood = new Good(22, "Apple", "Apple", "Apple");
-        secondExpectedZGood = new Good(23, "Android", "Android", "Android");
-        thirdExpectedGood = new Good(24, "Xiaomi", "Xiaomi", "Xiaomi");
-        fourthExpectedZGood = new Good(25, "Samsung", "Samsung", "Samsung");
-        firstChangeExpectedGood = new Good(22, "Apple", "ios", "Apple");
+        firstExpectedGood = new Good(22, "Apple", new BigDecimal("1.0"), "Apple", "Apple", "Apple");
+        secondExpectedZGood = new Good(23, "Android", new BigDecimal("2.0"), "Android", "Android", "Android");
+        thirdExpectedGood = new Good(24, "Xiaomi", new BigDecimal("4.0"), "Xiaomi", "Xiaomi", "Xiaomi");
+        fourthExpectedZGood = new Good(25, "Samsung", new BigDecimal("4.0"), "Samsung", "Samsung", "Samsung");
+        firstChangeExpectedGood = new Good(22, "Apple", new BigDecimal("1"), "ios", "Apple", "Apple");
 
         goodDao = new NNSGoodDao();
         goodDao.setPropertiesReader(testPropertiesReader);

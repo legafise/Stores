@@ -20,9 +20,11 @@ import java.util.Optional;
 public class NNSBasketDao implements BasketDao {
     private static final String ADD_TO_BASKET_SQL = "INSERT INTO baskets (good_id, user_id, quantity) VALUES (?, ?, ?);";
     private static final String FIND_ALL_USERS_AND_THEIR_GOODS_SQL = "SELECT baskets.user_id AS primary_key_good_id, baskets.user_id," +
-            " baskets.quantity, goods.id AS good_id, goods.name AS good_name, goods.summary AS good_summary, goods.description AS good_description FROM baskets LEFT JOIN goods ON baskets.good_id = goods.id ORDER BY baskets.good_id;";
+            " baskets.quantity, goods.id AS good_id, goods.name AS good_name, goods.price AS good_price, goods.summary AS good_summary," +
+            " goods.description AS good_description, goods.img AS good_img FROM baskets LEFT JOIN goods ON baskets.good_id = goods.id ORDER BY baskets.good_id;";
     private static final String FIND_GOODS_BY_USER_SQL = "SELECT baskets.user_id AS primary_key_good_id, baskets.user_id," +
-            " baskets.quantity, goods.id AS good_id, goods.name AS good_name, goods.summary AS good_summary, goods.description AS good_description FROM baskets LEFT JOIN goods ON baskets.good_id = goods.id WHERE user_id = ?;";
+            " baskets.quantity, goods.id AS good_id, goods.name AS good_name, goods.price AS good_price, goods.summary AS good_summary," +
+            " goods.description AS good_description, goods.img AS good_img FROM baskets LEFT JOIN goods ON baskets.good_id = goods.id WHERE user_id = ?;";
     private static final String DELETE_BASKET_SQL = "DELETE FROM baskets WHERE user_id = ?;";
 
     private PropertiesReader propertiesReader;

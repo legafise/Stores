@@ -7,7 +7,6 @@ import com.lashkevich.stores.exception.NNSServiceStoreException;
 import java.util.List;
 
 public interface CountryService {
-
     CountryDao getCountryDao();
 
     void setCountryDao(CountryDao countryDao);

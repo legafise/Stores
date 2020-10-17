@@ -16,11 +16,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class NNSCountryDao implements CountryDao {
-    private static final String ADD_COUNTRY_SQL = "INSERT INTO countries (id, name) VALUES (?, ?);";
-    private static final String FIND_ALL_COUNTRIES_SQL = "SELECT countries.id AS country_id, countries.name AS country_name FROM countries;";
-    private static final String FIND_COUNTRY_BY_ID_SQL = "SELECT countries.id AS country_id, countries.name AS country_name FROM countries WHERE id = ?;";
+    private static final String ADD_COUNTRY_SQL = "INSERT INTO countries (id, name, currency_id) VALUES (?, ?, ?);";
+    private static final String FIND_ALL_COUNTRIES_SQL = "SELECT countries.id AS country_id, countries.name AS country_name, countries.currency_id AS " +
+            "primary_key_currency_id, currencies.id AS currency_id, currencies.name AS currency_name, currencies.coefficient AS currency_coefficient, " +
+            "currencies.symbol AS currency_symbol FROM countries INNER JOIN currencies ON countries.currency_id = currencies.id ORDER BY countries.id;";
+    private static final String FIND_COUNTRY_BY_ID_SQL = "SELECT countries.id AS country_id, countries.name AS country_name, countries.currency_id AS " +
+            "primary_key_currency_id, currencies.id AS currency_id, currencies.name AS currency_name, currencies.coefficient AS currency_coefficient," +
+            " currencies.symbol AS currency_symbol FROM countries INNER JOIN currencies ON countries.currency_id = currencies.id WHERE countries.id = ?;";
     private static final String DELETE_COUNTRY_BY_ID_SQL = "DELETE FROM countries WHERE id = ?;";
-    private static final String UPDATE_COUNTRY_SQL = "UPDATE countries SET name = ? WHERE id = ?;";
+    private static final String UPDATE_COUNTRY_SQL = "UPDATE countries SET name = ?, currency_id = ? WHERE id = ?;";
 
     private PropertiesReader propertiesReader;
 
@@ -40,6 +44,7 @@ public class NNSCountryDao implements CountryDao {
             connection.setAutoCommit(propertiesReader.readCommitStatus());
             preparedStatement.setLong(1, country.getId());
             preparedStatement.setString(2, country.getName());
+            preparedStatement.setLong(3, country.getCurrency().getId());
             return preparedStatement.executeUpdate() == 1;
         } catch (SQLException | NNSConnectionPoolException | NNSUtilException e) {
             throw new NSSDaoStoreException(e);
@@ -92,7 +97,8 @@ public class NNSCountryDao implements CountryDao {
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_COUNTRY_SQL)) {
             connection.setAutoCommit(propertiesReader.readCommitStatus());
             preparedStatement.setString(1, country.getName());
-            preparedStatement.setLong(2, country.getId());
+            preparedStatement.setLong(2, country.getCurrency().getId());
+            preparedStatement.setLong(3, country.getId());
             return preparedStatement.executeUpdate() == 1;
         } catch (SQLException | NNSConnectionPoolException | NNSUtilException e) {
             throw new NSSDaoStoreException(e);

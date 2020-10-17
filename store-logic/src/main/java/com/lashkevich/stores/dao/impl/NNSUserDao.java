@@ -22,17 +22,19 @@ public class NNSUserDao implements UserDao {
     private static final String FIND_ALL_USERS_SQL = "SELECT users.id AS user_id, users.name AS user_name, users.surname, users.login, users.password," +
             " users.email, users.birth_date, users.role_id AS primary_key_role_id, users.city_id AS primary_key_city_id," +
             " roles.id AS role_id, roles.name AS role_name, cities.id AS city_id, cities.name AS city_name, cities.country_id AS" +
-            " primary_key_country_id, countries.id AS country_id, countries.name AS country_name, baskets.good_id AS primary_key_good_id," +
-            " baskets.user_id, baskets.quantity, goods.id AS good_id, goods.name AS good_name, goods.summary AS good_summary, goods.description AS good_description FROM users" +
+            " primary_key_country_id, countries.id AS country_id, countries.name AS country_name, countries.currency_id AS currency_id, baskets.good_id AS primary_key_good_id," +
+            " baskets.user_id, baskets.quantity, goods.id AS good_id, goods.name AS good_name, goods.price AS good_price ,goods.summary AS good_summary, goods.description AS good_description, goods.img AS good_img, currencies.name AS" +
+            " currency_name, currencies.coefficient AS currency_coefficient, currencies.symbol AS currency_symbol FROM users" +
             " LEFT JOIN roles ON users.role_id = roles.id LEFT JOIN cities ON users.city_id = cities.id LEFT JOIN countries ON" +
-            " cities.country_id = countries.id LEFT JOIN baskets ON users.id = baskets.user_id LEFT JOIN goods ON baskets.good_id = goods.id ORDER BY users.id;";
+            " cities.country_id = countries.id LEFT JOIN baskets ON users.id = baskets.user_id LEFT JOIN goods ON baskets.good_id = goods.id LEFT JOIN currencies ON countries.currency_id = currencies.id ORDER BY users.id;";
     private static final String FIND_USER_BY_ID_SQL = "SELECT users.id AS user_id, users.name AS user_name, users.surname, users.login, users.password," +
             " users.email, users.birth_date, users.role_id AS primary_key_role_id, users.city_id AS primary_key_city_id," +
             " roles.id AS role_id, roles.name AS role_name, cities.id AS city_id, cities.name AS city_name, cities.country_id AS" +
             " primary_key_country_id, countries.id AS country_id, countries.name AS country_name, baskets.good_id AS primary_key_good_id," +
-            " baskets.user_id, baskets.quantity, goods.id AS good_id, goods.name AS good_name, goods.summary AS good_summary, goods.description AS good_description FROM users" +
+            " baskets.user_id, baskets.quantity, goods.id AS good_id, goods.name AS good_name, goods.price AS good_price, goods.summary AS good_summary, goods.description AS good_description, goods.img AS good_img, countries.currency_id AS currency_id, currencies.name AS" +
+            " currency_name, currencies.coefficient AS currency_coefficient, currencies.symbol AS currency_symbol FROM users" +
             " INNER JOIN roles ON users.role_id = roles.id INNER JOIN cities ON users.city_id = cities.id INNER JOIN countries ON" +
-            " cities.country_id = countries.id INNER JOIN baskets ON users.id = baskets.user_id INNER JOIN goods ON baskets.good_id = goods.id WHERE users.id = ?;";
+            " cities.country_id = countries.id INNER JOIN baskets ON users.id = baskets.user_id INNER JOIN goods ON baskets.good_id = goods.id INNER JOIN currencies ON countries.currency_id = currencies.id WHERE users.id = ?;";
     private static final String DELETE_USER_BY_ID_SQL = "DELETE FROM users WHERE id = ?";
     private static final String UPDATE_USER_BY_ID_SQL = "UPDATE users SET name = ?, surname = ?, login = ?, password = ?," +
             " email = ?, birth_date = ?, role_id = ?, city_id = ? WHERE id = ?;";
