@@ -1,21 +1,50 @@
 package com.lashkevich.stores.entity;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Good {
     private long id;
     private String name;
+    private BigDecimal price;
     private String summary;
     private String description;
+    private String imgURL;
 
     public Good() {
     }
 
-    public Good(long id, String name, String summary, String description) {
+    public Good(long id, String name, BigDecimal price, String summary, String description, String imgURL) {
         this.id = id;
         this.name = name;
+        this.price = price;
         this.summary = summary;
         this.description = description;
+        this.imgURL = imgURL;
+    }
+
+    public Good(long id, String name, BigDecimal price, String summary, String description) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.summary = summary;
+        this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getImgURL() {
+        return imgURL;
+    }
+
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
     }
 
     public long getId() {
@@ -57,19 +86,14 @@ public class Good {
         Good good = (Good) o;
         return id == good.id &&
                 Objects.equals(name, good.name) &&
+                Objects.equals(price, good.price) &&
                 Objects.equals(summary, good.summary) &&
                 Objects.equals(description, good.description);
     }
 
     @Override
     public int hashCode() {
-        int code = 32;
-        code += id;
-        code += name.hashCode();
-        code += summary.hashCode();
-        code += description.hashCode();
-
-        return code;
+        return Objects.hash(id, name, price, summary, description, imgURL);
     }
 
     @Override
@@ -77,8 +101,10 @@ public class Good {
         return "Good{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", price=" + price +
                 ", summary='" + summary + '\'' +
                 ", description='" + description + '\'' +
+                ", imgURL='" + imgURL + '\'' +
                 '}';
     }
 }

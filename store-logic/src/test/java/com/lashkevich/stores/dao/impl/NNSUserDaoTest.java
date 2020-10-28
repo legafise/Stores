@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,32 +35,32 @@ public class NNSUserDaoTest {
         NNSConnectionPool.getInstance().initializeConnectionPool(1);
 
         Map<Good, Integer> firstGoods = new HashMap<>();
-        firstGoods.put(new Good(22, "Apple", "Apple", "Apple"), 2);
-        firstGoods.put(new Good(23, "Android", "Android", "Android"), 1);
+        firstGoods.put(new Good(22, "Apple", new BigDecimal("1.0"), "Apple", "Apple", "Apple"), 2);
+        firstGoods.put(new Good(23, "Android", new BigDecimal("2.0"), "Android", "Android", "Android"), 1);
         Basket firstBasket = new Basket(firstGoods);
         firstExpectedUser = new User(8, "A", "B", "C", "D",
-                "E", LocalDate.of(2000,02,20), new Role(1, "Admin"),
-                new City(1, "Minsk", new Country(1, "Belarus")), firstBasket);
+                "E", LocalDate.of(2000, 02, 20), new Role(1, "Admin"),
+                new City(1, "Minsk", new Country(1, "Belarus", new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN"))), firstBasket);
 
         firstChangeExpectedUser = new User(8, "A", "B", "C", "DOM",
-                "E", LocalDate.of(2000,02,20), new Role(1, "Admin"),
-                new City(1, "Minsk", new Country(1, "Belarus")), firstBasket);
+                "E", LocalDate.of(2000, 02, 20), new Role(1, "Admin"),
+                new City(1, "Minsk", new Country(1, "Belarus", new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN"))), firstBasket);
 
         Map<Good, Integer> secondGoods = new HashMap<>();
-        secondGoods.put(new Good(22, "Apple", "Apple", "Apple"), 2);
-        secondGoods.put(new Good(23, "Android", "Android", "Android"), 1);
+        secondGoods.put(new Good(22, "Apple", new BigDecimal("1.0"), "Apple", "Apple", "Apple"), 2);
+        secondGoods.put(new Good(23, "Android", new BigDecimal("2.0"), "Android", "Android", "Android"), 1);
         Basket secondBasket = new Basket(secondGoods);
         secondExpectedUser = new User(9, "F", "G", "H", "I",
-                "J", LocalDate.of(1111,11,11), new Role(2, "User"),
-                new City(2, "Moscow", new Country(2, "Russia")), secondBasket);
+                "J", LocalDate.of(1111, 11, 11), new Role(2, "User"),
+                new City(2, "Moscow", new Country(2, "Russia", new Currency(3, "Russian ruble", new BigDecimal("76.8"), "RUB"))), secondBasket);
 
         thirdExpectedUser = new User(10, "K", "L", "M", "N",
-                "O", LocalDate.of(1010,10,10), new Role(2, "User"),
-                new City(2, "Moscow", new Country(2, "Russia")));
+                "O", LocalDate.of(1010, 10, 10), new Role(2, "User"),
+                new City(2, "Moscow", new Country(2, "Russia", new Currency(3, "Russian ruble", new BigDecimal("76.8"), "RUB"))));
 
         fourthExpectedUser = new User(11, "P", "U", "H", "C",
-                "V", LocalDate.of(2010,04,12), new Role(2, "User"),
-                new City(1, "Minsk", new Country(1, "Belarus")));
+                "V", LocalDate.of(2010, 04, 12), new Role(2, "User"),
+                new City(1, "Minsk", new Country(1, "Belarus", new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN"))));
 
         userDao = new NNSUserDao();
         userDao.setPropertiesReader(testPropertiesReader);

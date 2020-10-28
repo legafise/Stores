@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class NNSGoodDao implements GoodDao {
-    private static final String ADD_GOOD_SQL = "INSERT INTO goods (id, name, summary, description) VALUES (?, ?, ?, ?);";
-    private static final String FIND_ALL_GOODS_SQL = "SELECT goods.id AS good_id, goods.name AS good_name, goods.summary AS" +
-            " good_summary, goods.description AS good_description FROM goods;";
-    private static final String FIND_GOOD_BY_ID_SQL = "SELECT goods.id AS good_id, goods.name AS good_name, goods.summary AS" +
-            " good_summary, goods.description AS good_description FROM goods WHERE id = ?;";
-    private static final String UPDATE_GOOD_SQL = "UPDATE goods SET name = ?, summary = ?, description = ? WHERE id = ?;";
+    private static final String ADD_GOOD_SQL = "INSERT INTO goods (id, name, price, summary, description, img) VALUES (?, ?, ?, ?, ?, ?);";
+    private static final String FIND_ALL_GOODS_SQL = "SELECT goods.id AS good_id, goods.name AS good_name, goods.price AS good_price, goods.price ,goods.summary AS" +
+            " good_summary, goods.description AS good_description, goods.img AS good_img FROM goods;";
+    private static final String FIND_GOOD_BY_ID_SQL = "SELECT goods.id AS good_id, goods.name AS good_name, goods.price AS good_price, goods.summary AS" +
+            " good_summary, goods.description AS good_description, goods.img AS good_img FROM goods WHERE id = ?;";
+    private static final String UPDATE_GOOD_SQL = "UPDATE goods SET name = ?, price = ?, summary = ?, description = ?, img = ? WHERE id = ?;";
     private static final String DELETE_GOOD_BY_ID_SQL = "DELETE FROM goods WHERE id = ?;";
 
     private PropertiesReader propertiesReader;
@@ -42,8 +42,10 @@ public class NNSGoodDao implements GoodDao {
             connection.setAutoCommit(propertiesReader.readCommitStatus());
             preparedStatement.setLong(1, good.getId());
             preparedStatement.setString(2, good.getName());
-            preparedStatement.setString(3, good.getSummary());
-            preparedStatement.setString(4, good.getDescription());
+            preparedStatement.setBigDecimal(3, good.getPrice());
+            preparedStatement.setString(4, good.getSummary());
+            preparedStatement.setString(5, good.getDescription());
+            preparedStatement.setString(6, good.getImgURL());
             return preparedStatement.executeUpdate() == 1;
         } catch (SQLException | NNSConnectionPoolException | NNSUtilException e) {
             throw new NSSDaoStoreException(e);
@@ -96,9 +98,11 @@ public class NNSGoodDao implements GoodDao {
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_GOOD_SQL)) {
             connection.setAutoCommit(propertiesReader.readCommitStatus());
             preparedStatement.setString(1, good.getName());
-            preparedStatement.setString(2, good.getSummary());
-            preparedStatement.setString(3, good.getDescription());
-            preparedStatement.setLong(4, good.getId());
+            preparedStatement.setBigDecimal(2, good.getPrice());
+            preparedStatement.setString(3, good.getSummary());
+            preparedStatement.setString(4, good.getDescription());
+            preparedStatement.setString(5, good.getImgURL());
+            preparedStatement.setLong(6, good.getId());
             return preparedStatement.executeUpdate() == 1;
         } catch (SQLException | NNSConnectionPoolException | NNSUtilException e) {
             throw new NSSDaoStoreException(e);
@@ -109,10 +113,10 @@ public class NNSGoodDao implements GoodDao {
     @Override
     public boolean remove(long id) throws NSSDaoStoreException {
         try (Connection connection = NNSConnectionPool.getInstance().acquireConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_GOOD_BY_ID_SQL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_GOOD_BY_ID_SQL);) {
             connection.setAutoCommit(propertiesReader.readCommitStatus());
             preparedStatement.setLong(1, id);
-            return preparedStatement.executeUpdate() == 1;
+            return preparedStatement.executeUpdate() >= 1;
         } catch (SQLException | NNSConnectionPoolException | NNSUtilException e) {
             throw new NSSDaoStoreException(e);
         }

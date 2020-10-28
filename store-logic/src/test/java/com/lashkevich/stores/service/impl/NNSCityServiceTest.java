@@ -3,6 +3,7 @@ package com.lashkevich.stores.service.impl;
 import com.lashkevich.stores.dao.CityDao;
 import com.lashkevich.stores.entity.City;
 import com.lashkevich.stores.entity.Country;
+import com.lashkevich.stores.entity.Currency;
 import com.lashkevich.stores.exception.NNSServiceStoreException;
 import com.lashkevich.stores.exception.NSSDaoStoreException;
 import com.lashkevich.stores.service.CityService;
@@ -11,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,8 +35,8 @@ public class NNSCityServiceTest {
         countryService = mock(CountryService.class);
         cityService.setCityDao(cityDao);
         cityService.setCountryService(countryService);
-        testCountry = new Country(1, "Belarus");
-        testCity = new City(1, "Minsk", new Country(1, "Belarus"));
+        testCountry = new Country(1, "Belarus", new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN"));
+        testCity = new City(1, "Minsk", new Country(1, "Belarus", new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN")));
         testCityOptional = Optional.of(testCity);
     }
 
@@ -71,10 +73,10 @@ public class NNSCityServiceTest {
         Assert.assertEquals(cityService.findCityById("1"), testCity);
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void findCityByIdWithInvalidCityIdTest() throws NSSDaoStoreException, NNSServiceStoreException {
         cityService.findCityById("dgd");
-}
+    }
 
     @Test
     public void removeCityPositiveTest() throws NSSDaoStoreException, NNSServiceStoreException {
@@ -82,7 +84,7 @@ public class NNSCityServiceTest {
         Assert.assertTrue(cityService.removeCity("1"));
     }
 
-    @Test (expected = NNSServiceStoreException.class)
+    @Test(expected = NNSServiceStoreException.class)
     public void removeCityWithInvalidRemoveTest() throws NNSServiceStoreException {
         cityService.removeCity("egd");
     }
