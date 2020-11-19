@@ -9,26 +9,28 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xl-3">
-                    <div class="card text-center card-size">
-                        <div class="card-body">
-                            <h5 class="card-title short-description"><a href="iphone.html">Iphone</a></h5>
-                            <p class="card-text">
-                                <a href="iphone.html">
-                                    <img src="../img/iphone.jpg" class="img-fluid img-idents img-size" alt="iphone">
+                <c:forEach var="good" items="${goodList}">
+                    <div class="col-xl-3">
+                        <div class="card text-center card-size">
+                            <div class="card-body">
+                                <h5 class="card-title short-description"><a href="controller?command=good&goodId=${good.id}&currencyId=${currency.id}">${good.name}</a></h5>
+                                <p class="card-text">
+                                    <a href="controller?command=good&goodId=${good.id}&currencyId=${currency.id}">
+                                        <img src="${good.imgURL}" class="img-fluid img-idents img-size" alt="${good.name}">
+                                    </a>
+                                </p>
+                                <a href="controller?command=good&goodId=${good.id}&currencyId=${currency.id}">
+                                    <button class="more-button">
+                                        Подробнее
+                                    </button>
                                 </a>
-                            </p>
-                            <a href="iphone.html">
-                                <button class="more-button">
-                                    Подробнее
-                                </button>
-                            </a>
-                        </div>
-                        <div class="card-footer text-muted short-description">
-                            <a href="iphone.html">Цена: 1600р</a>
+                            </div>
+                            <div class="card-footer text-muted short-description">
+                                <a href="controller?command=good&goodId=${good.id}&currencyId=${currency.id}">Цена: ${good.price} ${currency.symbol}</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </c:forEach>
             </div>
         </div>
     </main>

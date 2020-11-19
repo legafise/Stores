@@ -8,7 +8,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,   shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../store/static/css/style.css">
     <title>Каталог NNStore</title>
 </head>
 <body>
@@ -24,7 +24,8 @@
                 <a class="nav-link" href="#">Личный кабинет<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">Каталог<span class="sr-only">(current)</span></a>
+<%--                <a class="nav-link" href="controller?command=catalog&currencyId=${currency.id}">Каталог<span class="sr-only">(current)</span></a>--%>
+                <a class="nav-link" href="controller?command=catalog&currencyId=1">Каталог<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item basket-indents">
                 <a class="nav-link" href="#">Корзина<span class="sr-only">(current)</span></a>
@@ -32,7 +33,15 @@
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+            <button class="btn btn-outline-success my-2 my-sm-0 search-button-idents" type="submit">Поиск</button>
         </form>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/store/controller?command=registration_page">Регистрация<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/store/controller?command=authorization_page">Вход<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
     </div>
 </nav>
