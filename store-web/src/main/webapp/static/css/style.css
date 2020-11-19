@@ -22,6 +22,10 @@ footer {
 	font-family: "Segoe UI";
 }
 
+a {
+	text-decoration: none;
+}
+
 .navbar	{
 	background-color: #303B44!important;
 }
@@ -102,7 +106,6 @@ footer {
 .more-button:hover {
 	color: #E7E7E7;
 	background-color: #303B44;
-	font-size: 1.3rem;
 }
 
 .more-button {
@@ -175,8 +178,50 @@ footer {
 
 .card-size {
 	overflow: hidden;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    min-height: 45vh;
+	margin-bottom: 15px;
+	margin-top: 15px;
+	min-height: 45vh;
+}
+
+.authorization-form-idents {
+	margin-top: 40%;
+	margin-bottom: 25%;
+}
+
+.registration-form-idents {
+	margin-top: 20%;
+	margin-bottom: 20%;
+}
+
+.row-in-registration {
+	font-size: 16px;
+}
+
+.authorization {
+	font-family: "Segoe UI" !important;
+	font-size: 18px;
+}
+
+.my-button:hover {
+	color: #E7E7E7;
+	background-color: #303B44;
+	text-decoration: none;
+}
+
+.my-button {
+	margin-top: 7px;
+	background-color: #FFFFFF;
+	font-size: 1rem;
+	padding: 5px;
+	color: #303B44;
+	font-family: "Franklin Gothic Medium";
+	border: 2px solid #303B44;
+	border-radius: 4px;
+	transition: all .3s;
+	text-decoration: none;
+}
+
+.search-button-idents {
+	margin-right: 15px;
 }
 
