@@ -101,7 +101,7 @@ CREATE TABLE `goods` (
   `price` double NOT NULL,
   `summary` varchar(45) COLLATE utf8_bin NOT NULL,
   `description` varchar(45) COLLATE utf8_bin NOT NULL,
-  `img` longtext COLLATE utf8_bin NOT NULL,
+  `img` longtext COLLATE utf8_bin,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
