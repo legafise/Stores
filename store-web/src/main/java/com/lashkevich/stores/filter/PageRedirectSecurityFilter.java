@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter( urlPatterns = { "/jsp/*", "/static/*"}, filterName = "PageRedirectSecurityFilter", initParams = {
+@WebFilter( urlPatterns = {}, filterName = "PageRedirectSecurityFilter", initParams = {
         @WebInitParam(name = "CONTROLLER-PATH", value = "/controller") })
 public class PageRedirectSecurityFilter implements Filter {
     private String indexPath;
