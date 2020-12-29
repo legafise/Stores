@@ -6,6 +6,7 @@ import com.lashkevich.stores.command.CommandResult;
 import com.lashkevich.stores.exception.NNSCommandFactoryException;
 import com.lashkevich.stores.exception.NNSConnectionPoolException;
 import com.lashkevich.stores.exception.NNSReceiverException;
+import com.lashkevich.stores.exception.NNSServiceStoreException;
 import com.lashkevich.stores.pool.NNSConnectionPool;
 
 import javax.servlet.ServletException;
@@ -45,7 +46,7 @@ public class StoreController extends HttpServlet {
             } else {
                 resp.sendRedirect(commandResult.getPage());
             }
-        } catch (NNSCommandFactoryException | NNSReceiverException e) {
+        } catch (NNSCommandFactoryException | NNSReceiverException | NNSServiceStoreException | InterruptedException e) {
             System.err.println(e);
         }
     }
