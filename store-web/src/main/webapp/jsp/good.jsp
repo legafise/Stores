@@ -1,6 +1,11 @@
+<%@ page import="com.lashkevich.stores.entity.Good" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%request.setAttribute("addGoodCommand", request.getContextPath() + "/controller?command=add_good");%>
+<%Good currentGood = (Good) request.getAttribute("good");%>
+<%request.getSession().setAttribute("currentGoodId", currentGood.getId());%>
 
 <c:import url="header.jsp"/>
 <main>
@@ -16,9 +21,11 @@
                     <button class="buy-button">
                         Купить
                     </button>
-                    <button class="basket-button">
-                        В корзину
-                    </button>
+                    <a href="${addGoodCommand}">
+                        <button class="basket-button">
+                            В корзину
+                        </button>
+                    </a>
                 </div>
             </div>
             <div class="col-xl-6 description">

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<%request.setAttribute("actionURL", request.getContextPath() + "/controller?command=registration");%>
 <c:import url="header.jsp"/>
 
 <main>
@@ -14,7 +15,7 @@
                         Регистрация
                     </div>
                     <div class="card-body authorization">
-                        <form action="/store/controller?command=registration" method="post">
+                        <form action="${actionURL}" method="post" class="reg-inputs">
                             <div class="form-group">
                                 <label for="login">Логин(никнейм)</label>
                                 <input type="text" class="form-control" id="login" name="login">
@@ -34,8 +35,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="email1">Email</label>
-                                <input type="email" class="form-control" id="email1" name="email"
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email"
                                        aria-describedby="emailHelp">
                             </div>
                             <div class="row row-in-registration">
@@ -70,6 +71,8 @@
         </div>
     </div>
 </main>
+
+<script src="<c:url value="/js/registrationValidator.js"/>"></script>
 
 <c:import url="footer.jsp"/>
 
