@@ -16,6 +16,7 @@ import com.lashkevich.stores.util.checker.NNSBasketDuplicationsChecker;
 import com.lashkevich.stores.util.validator.NNSBasketValidator;
 import com.lashkevich.stores.util.validator.NNSGoodValidator;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -97,7 +98,8 @@ public class NNSBasketService implements BasketService {
         try {
             Optional<Basket> basketOptional = basketDao.findByUser(Integer.parseInt(userId));
             if (!basketOptional.isPresent()) {
-                throw new NNSServiceStoreException();
+                Map<Good, Integer> goods = new HashMap<>();
+                return new Basket(goods);
             }
 
             return basketOptional.get().convertPrices(currencyService.findCurrencyById(currencyId));

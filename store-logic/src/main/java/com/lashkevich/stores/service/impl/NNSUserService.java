@@ -57,6 +57,20 @@ public class NNSUserService implements UserService {
     }
 
     @Override
+    public User findUserByEmail(String email) throws NNSServiceStoreException {
+        try {
+            Optional<User> userOptional = userDao.findByEmail(email);
+            if (!userOptional.isPresent()) {
+                throw new NNSServiceStoreException();
+            }
+
+            return userOptional.get();
+        } catch (NumberFormatException | NSSDaoStoreException e) {
+            throw new NNSServiceStoreException(e);
+        }
+    }
+
+    @Override
     public List<User> findAllUsers() throws NNSServiceStoreException {
         try {
             return userDao.findAll();

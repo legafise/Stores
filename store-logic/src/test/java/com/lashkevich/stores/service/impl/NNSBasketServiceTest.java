@@ -59,7 +59,7 @@ public class NNSBasketServiceTest {
         basketService.setCurrencyService(currencyService);
 
         firstTestGood = new Good(23, "Android", new BigDecimal("2.0"), "Android", "Android", "Android");
-        firstTestGoodAfterConversion = new Good(23, "Android", new BigDecimal("5.20"), "Android", "Android", "Android");
+        firstTestGoodAfterConversion = new Good(23, "Android", new BigDecimal("5.2"), "Android", "Android", "Android");
         secondTestGood = new Good(22, "Apple", new BigDecimal("1.0"), "Apple", "Apple", "Apple");
         goods = new ArrayList<>();
         goods.add(firstTestGood);
