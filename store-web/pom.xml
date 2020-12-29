@@ -24,6 +24,7 @@
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.lashkevich.stores</groupId>
             <artifactId>store-logic</artifactId>
