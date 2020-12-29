@@ -7,13 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter( urlPatterns = {}, filterName = "PageRedirectSecurityFilter", initParams = {
-        @WebInitParam(name = "CONTROLLER-PATH", value = "/controller") })
+@WebFilter(filterName = "PageRedirectSecurityFilter", initParams = {
+        @WebInitParam(name = "ERROR-PAGE-PATH", value = "/controller?command=error")
+})
 public class PageRedirectSecurityFilter implements Filter {
-    private String indexPath;
+    private String errorPath;
     @Override
     public void init(FilterConfig filterConfig) {
-        indexPath = filterConfig.getInitParameter("CONTROLLER-PATH");
+        errorPath = filterConfig.getInitParameter("ERROR-PAGE-PATH");
     }
 
     @Override
@@ -21,7 +22,7 @@ public class PageRedirectSecurityFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
-        httpResponse.sendRedirect(httpRequest.getContextPath() + indexPath);
+        httpResponse.sendRedirect(httpRequest.getContextPath() + errorPath);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
