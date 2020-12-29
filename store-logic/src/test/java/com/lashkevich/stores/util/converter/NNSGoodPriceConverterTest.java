@@ -16,7 +16,7 @@ public class NNSGoodPriceConverterTest {
     @Before
     public void setUp() {
         firstTestGood = new Good(1, "Samsung", new BigDecimal("2.0"), "Samsung", "Samsung", "Samsung");
-        firstTestGoodAfterConversion = new Good(1, "Samsung", new BigDecimal("5.20"), "Samsung", "Samsung", "Samsung");
+        firstTestGoodAfterConversion = new Good(1, "Samsung", new BigDecimal("5.2"), "Samsung", "Samsung", "Samsung");
         firstTestCurrency = new Currency(2, "Belarusian ruble", new BigDecimal("2.6"), "BYN");
     }
 
