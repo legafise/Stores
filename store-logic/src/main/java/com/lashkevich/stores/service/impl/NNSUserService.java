@@ -9,6 +9,7 @@ import com.lashkevich.stores.service.CityService;
 import com.lashkevich.stores.service.UserService;
 import com.lashkevich.stores.util.checker.NNSUserDuplicationsChecker;
 import com.lashkevich.stores.util.validator.NNSUserValidator;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 import java.util.Optional;
@@ -84,6 +85,7 @@ public class NNSUserService implements UserService {
         try {
             if (NNSUserValidator.validate(user) && NNSUserDuplicationsChecker.checkUserAdding(userDao.findAll(), user)
                     && cityService.findAllCities().contains(user.getCity())) {
+                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
                 return userDao.add(user);
             }
 
@@ -98,6 +100,7 @@ public class NNSUserService implements UserService {
         try {
             if (NNSUserValidator.validate(user) && NNSUserDuplicationsChecker.checkUserUpdating(userDao.findAll(), user) &&
                     cityService.findAllCities().contains(user.getCity())) {
+                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
                 return userDao.update(user);
             }
 

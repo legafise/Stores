@@ -6,10 +6,10 @@ import com.lashkevich.stores.exception.NNSReceiverException;
 import com.lashkevich.stores.exception.NNSServiceStoreException;
 import com.lashkevich.stores.service.*;
 import com.lashkevich.stores.service.impl.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,7 +95,7 @@ public class SiteReceiver {
         try {
             User user = userService.findUserByEmail(request.getParameter("email"));
 
-            if (user.getPassword().equals(request.getParameter("password"))) {
+            if (BCrypt.checkpw(request.getParameter("password"), user.getPassword())) {
                 request.getSession().setAttribute("role", user.getRole().getName());
                 request.getSession().setAttribute("userId", user.getId());
                 request.getSession().setAttribute("currencyId", String.valueOf(user.getCity().getCountry().getCurrency().getId()));
@@ -179,6 +179,10 @@ public class SiteReceiver {
 
     public CommandResult guestInfoForward(HttpServletRequest request) {
         return new CommandResult(CommandResult.ResponseType.FORWARD, "/jsp/guest_info.jsp");
+    }
+
+    public CommandResult errorForward(HttpServletRequest request) {
+        return new CommandResult(CommandResult.ResponseType.FORWARD, "/jsp/error.jsp");
     }
 
     private User registrationMapper(HttpServletRequest request) throws NNSServiceStoreException {
