@@ -17,6 +17,7 @@ public enum CommandType {
     ADD_GOOD(SiteReceiver.getInstance()::addGoodInBasket, "add_good"),
     REMOVE_GOOD(SiteReceiver.getInstance()::removeGoodFromBasket, "remove_good"),
     CLEAR_BASKET(SiteReceiver.getInstance()::clearBasket, "clear_basket"),
+    ERROR(SiteReceiver.getInstance()::errorForward, "error"),
     GUEST_INFO(SiteReceiver.getInstance()::guestInfoForward, "guest_info");
 
 

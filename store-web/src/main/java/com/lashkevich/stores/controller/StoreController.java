@@ -47,7 +47,7 @@ public class StoreController extends HttpServlet {
                 resp.sendRedirect(commandResult.getPage());
             }
         } catch (NNSCommandFactoryException | NNSReceiverException | NNSServiceStoreException | InterruptedException e) {
-            System.err.println(e);
+            resp.sendRedirect(req.getContextPath() + "/controller?command=error");
         }
     }
 
