@@ -94,4 +94,9 @@ public class NNSUserDaoTest {
     public void removeTest() throws NSSDaoStoreException {
         Assert.assertTrue(userDao.remove(10));
     }
+
+    @Test
+    public void findByEmail() throws NSSDaoStoreException {
+        Assert.assertEquals(firstExpectedUser, userDao.findByEmail("E").get());
+    }
 }

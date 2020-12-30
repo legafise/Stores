@@ -16,6 +16,8 @@ public interface UserDao {
 
     Optional<User> findById(long id) throws NSSDaoStoreException;
 
+    Optional<User> findByEmail(String email) throws NSSDaoStoreException;
+
     boolean update(User user) throws NSSDaoStoreException;
 
     boolean remove(long id) throws NSSDaoStoreException;

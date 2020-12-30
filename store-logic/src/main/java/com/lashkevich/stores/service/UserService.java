@@ -18,6 +18,8 @@ public interface UserService {
 
     User findUserById(String id) throws NNSServiceStoreException;
 
+    User findUserByEmail(String email) throws NNSServiceStoreException;
+
     List<User> findAllUsers() throws NNSServiceStoreException;
 
     boolean addUser(User user) throws NNSServiceStoreException;

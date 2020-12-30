@@ -59,6 +59,12 @@ public class NNSUserServiceTest {
     }
 
     @Test
+    public void findByEmailTest() throws NSSDaoStoreException, NNSServiceStoreException {
+        when(userDao.findByEmail("t.a_p-0oc04@yan.dx.ru")).thenReturn(firstTestUserOptional);
+        Assert.assertEquals(userService.findUserByEmail("t.a_p-0oc04@yan.dx.ru"), firstTestUser);
+    }
+
+    @Test
     public void findAllTest() throws NSSDaoStoreException, NNSServiceStoreException {
         List<User> users = new ArrayList<>();
         users.add(firstTestUser);

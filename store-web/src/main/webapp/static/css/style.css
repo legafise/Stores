@@ -1,0 +1,309 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 65px;
+}
+
+main {
+	margin-bottom: 100px;
+	padding-bottom: 40px;
+}
+
+footer {
+	position: absolute;
+  	bottom: 0;
+  	width: 100%;
+  	height: 68px;
+	background-color: #303B44;
+	color: #fff;
+	font-size: 18px;
+	font-family: "Segoe UI";
+}
+
+a {
+	text-decoration: none;
+}
+
+.navbar	{
+	background-color: #303B44!important;
+}
+
+.navbar-brand {
+	font-family: Tahoma;
+	max-height: 50px;
+	font-size: 2.5rem;
+	display: flex;
+	align-items: center;
+	margin: 0;
+}
+
+.nav-link {
+	font-family: "Segoe UI";
+	font-size: 1.3rem;
+
+}
+
+.basket-indents {
+	margin-right: 8px;
+}
+
+.name {
+	font-family: Tahoma;
+	margin-top: 20px;
+	font-size: 3vh!important;
+}
+
+.footer-indents {
+	margin-top: 4px;
+}
+
+.description {
+	font-size: 1.22rem;
+	font-family: Arial;
+}
+
+.good-idents {
+	margin-top: 8px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.basket-button {
+  background: url("../img/black_basket.png") 5px center no-repeat;
+  background-size: 30px;
+}
+
+.basket-button:hover {
+	background: url("../img/gray_basket.png") 5px center no-repeat;
+	background-size: 30px;
+	color: #E7E7E7;
+	background-color: #303B44;
+}
+
+.basket-button {
+    background-color: #FFFFFF;
+	font-size: 20px;
+	padding: 5px;
+	padding-left: 40px;
+	color: #303B44;
+	float: left;
+	margin-right: 10px;
+	font-family: "Franklin Gothic Medium";
+	border: 2px solid #303B44;
+	border-radius: 4px;
+	background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: 20px left;
+    transition: all .4s;
+}
+
+.more-button:hover {
+	color: #E7E7E7;
+	background-color: #303B44;
+}
+
+.more-button {
+	background-color: #FFFFFF;
+	font-size: 1.2rem;
+	padding: 5px;
+	color: #303B44;
+	font-family: "Franklin Gothic Medium";
+	border: 2px solid #303B44;
+	border-radius: 4px;
+	transition: all .3s;
+}
+
+.buy-button:hover {
+	color: #E7E7E7;
+	background-color: #303B44;
+}
+
+.buy-button {
+	background-color: #FFFFFF;
+	font-size: 20px;
+	padding: 5px;
+	color: #303B44;
+	float: left;
+	margin-right: 10px;
+	font-family: "Franklin Gothic Medium";
+	border: 2px solid #303B44;
+	border-radius: 4px;
+	transition: all .3s;
+}
+
+.buttons-idents {
+	margin-bottom: 60px;
+}
+
+.img-idents {
+	margin-bottom: 10px;
+}
+
+.price {
+	font-family: Tahoma;
+	font-weight: bold;
+	font-size: 1.25rem;
+	margin-bottom: 6px;
+}
+
+.short-description {
+	font-family: Tahoma;
+	font-weight: bold;
+	font-size: 1.15rem;
+}
+
+.short-description>a {
+	color: black!important;
+}
+
+.card-title {
+	font-size: 1.3rem!important;
+}
+
+.short-description>a:hover {
+	text-decoration: none;
+}
+
+.img-size {
+	height: 30vh;
+	overflow: hidden;
+}
+
+.card-size {
+	overflow: hidden;
+	margin-bottom: 15px;
+	margin-top: 15px;
+	min-height: 45vh;
+}
+
+.authorization-form-idents {
+	margin-top: 40%;
+	margin-bottom: 25%;
+}
+
+.registration-form-idents {
+	margin-top: 20%;
+	margin-bottom: 20%;
+}
+
+.row-in-registration {
+	font-size: 16px;
+}
+
+.authorization {
+	font-family: "Segoe UI" !important;
+	font-size: 18px;
+}
+
+.my-button:hover {
+	color: #E7E7E7;
+	background-color: #303B44;
+	text-decoration: none;
+}
+
+.my-button {
+	margin-top: 7px;
+	background-color: #FFFFFF;
+	font-size: 1rem;
+	padding: 5px;
+	color: #303B44;
+	font-family: "Franklin Gothic Medium";
+	border: 2px solid #303B44;
+	border-radius: 4px;
+	transition: all .3s;
+	text-decoration: none;
+}
+
+.search-button-idents {
+	margin-right: 12.5px;
+}
+
+.error-message-idents {
+	margin-top: 10px!important;
+}
+
+.profile-img {
+	border: 2px solid #000000;
+	height: 36vh;
+}
+
+.user-info {
+	font-family: "Segoe UI";
+	font-size: 1.55rem;
+}
+
+.user-info-card {
+	margin-top: 5%;
+}
+
+.basket-description-text {
+	font-family: "Tahoma";
+	font-size: 1.150rem;
+	padding-bottom: 10px;
+}
+
+.price-in-basket {
+	font-family: Tahoma;
+	font-weight: bold;
+	font-size: 1.150rem;
+	margin-top: 100px;
+}
+
+.buy-button-in-basket:hover {
+	color: #E7E7E7;
+	background-color: #303B44;
+}
+
+.buy-button-in-basket {
+	margin-top: 5px;
+	background-color: #FFFFFF;
+	font-size: 20px;
+	padding: 5px;
+	color: #303B44;
+	float: left;
+	margin-right: 10px;
+	font-family: "Franklin Gothic Medium";
+	border: 2px solid #303B44;
+	border-radius: 4px;
+	transition: all .3s;
+}
+
+.basket-good-header {
+	font-size: 1.4rem;
+	font-family: "Tahoma";
+}
+
+.delete-button-in-basket:hover {
+	color: #e7e7e7;
+	background-color: #ac041a;
+}
+
+.delete-button-in-basket {
+	margin-top: 5px;
+	background-color: #FFFFFF;
+	font-size: 20px;
+	padding: 5px;
+	color: #ac041a;
+	float: left;
+	margin-right: 10px;
+	font-family: "Franklin Gothic Medium";
+	border: 2px solid #ac041a;
+	border-radius: 4px;
+	transition: all .3s;
+}
+
+.back-to-catalog-info {
+	margin-top: 12px;
+}
+
+:active, :hover, :focus {
+	outline: 0;
+	outline-offset: 0;
+}
+
+

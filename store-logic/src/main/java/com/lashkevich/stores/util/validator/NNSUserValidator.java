@@ -35,7 +35,7 @@ public final class NNSUserValidator {
     }
 
     private static boolean validatePassword(String password) {
-        return password != null && password.length() >= 4 && password.length() <= 45;
+        return password != null && password.length() >= 4 && password.length() <= 60;
     }
 
 
